@@ -58,16 +58,48 @@
 		697FE7C226E8EAA00060F0CE /* Reciplease */ = {
 			isa = PBXGroup;
 			children = (
-				697FE7C326E8EAA00060F0CE /* AppDelegate.swift */,
-				697FE7C526E8EAA00060F0CE /* SceneDelegate.swift */,
-				697FE7C726E8EAA00060F0CE /* ViewController.swift */,
-				697FE7C926E8EAA00060F0CE /* Main.storyboard */,
-				697FE7CF26E8EAA10060F0CE /* Assets.xcassets */,
-				697FE7D126E8EAA10060F0CE /* LaunchScreen.storyboard */,
-				697FE7D426E8EAA10060F0CE /* Info.plist */,
-				697FE7CC26E8EAA00060F0CE /* Reciplease.xcdatamodeld */,
+				697FE7DD26E8EADC0060F0CE /* Supporting Files */,
+				697FE7DC26E8EAD60060F0CE /* Model */,
+				697FE7DB26E8EAD00060F0CE /* View */,
+				697FE7DA26E8EAC90060F0CE /* Controller */,
 			);
 			path = Reciplease;
+			sourceTree = "<group>";
+		};
+		697FE7DA26E8EAC90060F0CE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				697FE7C726E8EAA00060F0CE /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		697FE7DB26E8EAD00060F0CE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				697FE7D126E8EAA10060F0CE /* LaunchScreen.storyboard */,
+				697FE7C926E8EAA00060F0CE /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		697FE7DC26E8EAD60060F0CE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				697FE7CC26E8EAA00060F0CE /* Reciplease.xcdatamodeld */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		697FE7DD26E8EADC0060F0CE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				697FE7D426E8EAA10060F0CE /* Info.plist */,
+				697FE7CF26E8EAA10060F0CE /* Assets.xcassets */,
+				697FE7C326E8EAA00060F0CE /* AppDelegate.swift */,
+				697FE7C526E8EAA00060F0CE /* SceneDelegate.swift */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,7 +324,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 96Q85JB8SS;
-				INFOPLIST_FILE = Reciplease/Info.plist;
+				INFOPLIST_FILE = "Reciplease/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -300,7 +332,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = fr.buewaertromain.Reciplease;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -311,7 +343,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 96Q85JB8SS;
-				INFOPLIST_FILE = Reciplease/Info.plist;
+				INFOPLIST_FILE = "Reciplease/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -319,7 +351,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = fr.buewaertromain.Reciplease;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
