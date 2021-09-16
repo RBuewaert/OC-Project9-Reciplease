@@ -29,7 +29,7 @@ struct RecipeListResult: Codable {
     let from: Int
     let to: Int
     let count: Int
-    let links: RecipeListResultLinks?
+    let links: RecipeListResultLinks
     let hits: [RecipeListResultHits]
 
     enum CodingKeys: String, CodingKey {
@@ -40,7 +40,7 @@ struct RecipeListResult: Codable {
 }
 
 struct RecipeListResultLinks: Codable {
-    let next: RecipeListResultLinksHref
+    let next: RecipeListResultLinksHref?
 }
 
 struct RecipeListResultLinksHref: Codable {
@@ -49,6 +49,20 @@ struct RecipeListResultLinksHref: Codable {
 
 struct RecipeListResultHits: Codable {
     let recipe: RecipeListResultRecipe
+}
+
+extension RecipeListResultHits {
+    func toRecipe() -> Recipe {
+        return Recipe(title: recipe.label,
+               image: recipe.image,
+               url: recipe.url,
+               yield: recipe.yield,
+               cautions: recipe.cautions,
+               ingredientList: recipe.ingredientLines,
+               totalTime: recipe.totalTime,
+               mealType: recipe.mealType,
+               dishType: recipe.dishType)
+    }
 }
 
 struct RecipeListResultRecipe: Codable {

@@ -17,8 +17,8 @@ class CustomTabBarController: UITabBarController {
         let tabBarItemAppearance = UITabBarItem.appearance()
         let attributes = [NSAttributedString.Key.font:UIFont(name: "Chalkduster", size: 20)]
         tabBarItemAppearance.setTitleTextAttributes(attributes as [NSAttributedString.Key : Any], for: .normal)
+        navigationItem.backButtonTitle = "Back"
        
-        
 //        tabBar.layer.borderWidth = 2.0
 //        tabBar.layer.borderColor = #colorLiteral(red: 0.5197287798, green: 0.5297763944, blue: 0.5338007212, alpha: 1)
     }

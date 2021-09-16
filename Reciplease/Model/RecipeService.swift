@@ -11,32 +11,34 @@ import Alamofire
 final class RecipeService {
     // MARK: - Pattern Singleton
     static var shared = RecipeService()
-    static var recipeList = RecipeList(list: [])
+
+    private static let url = "https://api.edamam.com/api/recipes/v2?"
     
-    func getRecipe(ingredients: String, completionHandler: @escaping (Bool) -> ()) -> () {
+    func getRecipe(ingredients: String, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
         let parameters = ["type": "public", "q": ingredients, "app_id": APIKey.id, "app_key": APIKey.key]
 
-        let request = AF.request("https://api.edamam.com/api/recipes/v2?", method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil, interceptor: nil, requestModifier: nil).responseDecodable(of: RecipeListResult.self) { response in
+        AF.request(RecipeService.url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil, interceptor: nil, requestModifier: nil).responseDecodable(of: RecipeListResult.self) { response in
 
             guard response.error == nil else {
-                completionHandler(false)
-                return
+                return completionHandler(.failure(.downloadFailed))
             }
 
-            guard response.data != nil else {
-                completionHandler(false)
-                return
+            guard let data = response.data else {
+                return completionHandler(.failure(.noData))
             }
-
-            guard let JSONresult = try? JSONDecoder().decode(RecipeListResult.self, from: response.data!) else {
-                completionHandler(false)
-                return
+            
+            var recipeList = RecipeList(list: [])
+            do {
+                let JSONresult = try JSONDecoder().decode(RecipeListResult.self, from: data)
+                guard JSONresult.count > 0 else {
+                    return completionHandler(.failure(.noResult))
+                }
+                recipeList = self.addRecipeOnArrayList(numberOfRecipe: JSONresult.to, JSONresult: JSONresult)
+            } catch {
+                print(error)
+                return completionHandler(.failure(.extractValues))
             }
-
-            self.addRecipeOnArrayList(numberOfRecipe: JSONresult.to, JSONresult: JSONresult)
-
-            print("RECIPE LIST \(RecipeService.recipeList.list.count)")
-
+            
             
              // PB AVEC BEAUCOUP DE PAGES ET LIMITATION UTILISATION PAR MINUTE
 //            while JSONresult.links != nil {
@@ -58,39 +60,36 @@ final class RecipeService {
 //            print("RECIPE LIST \(RecipeService.recipeList.list.count)")
             
             
-            completionHandler(true)
-        }
-    }
-    
-    private func addRecipeOnArrayList(numberOfRecipe: Int, JSONresult: RecipeListResult) {
-        for i in 0...(numberOfRecipe-1) {
-            RecipeService.recipeList.list.append(Recipe(title: JSONresult.hits[i].recipe.label,
-                                                    image: JSONresult.hits[i].recipe.image,
-                                                    url: JSONresult.hits[i].recipe.url,
-                                                    yield: JSONresult.hits[i].recipe.yield,
-                                                    cautions: JSONresult.hits[i].recipe.cautions,
-                                                    ingredientList: JSONresult.hits[i].recipe.ingredientLines,
-                                                    totalTime: JSONresult.hits[i].recipe.totalTime,
-                                                    mealType: JSONresult.hits[i].recipe.mealType,
-                                                    dishType: JSONresult.hits[i].recipe.dishType))
+            completionHandler(.success(recipeList))
         }
     }
 
-    func getImage(url: String, completionHandler: @escaping (Bool, Data?) -> ()) -> () {
-        let imageUrl = URL(string: url)
-    
+    private func addRecipeOnArrayList(numberOfRecipe: Int, JSONresult: RecipeListResult) -> RecipeList {
+        var recipeList = RecipeList(list: [])
+        let recipes = JSONresult.hits.map { $0.toRecipe() }
+        recipeList.list.append(contentsOf: recipes)
+        return recipeList
+        
+//         3 last lines equivalent to:
+//        for hit in JSONresult.hits {
+//            recipeList.list.append(hit.toRecipe())
+//        }
+//        return recipeList
+    }
+
+    func getImage(url: String, completionHandler: @escaping (Result<Data, ErrorType>) -> ()) {
         AF.request(url).responseData { (response) in
             guard response.error == nil else {
-                completionHandler(false, nil)
+                completionHandler(.failure(.downloadFailed))
                 return
             }
 
             guard let image = response.data else {
-                completionHandler(false, nil)
+                completionHandler(.failure(.noData))
                 return
             }
 
-            completionHandler(true, image)
+            completionHandler(.success(image))
         }
     }
 }

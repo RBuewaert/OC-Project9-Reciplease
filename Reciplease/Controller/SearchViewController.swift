@@ -24,14 +24,14 @@ class SearchViewController: UIViewController {
     }
 
     @IBAction func tappedAddButton(_ sender: Any) {
-        guard textField.text != nil else { return }
+        guard let textTapped = textField.text else { return }
 
         var ingredientsList = [String]()
 
         if ((textField.text?.contains(",")) != nil) {
-            ingredientsList = (textField.text?.components(separatedBy: ","))!
+            ingredientsList = textTapped.components(separatedBy: ",")
         } else {
-            ingredientsList = [textField.text!]
+            ingredientsList = [textTapped]
         }
 
         for ingredient in ingredientsList {
@@ -54,9 +54,8 @@ class SearchViewController: UIViewController {
         }
     }
 
-    private func extractIngredients() -> String {
-        var ingredientsList = [String]()
-        ingredientsList = (ingredientTextView.text?.components(separatedBy: "- "))!
+    private func extractIngredients() -> String? {
+        guard let ingredientsList = ingredientTextView.text?.components(separatedBy: "- ") else { return nil }
         print(ingredientsList)
 
         var ingredients = ""
@@ -82,7 +81,8 @@ class SearchViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToListTableView" {
             let vc = segue.destination as! ListTableViewController
-            vc.ingredients = extractIngredients()
+            guard let extractedIngredients = extractIngredients() else { return }
+            vc.ingredients = extractedIngredients
         }
     }
 
