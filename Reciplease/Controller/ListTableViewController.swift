@@ -49,8 +49,9 @@ class ListTableViewController: UITableViewController {
         }
 
         let recipe = recipeList.list[indexPath.row]
+        print(recipe.totalTime)
         
-        guard let imageUrl = recipe.image else {
+        guard let imageUrl = recipe.imageUrl else {
             cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
             return cell
         }
@@ -63,7 +64,7 @@ class ListTableViewController: UITableViewController {
 //        , let imageData = imageUrl.data
 //        cell.configure(picture: imageData, title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
         
-        RecipeService.shared.getImage(url: recipe.image!) { result in
+        RecipeService.shared.getImage(url: recipe.imageUrl!) { result in
             switch result {
             case .success(let image):
                 cell.configure(picture: image, title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
@@ -184,32 +185,7 @@ class ListTableViewController: UITableViewController {
     }
     */
     
-    /*
-    https://api.edamam.com/api/recipes/v2?
-        type=public&q=chicken, rabbit
-     &app_id=06863309&app_key=2b6469119d2a85f1ca18276aae53b131
     
-    https://api.edamam.com/api/recipes/v2?
-    q=chicken%2C%20rabbit
-     &app_key=2b6469119d2a85f1ca18276aae53b131
-     &_cont=CHcVQBtNNQphDmgVQ3tAEX4BZ1VtBQMOQGFGBWUaZV10AREbUWBEUDYQMVQlUgAOQW1DCjQRN1F2DABRRjNFBmATMgdyFm4bUTMCXD8BaVdzGBFEEjMVcDNPPBcqUUBlEjsXVnAZKBg-
-     &type=public
-     &app_id=06863309
-     
-     https://api.edamam.com/api/recipes/v2?
-     q=chicken%2C%20rabbit
-     &app_key=2b6469119d2a85f1ca18276aae53b131
-     &_cont=CHcVQBtNNQphDmgVQ3tAEX4BZ1VtBQMOQGFGBWUaZV10AREbUWBEUDYQMVQlUgAOQW1DCjQRN1F2DABRRjNFBmATMgdyFm4bUTMCXD8BaVFzGBFEEjMVcDNPPBcqUUBlEjsXVnAZKBg-
-     &type=public
-     &app_id=06863309
- */
-    
-    /*
-    let titi = "https://api.edamam.com/api/recipes/v2?q=chicken%2C%20rabbit&app_key=2b6469119d2a85f1ca18276aae53b131&_cont=CHcVQBtNNQphDmgVQ3tAEX4BZ1VtBQMOQGFGBWUaZV10AREbUWBEUDYQMVQlUgAOQW1DCjQRN1F2DABRRjNFBmATMgdyFm4bUTMCXD8BaVdzGBFEEjMVcDNPPBcqUUBlEjsXVnAZKBg-&type=public&app_id=06863309"
-    let toto = "https://api.edamam.com/api/recipes/v2?q=chicken%2C%20rabbit&app_key=2b6469119d2a85f1ca18276aae53b131&_cont=CHcVQBtNNQphDmgVQ3tAEX4BZ1VtBQMOQGFGBWUaZV10AREbUWBEUDYQMVQlUgAOQW1DCjQRN1F2DABRRjNFBmATMgdyFm4bUTMCXD8BaVFzGBFEEjMVcDNPPBcqUUBlEjsXVnAZKBg-&type=public&app_id=06863309"
-    
-   */
-
 }
 
 

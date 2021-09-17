@@ -8,6 +8,7 @@
 import UIKit
 
 class SearchViewController: UIViewController {
+    // MARK: - Properties
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var ingredientTextView: UITextView!
     @IBOutlet weak var addButton: UIButton!
@@ -23,6 +24,7 @@ class SearchViewController: UIViewController {
         searchButton.layer.cornerRadius = 5
     }
 
+    // MARK: - Methods
     @IBAction func tappedAddButton(_ sender: Any) {
         guard let textTapped = textField.text else { return }
 
@@ -69,10 +71,13 @@ class SearchViewController: UIViewController {
         ingredients.removeFirst(2)
         return ingredients
     }
+    
+}
 
+// MARK: - Navigation
+extension SearchViewController {
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         guard ingredientTextView.text != nil && ingredientTextView.text != "" else {
-//            presentAlert()
             return false
         }
         return true
@@ -85,7 +90,10 @@ class SearchViewController: UIViewController {
             vc.ingredients = extractedIngredients
         }
     }
+}
 
+// MARK: - UIAlertController
+extension SearchViewController {
     private func presentAlert(){
         let alertVC = UIAlertController(title: "Error", message: "Add ingredients before launch your research", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -104,23 +112,5 @@ extension SearchViewController: UITextFieldDelegate {
     @IBAction func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         textField.resignFirstResponder()
     }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
-
-// MARK: - Navigation
-extension SearchViewController {
-    
-    
-}

@@ -16,7 +16,7 @@ class RecipeViewController: UIViewController {
     @IBOutlet weak var timeLabel: UILabel!
 
     var selectedRecipe: Recipe?
-    var selectedRecipeImage =  UIImage()
+    var selectedRecipeImage = UIImage()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +37,8 @@ class RecipeViewController: UIViewController {
     }
     
     @IBAction func tappedGetDirectionsButton(_ sender: Any) {
+        guard let currentUrl = selectedRecipe?.url else { return }
+        print(currentUrl)
     }
 
     private func updateView() {

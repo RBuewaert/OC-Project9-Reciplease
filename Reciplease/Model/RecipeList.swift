@@ -14,7 +14,7 @@ struct RecipeList {
 
 struct Recipe {
     let title: String
-    let image: String?
+    let imageUrl: String?
     let url: String
     let yield: Double
     let cautions: [String]
@@ -54,7 +54,7 @@ struct RecipeListResultHits: Codable {
 extension RecipeListResultHits {
     func toRecipe() -> Recipe {
         return Recipe(title: recipe.label,
-               image: recipe.image,
+               imageUrl: recipe.image,
                url: recipe.url,
                yield: recipe.yield,
                cautions: recipe.cautions,
