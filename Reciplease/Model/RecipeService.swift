@@ -13,55 +13,107 @@ final class RecipeService {
     static var shared = RecipeService()
 
     private static let url = "https://api.edamam.com/api/recipes/v2?"
+    static var urlNextPage = ""
     
-    func getRecipe(ingredients: String, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
+    func getFirstRecipe(ingredients: String, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
         let parameters = ["type": "public", "q": ingredients, "app_id": APIKey.id, "app_key": APIKey.key]
 
         AF.request(RecipeService.url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil, interceptor: nil, requestModifier: nil).responseDecodable(of: RecipeListResult.self) { response in
+            
+            self.getRecipe(response: response, completionHandler: completionHandler)
+            
 
-            guard response.error == nil else {
-                return completionHandler(.failure(.downloadFailed))
-            }
-
-            guard let data = response.data else {
-                return completionHandler(.failure(.noData))
-            }
-            
-            var recipeList = RecipeList(list: [])
-            do {
-                let JSONresult = try JSONDecoder().decode(RecipeListResult.self, from: data)
-                guard JSONresult.count > 0 else {
-                    return completionHandler(.failure(.noResult))
-                }
-                recipeList = self.addRecipeOnArrayList(numberOfRecipe: JSONresult.to, JSONresult: JSONresult)
-            } catch {
-                print(error)
-                return completionHandler(.failure(.extractValues))
-            }
-            
-            
-             // PB AVEC BEAUCOUP DE PAGES ET LIMITATION UTILISATION PAR MINUTE
-//            while JSONresult.links != nil {
-//
-//
-//                AF.request(JSONresult.links!.next.href).responseDecodable(of: RecipeListResult.self) { response in
-//                    guard let data = response.data else {
-//                        self.callback(nil, false, "The download failed")
-//                        return
-//                    }
-//                    guard let JSONresult = try? JSONDecoder().decode(RecipeListResult.self, from: response.data!) else {
-//                        self.callback(nil, nil, "")
-//                        return
-//                    }
-//                    addRecipeOnArrayList(numberOfRecipe: JSONresult.to, JSONresult: JSONresult)
-//                    print("RECIPE LIST \(RecipeService.recipeList.list.count)")
-//                }
+//            guard response.error == nil else {
+//                return completionHandler(.failure(.downloadFailed))
 //            }
-//            print("RECIPE LIST \(RecipeService.recipeList.list.count)")
-            
-            
-            completionHandler(.success(recipeList))
+//
+//            guard let data = response.data else {
+//                return completionHandler(.failure(.noData))
+//            }
+//
+//            var recipeList = RecipeList(list: [])
+//            do {
+//                let JSONresult = try JSONDecoder().decode(RecipeListResult.self, from: data)
+//                guard JSONresult.count > 0 else {
+//                    return completionHandler(.failure(.noResult))
+//                }
+//                recipeList = self.addRecipeOnArrayList(numberOfRecipe: JSONresult.to, JSONresult: JSONresult)
+//                if let urlNextPage = JSONresult.links.next?.href {
+//                    RecipeService.urlNextPage = urlNextPage
+//                } else {
+//                    RecipeService.urlNextPage = ""
+//                }
+//            } catch {
+//                print(error)
+//                return completionHandler(.failure(.extractValues))
+//            }
+//
+//            completionHandler(.success(recipeList))
         }
+    }
+    
+    func getOtherRecipe(url: String, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
+        AF.request(url).responseDecodable(of: RecipeListResult.self) { response in
+            
+            self.getRecipe(response: response, completionHandler: completionHandler)
+            
+//            guard response.error == nil else {
+//                return completionHandler(.failure(.downloadFailed))
+//            }
+//
+//            guard let data = response.data else {
+//                return completionHandler(.failure(.noData))
+//            }
+//
+//            var recipeList = RecipeList(list: [])
+//            do {
+//                let JSONresult = try JSONDecoder().decode(RecipeListResult.self, from: data)
+//                guard JSONresult.count > 0 else {
+//                    return completionHandler(.failure(.noResult))
+//                }
+//                recipeList = self.addRecipeOnArrayList(numberOfRecipe: JSONresult.to, JSONresult: JSONresult)
+//                if let urlNextPage = JSONresult.links.next?.href {
+//                    RecipeService.urlNextPage = urlNextPage
+//                } else {
+//                    RecipeService.urlNextPage = ""
+//                }
+//            } catch {
+//                print(error)
+//                return completionHandler(.failure(.extractValues))
+//            }
+//
+//            completionHandler(.success(recipeList))
+        }
+    }
+
+    private func getRecipe(response: DataResponse<RecipeListResult, AFError>, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
+        guard response.error == nil else {
+            return completionHandler(.failure(.downloadFailed))
+        }
+
+        guard let data = response.data else {
+            return completionHandler(.failure(.noData))
+        }
+        
+        var recipeList = RecipeList(list: [])
+        do {
+            let JSONresult = try JSONDecoder().decode(RecipeListResult.self, from: data)
+            guard JSONresult.count > 0 else {
+                return completionHandler(.failure(.noResult))
+            }
+            recipeList = self.addRecipeOnArrayList(numberOfRecipe: JSONresult.to, JSONresult: JSONresult)
+            if let urlNextPage = JSONresult.links.next?.href {
+                RecipeService.urlNextPage = urlNextPage
+            } else {
+                RecipeService.urlNextPage = ""
+            }
+        } catch {
+            print(error)
+            return completionHandler(.failure(.extractValues))
+        }
+        
+        completionHandler(.success(recipeList))
+        
     }
 
     private func addRecipeOnArrayList(numberOfRecipe: Int, JSONresult: RecipeListResult) -> RecipeList {

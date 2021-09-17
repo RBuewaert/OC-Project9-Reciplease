@@ -10,12 +10,13 @@ import UIKit
 class ListTableViewController: UITableViewController {
     var ingredients = ""
     var recipeList = RecipeList(list: [])
+    var findMoreRecipe = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 200
 
-        RecipeService.shared.getRecipe(ingredients: ingredients) { result in
+        RecipeService.shared.getFirstRecipe(ingredients: ingredients) { result in
             switch result {
             case .success(let recipeList):
                 self.recipeList = recipeList
@@ -50,24 +51,24 @@ class ListTableViewController: UITableViewController {
         let recipe = recipeList.list[indexPath.row]
         
         guard let imageUrl = recipe.image else {
-            guard let imageData = UIImage(named: "tableSetFlag")?.pngData() else { return UITableViewCell() }
-            cell.configure(picture: imageData, title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+            cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
             return cell
         }
         
         guard imageUrl.hasSuffix(".jpg") || imageUrl.hasSuffix(".png") else {
-            guard let imageData = UIImage(named: "tableSetFlag")?.pngData() else { return UITableViewCell() }
-            cell.configure(picture: imageData, title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+            cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
             return cell
         }
+        
+//        , let imageData = imageUrl.data
+//        cell.configure(picture: imageData, title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
         
         RecipeService.shared.getImage(url: recipe.image!) { result in
             switch result {
             case .success(let image):
                 cell.configure(picture: image, title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
             case .failure(_):
-                guard let imageData = UIImage(named: "tableSetFlag")?.pngData() else { return }
-                cell.configure(picture: imageData, title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+                cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
             }
         }
         return cell
@@ -77,10 +78,54 @@ class ListTableViewController: UITableViewController {
         if let vc = storyboard?.instantiateViewController(identifier: "Recipe") as? RecipeViewController {
             vc.selectedRecipe = recipeList.list[indexPath.row]
             
-            let currentCell = tableView.cellForRow(at: indexPath)
-//            vc.selectedRecipeImage =
-            
+            guard let currentCell = tableView.cellForRow(at: indexPath) as? RecipeTableViewCell else { return }
+            guard let currentImage = currentCell.recipeImageView.image else { return }
+            vc.selectedRecipeImage = currentImage
+
             navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let positionY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+
+        if positionY > contentHeight - scrollView.frame.height * 2, RecipeService.urlNextPage != "" {
+            if !findMoreRecipe {
+                loadMoreRecipe()
+            }
+        }
+    }
+
+    private func createFooterActivityIndicator() -> UIView {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.center = footerView.center
+        footerView.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        
+        return footerView
+    }
+
+    private func loadMoreRecipe() {
+        findMoreRecipe = true
+        self.tableView.tableFooterView = createFooterActivityIndicator()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            RecipeService.shared.getOtherRecipe(url: RecipeService.urlNextPage) { result in
+                self.tableView.tableFooterView = nil
+                switch result {
+                case .success(let nextRecipeList):
+                    for recipe in nextRecipeList.list {
+                        self.recipeList.list.append(recipe)
+                    }
+                    self.findMoreRecipe = false
+                    self.tableView.reloadData()
+                    print(self.recipeList.list.count)
+                case .failure(let error):
+                    self.alertErrorMessage(message: error.rawValue)
+                }
+            }
         }
     }
 
@@ -165,4 +210,22 @@ class ListTableViewController: UITableViewController {
     
    */
 
+}
+
+
+
+extension String {
+    var data: Data? {
+        guard let url = URL(string: self) else { return nil }
+        guard let data = try? Data(contentsOf: url) else { return nil }
+        return data
+    }
+}
+
+
+class ioti {
+    func tut() {
+        var adv = "nonjour"
+        adv.data
+    }
 }

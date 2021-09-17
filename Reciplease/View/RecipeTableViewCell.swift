@@ -11,6 +11,7 @@ class RecipeTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ingredientsLabel: UILabel!
     @IBOutlet weak var littleView: UIView!
+    @IBOutlet weak var bottomLabelsView: UIView!
     @IBOutlet weak var noteLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var recipeImageView: UIImageView!
@@ -24,7 +25,20 @@ class RecipeTableViewCell: UITableViewCell {
 
     func configure(picture: Data, title: String, ingredients: [String], note: Double, time: Double) {
         recipeImageView.image = UIImage(data: picture)
-//        imageView?.image = UIImage(data: picture)
+        titleLabel.text = title
+        ingredientsLabel.text = ingredients[0]
+        noteLabel.text = "\(note)"
+        
+        if time > 0 {
+            timeLabel.text = "\(time) min"
+        } else {
+            timeLabel.text = ""
+        }
+    }
+
+    func configureWithDefaultImage(title: String, ingredients: [String], note: Double, time: Double) {
+        guard let imageData = UIImage(named: "tableSetFlag")?.pngData() else { return }
+        recipeImageView.image = UIImage(data: imageData)
         titleLabel.text = title
         ingredientsLabel.text = ingredients[0]
         noteLabel.text = "\(note)"

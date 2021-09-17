@@ -16,32 +16,60 @@ class RecipeViewController: UIViewController {
     @IBOutlet weak var timeLabel: UILabel!
 
     var selectedRecipe: Recipe?
-    var selectedRecipeImage: UIImage?
+    var selectedRecipeImage =  UIImage()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+
+        
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"), style: .plain, target: self, action: #selector(removeFavorite))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(addToFavorite))
+
+        
         littleView.layer.cornerRadius = 5
         littleView.layer.borderWidth = 1
         littleView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
+        updateView()
 
-        if let recipeToLoad = selectedRecipe {
-            print(recipeToLoad)
-            updateView()
-        }
     }
     
     @IBAction func tappedGetDirectionsButton(_ sender: Any) {
     }
 
     private func updateView() {
-        titleLabel.text = selectedRecipe?.title
+        guard let recipeToLoad = selectedRecipe else { return }
+        titleLabel.text = recipeToLoad.title
         
-//        noteLabel.text = selectedRecipe?.yield
-//        timeLabel.text = selectedRecipe?.totalTime
-
+        for ingredient in recipeToLoad.ingredientList {
+            ingredientsTextView.text.append("- \(ingredient) \n")
+        }
+        
+        noteLabel.text = "\(recipeToLoad.yield)"
+        
+        if recipeToLoad.totalTime > 0 {
+            timeLabel.text = "\(recipeToLoad.totalTime) min"
+        } else {
+            timeLabel.text = ""
+        }
+        
+        recipeImageView.image = selectedRecipeImage
     }
+    
+    @objc private func addToFavorite() {
+        
+    }
+    
+    @objc private func removeFavorite() {
+        
+    }
+    
+    
+    
+    
+    
     
     /*
     // MARK: - Navigation
