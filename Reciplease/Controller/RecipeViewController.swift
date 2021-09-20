@@ -58,6 +58,38 @@ class RecipeViewController: UIViewController {
     }
     
     @objc private func addToFavorite() {
+        guard let currentRecipe = selectedRecipe else { return }
+        
+        let recipeToSave = RecipeSaved(context: AppDelegate.viewContext)
+        recipeToSave.title = currentRecipe.title
+        recipeToSave.imageUrl = currentRecipe.imageUrl
+        recipeToSave.url = currentRecipe.url
+        
+        recipeToSave.totalTime = recipeToSave.totalTime
+        
+        
+        guard let personName = peopleTextField.text,
+            var people = peopleTextView.text else {
+                return
+        }
+
+        people += personName + "\n"
+        peopleTextView.text = people
+        peopleTextField.text = ""
+
+        savePerson(named: personName)
+        
+        
+        let person = Person(context: AppDelegate.viewContext)
+        person.name = name
+
+        //        try? AppDelegate.viewContext.save()
+
+        do {
+            try AppDelegate.viewContext.save()
+        } catch {
+            alertErrorMessage()
+        }
         
     }
     

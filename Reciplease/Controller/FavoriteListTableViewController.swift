@@ -12,6 +12,7 @@ class FavoriteListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.rowHeight = 200
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -24,23 +25,53 @@ class FavoriteListTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return recipeList.list.count
     }
-
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath) as? RecipeTableViewCell else {
+            return UITableViewCell()
+        }
 
-        // Configure the cell...
-
+        let recipe = recipeList.list[indexPath.row]
+        
+        guard let imageUrl = recipe.imageUrl else {
+            cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+            return cell
+        }
+        
+        guard imageUrl.hasSuffix(".jpg") || imageUrl.hasSuffix(".png") else {
+            cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+            return cell
+        }
+                
+        RecipeService.shared.getImage(url: recipe.imageUrl!) { result in
+            switch result {
+            case .success(let image):
+                cell.configure(picture: image, title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+            case .failure(_):
+                cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+            }
+        }
         return cell
     }
-    */
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let vc = storyboard?.instantiateViewController(identifier: "Recipe") as? RecipeViewController {
+            vc.selectedRecipe = recipeList.list[indexPath.row]
+            
+            guard let currentCell = tableView.cellForRow(at: indexPath) as? RecipeTableViewCell else { return }
+            guard let currentImage = currentCell.recipeImageView.image else { return }
+            vc.selectedRecipeImage = currentImage
+
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.
