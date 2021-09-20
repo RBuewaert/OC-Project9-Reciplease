@@ -44,10 +44,7 @@ class RecipeViewController: UIViewController {
     private func updateView() {
         guard let recipeToLoad = selectedRecipe else { return }
         titleLabel.text = recipeToLoad.title
-        
-        for ingredient in recipeToLoad.ingredientList {
-            ingredientsTextView.text.append("- \(ingredient) \n")
-        }
+        ingredientsTextView.text = recipeToLoad.ingredientList
         
         noteLabel.text = "\(recipeToLoad.yield)"
         

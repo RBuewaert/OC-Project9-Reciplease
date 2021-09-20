@@ -17,10 +17,10 @@ struct Recipe {
     let imageUrl: String?
     let url: String
     let yield: Double
-    let cautions: [String]
-    let ingredientList : [String]
+//    let cautions: [String]
+    let ingredientList : String
     let totalTime: Double
-    let mealType: [String]
+//    let mealType: [String]
     let dishType: [String]
 }
 
@@ -57,11 +57,20 @@ extension RecipeListResultHits {
                imageUrl: recipe.image,
                url: recipe.url,
                yield: recipe.yield,
-               cautions: recipe.cautions,
-               ingredientList: recipe.ingredientLines,
+//               cautions: recipe.cautions,
+               ingredientList: addIngredientList(),
                totalTime: recipe.totalTime,
-               mealType: recipe.mealType,
+//               mealType: recipe.mealType,
                dishType: recipe.dishType)
+    }
+
+    private func addIngredientList() -> String {
+        var ingredientlist = ""
+        for ingredient in recipe.ingredientLines {
+            ingredientlist.append("- \(ingredient) \n")
+        }
+        ingredientlist.removeLast(2)
+        return ingredientlist
     }
 }
 
@@ -70,10 +79,10 @@ struct RecipeListResultRecipe: Codable {
     let image: String?
     let url: String
     let yield: Double
-    let cautions: [String]
+//    let cautions: [String]
     let ingredientLines : [String]
     let totalTime: Double
-    let mealType: [String]
+//    let mealType: [String]
     let dishType: [String]
 }
 

@@ -23,10 +23,10 @@ class RecipeTableViewCell: UITableViewCell {
         littleView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
 
-    func configure(picture: Data, title: String, ingredients: [String], note: Double, time: Double) {
+    func configure(picture: Data, title: String, ingredients: String, note: Double, time: Double) {
         recipeImageView.image = UIImage(data: picture)
         titleLabel.text = title
-        ingredientsLabel.text = ingredients[0]
+        ingredientsLabel.text = ingredients
         noteLabel.text = "\(note)"
         
         if time > 0 {
@@ -36,11 +36,11 @@ class RecipeTableViewCell: UITableViewCell {
         }
     }
 
-    func configureWithDefaultImage(title: String, ingredients: [String], note: Double, time: Double) {
+    func configureWithDefaultImage(title: String, ingredients: String, note: Double, time: Double) {
         guard let imageData = UIImage(named: "tableSetFlag")?.pngData() else { return }
         recipeImageView.image = UIImage(data: imageData)
         titleLabel.text = title
-        ingredientsLabel.text = ingredients[0]
+        ingredientsLabel.text = ingredients
         
         noteLabel.text = "\(note)"
 

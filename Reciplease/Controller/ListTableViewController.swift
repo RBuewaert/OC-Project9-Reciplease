@@ -49,7 +49,6 @@ class ListTableViewController: UITableViewController {
         }
 
         let recipe = recipeList.list[indexPath.row]
-        print(recipe.totalTime)
         
         guard let imageUrl = recipe.imageUrl else {
             cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)

@@ -58,7 +58,6 @@ class SearchViewController: UIViewController {
 
     private func extractIngredients() -> String? {
         guard let ingredientsList = ingredientTextView.text?.components(separatedBy: "- ") else { return nil }
-        print(ingredientsList)
 
         var ingredients = ""
         for ingredient in ingredientsList {
