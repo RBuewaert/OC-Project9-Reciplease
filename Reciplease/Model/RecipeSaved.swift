@@ -8,6 +8,13 @@
 import Foundation
 import CoreData
 
-//class RecipeSaved: NSManagedObject {
-//
-//}
+class RecipeSaved: NSManagedObject {
+    public var wrappedTitle: String {
+        title ?? "Unknown Title"
+    }
+
+    public var wrappedImageUrl: String {
+        imageUrl ?? "Unknown Title"
+    }
+
+}
