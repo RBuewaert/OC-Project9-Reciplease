@@ -8,6 +8,6 @@
 import Foundation
 import CoreData
 
-class RecipeSaved: NSManagedObject {
-
-}
+//class RecipeSaved: NSManagedObject {
+//
+//}

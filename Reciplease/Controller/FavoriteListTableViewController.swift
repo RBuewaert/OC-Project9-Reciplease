@@ -42,7 +42,6 @@ class FavoriteListTableViewController: UITableViewController {
 
         let recipe = recipesList[indexPath.row]
         
-
         guard let imageUrl = recipe.imageUrl else {
             cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
             return cell
