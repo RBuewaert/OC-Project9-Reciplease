@@ -9,37 +9,40 @@ import UIKit
 
 class FavoriteListTableViewController: UITableViewController {
     var recipeList = RecipeList(list: [])
+    var dishTypeList = DishType.all
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 200
+    }
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        dishTypeList = DishType.all
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+        return dishTypeList.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return recipeList.list.count
+        guard let numberOfRows = dishTypeList[section].recipes?.count else { return 1 }
+        return numberOfRows
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath) as? RecipeTableViewCell else {
             return UITableViewCell()
         }
-
-        let recipe = recipeList.list[indexPath.row]
         
+        guard let recipesList = dishTypeList[indexPath.section].recipes?.sortedArray(using: [NSSortDescriptor(key: "recipe.title", ascending: true)]) as? [RecipeSaved] else { return UITableViewCell() }
+
+        let recipe = recipesList[indexPath.row]
+        
+
         guard let imageUrl = recipe.imageUrl else {
             cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
             return cell
@@ -53,7 +56,7 @@ class FavoriteListTableViewController: UITableViewController {
         RecipeService.shared.getImage(url: recipe.imageUrl!) { result in
             switch result {
             case .success(let image):
-                cell.configure(picture: image, title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+                cell.configure(imageData: image, title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
             case .failure(_):
                 cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
             }

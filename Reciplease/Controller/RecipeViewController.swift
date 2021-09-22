@@ -59,39 +59,48 @@ class RecipeViewController: UIViewController {
     
     @objc private func addToFavorite() {
         guard let currentRecipe = selectedRecipe else { return }
-        
+
         let recipeToSave = RecipeSaved(context: AppDelegate.viewContext)
         recipeToSave.title = currentRecipe.title
         recipeToSave.imageUrl = currentRecipe.imageUrl
         recipeToSave.url = currentRecipe.url
-        
-        recipeToSave.totalTime = recipeToSave.totalTime
-        
-        
-        guard let personName = peopleTextField.text,
-            var people = peopleTextView.text else {
-                return
-        }
+        recipeToSave.ingredientList = currentRecipe.ingredientList
+        recipeToSave.totalTime = currentRecipe.totalTime
 
-        people += personName + "\n"
-        peopleTextView.text = people
-        peopleTextField.text = ""
+        print("dishType reçu: \(currentRecipe.dishType)")
 
-        savePerson(named: personName)
+        for dishType in currentRecipe.dishType {
+            let dishTypeToSave = DishType(context: AppDelegate.viewContext)
+            dishTypeToSave.type = dishType
+            recipeToSave.addToDishTypes(dishTypeToSave)
+            }
+
+        print("dishType sauvegardé: \(recipeToSave.dishTypes?.allObjects)")
         
-        
-        let person = Person(context: AppDelegate.viewContext)
-        person.name = name
-
-        //        try? AppDelegate.viewContext.save()
-
         do {
             try AppDelegate.viewContext.save()
         } catch {
             alertErrorMessage()
         }
-        
     }
+
+    private func alertErrorMessage() {
+        let alertVC = UIAlertController(title: "Error!", message: "Favorite not saved!",
+                                        preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        self.present(alertVC, animated: true, completion: nil)
+    }
+
+//    private func addDishTypes(recipe: Recipe) -> String {
+//        let dishTypeToSave = DishType(context: AppDelegate.viewContext)
+//
+//        var dishTypes = ""
+//        for dishType in recipe.dishType {
+//            dishTypes.append("\(dishType), ")
+//        }
+//        dishTypes.removeLast(2)
+//        return dishTypes
+//    }
     
     @objc private func removeFavorite() {
         

@@ -25,12 +25,6 @@ class ListTableViewController: UITableViewController {
                 self.alertErrorMessage(message: error.rawValue)
             }
         }
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     // MARK: - Table view data source
@@ -54,19 +48,16 @@ class ListTableViewController: UITableViewController {
             cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
             return cell
         }
-        
+                
         guard imageUrl.hasSuffix(".jpg") || imageUrl.hasSuffix(".png") else {
             cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
             return cell
         }
-        
-//        , let imageData = imageUrl.data
-//        cell.configure(picture: imageData, title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
-        
+
         RecipeService.shared.getImage(url: recipe.imageUrl!) { result in
             switch result {
             case .success(let image):
-                cell.configure(picture: image, title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+                cell.configure(imageData: image, title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
             case .failure(_):
                 cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
             }
@@ -188,19 +179,16 @@ class ListTableViewController: UITableViewController {
 }
 
 
-
-extension String {
-    var data: Data? {
-        guard let url = URL(string: self) else { return nil }
-        guard let data = try? Data(contentsOf: url) else { return nil }
-        return data
-    }
-}
-
-
-class ioti {
-    func tut() {
-        var adv = "nonjour"
-        adv.data
+extension UIImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
     }
 }

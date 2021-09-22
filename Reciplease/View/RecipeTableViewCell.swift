@@ -23,8 +23,8 @@ class RecipeTableViewCell: UITableViewCell {
         littleView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
 
-    func configure(picture: Data, title: String, ingredients: String, note: Double, time: Double) {
-        recipeImageView.image = UIImage(data: picture)
+    func configure(imageData: Data, title: String, ingredients: String, note: Double, time: Double) {
+        recipeImageView.image = UIImage(data: imageData)
         titleLabel.text = title
         ingredientsLabel.text = ingredients
         noteLabel.text = "\(note)"

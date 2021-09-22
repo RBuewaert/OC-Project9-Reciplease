@@ -9,5 +9,15 @@ import Foundation
 import CoreData
 
 class DishType: NSManagedObject {
-
+    static var all: [DishType] {
+        let request: NSFetchRequest<DishType> = DishType.fetchRequest()
+        request.sortDescriptors = [
+            NSSortDescriptor(key: "type", ascending: true),
+            NSSortDescriptor(key: "type.recipes", ascending: true)
+        ]
+        guard let dishTypes = try? AppDelegate.viewContext.fetch(request) else {
+            return []
+        }
+        return dishTypes
+    }
 }
