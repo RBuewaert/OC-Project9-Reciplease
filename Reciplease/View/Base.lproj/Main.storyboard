@@ -30,7 +30,7 @@
             </objects>
             <point key="canvasLocation" x="-674" y="216"/>
         </scene>
-        <!--Item-->
+        <!--Favorite-->
         <scene sceneID="zoM-LS-3i2">
             <objects>
                 <tableViewController id="T0p-qA-Iyz" customClass="FavoriteListTableViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
@@ -38,6 +38,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.2117646933" green="0.20000001789999999" blue="0.19215688110000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RecipeCell" rowHeight="100" id="gcd-Rl-9QM" customClass="RecipeTableViewCell" customModule="Reciplease" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="100"/>
@@ -134,7 +135,7 @@
                             <outlet property="delegate" destination="T0p-qA-Iyz" id="tLC-sG-fQW"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Item" id="znH-Ww-wjn"/>
+                    <tabBarItem key="tabBarItem" title="Favorite" id="znH-Ww-wjn"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pk0-U4-5dW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -332,7 +333,7 @@
             </objects>
             <point key="canvasLocation" x="918.84057971014499" y="-139.28571428571428"/>
         </scene>
-        <!--List Table View Controller-->
+        <!--Search-->
         <scene sceneID="n9F-zW-6BV">
             <objects>
                 <tableViewController id="jmw-Kn-7UN" customClass="ListTableViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
@@ -436,13 +437,15 @@
                             <outlet property="delegate" destination="jmw-Kn-7UN" id="1yu-OL-U4j"/>
                         </connections>
                     </tableView>
+                    <tabBarItem key="tabBarItem" title="Search" id="rZz-AT-JqH"/>
                     <navigationItem key="navigationItem" id="RFL-Xi-bnO"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gni-HT-9FE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2047.826086956522" y="-139.28571428571428"/>
         </scene>
-        <!--Recipe View Controller-->
+        <!--Search-->
         <scene sceneID="xrd-48-ryv">
             <objects>
                 <viewController storyboardIdentifier="Recipe" id="bEw-7H-ktu" customClass="RecipeViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
@@ -457,9 +460,9 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bgu-L1-mhI">
-                                        <rect key="frame" x="0.0" y="329" width="414" height="21"/>
+                                        <rect key="frame" x="0.0" y="321" width="414" height="29"/>
                                         <color key="backgroundColor" red="0.2117646933" green="0.20000001789999999" blue="0.19215688110000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -508,14 +511,14 @@
                                 </constraints>
                             </view>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="f7C-Cn-oTl">
-                                <rect key="frame" x="15" y="400" width="384" height="369"/>
+                                <rect key="frame" x="15" y="400" width="384" height="320"/>
                                 <color key="backgroundColor" red="0.2117646933" green="0.20000001789999999" blue="0.19215688110000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lzY-Ms-Bii">
-                                <rect key="frame" x="20" y="789" width="374" height="48"/>
+                                <rect key="frame" x="20" y="740" width="374" height="48"/>
                                 <color key="backgroundColor" red="0.2588235438" green="0.52941179279999995" blue="0.34901961679999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Get directions">
@@ -553,7 +556,9 @@
                             <constraint firstItem="fVQ-U3-KZy" firstAttribute="trailing" secondItem="Y3K-OF-yaw" secondAttribute="trailing" constant="15" id="zbz-pS-bJL"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Search" id="jig-cH-bjw"/>
                     <navigationItem key="navigationItem" id="jDE-qk-Uq0"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="ingredientsTextView" destination="f7C-Cn-oTl" id="KfA-Wu-7NX"/>
                         <outlet property="littleView" destination="7Nw-6H-ONn" id="enZ-MO-jU3"/>

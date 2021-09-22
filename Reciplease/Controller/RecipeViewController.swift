@@ -70,15 +70,21 @@ class RecipeViewController: UIViewController {
         print("dishType reçu: \(currentRecipe.dishType)")
 
         for dishType in currentRecipe.dishType {
-            let dishTypeToSave = DishType(context: AppDelegate.viewContext)
-            dishTypeToSave.type = dishType
-            recipeToSave.addToDishTypes(dishTypeToSave)
+            if !DishType().dishTypeIsExisting(dishType) {
+                let dishTypeToSave = DishType(context: AppDelegate.viewContext)
+                dishTypeToSave.type = dishType
+                recipeToSave.addToDishTypes(dishTypeToSave)
+            } else {
+                guard let currentDishType = DishType().returnExistingDishType(dishType) else { return }
+                recipeToSave.addToDishTypes(currentDishType)
             }
+        }
 
         print("dishType sauvegardé: \(recipeToSave.dishTypes?.allObjects)")
         
         do {
             try AppDelegate.viewContext.save()
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"), style: .plain, target: self, action: #selector(removeFavorite))
         } catch {
             alertErrorMessage()
         }
@@ -101,14 +107,10 @@ class RecipeViewController: UIViewController {
 //        dishTypes.removeLast(2)
 //        return dishTypes
 //    }
-    
+
     @objc private func removeFavorite() {
         
     }
-    
-    
-    
-    
     
     
     /*

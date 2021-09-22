@@ -14,7 +14,14 @@ class RecipeSaved: NSManagedObject {
     }
 
     public var wrappedImageUrl: String {
-        imageUrl ?? "Unknown Title"
+        imageUrl ?? "no Url"
     }
 
+    public var wrappedIngredientList: String {
+        ingredientList ?? "No Ingredients"
+    }
+
+    public var wrappedUrl: String {
+        url ?? "No Url"
+    }
 }

@@ -14,11 +14,13 @@ class FavoriteListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 200
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         dishTypeList = DishType.all
+        print(dishTypeList)
         tableView.reloadData()
     }
 
@@ -38,29 +40,99 @@ class FavoriteListTableViewController: UITableViewController {
             return UITableViewCell()
         }
         
-        guard let recipesList = dishTypeList[indexPath.section].recipes?.sortedArray(using: [NSSortDescriptor(key: "recipe.title", ascending: true)]) as? [RecipeSaved] else { return UITableViewCell() }
-
-        let recipe = recipesList[indexPath.row]
         
+        
+        
+        // Nouveau test
+//        print("Premier Print : \(dishTypeList[indexPath.section].recipes!)")
+//        print(dishTypeList[indexPath.section].recipes?.sortedArray(using: [NSSortDescriptor(key: "recipe.title", ascending: true)]) as? [RecipeSaved] as Any)
+        
+//        guard let recipesList = dishTypeList[indexPath.section].recipes?.sortedArray(using: [NSSortDescriptor(key: "recipe.title", ascending: true)]) as? [RecipeSaved] else { return UITableViewCell() }
+//
+//
+//
+//        var RecipeListArray: [RecipeSaved] {
+//            let set = RecipeSaved as? Set<RecipeSaved> ?? []
+//            return set.sorted {
+//                $0.wrappedName < $1.wrappedName
+//            }
+//        }
+//
+//
+//
+//        public var candyArray: [Candy] {
+//            let set = candy as? Set<Candy> ?? []
+//            return set.sorted {
+//                $0.wrappedName < $1.wrappedName
+//            }
+//        }
+        
+        
+        
+//        guard let recipesList = dishTypeList[indexPath.section].recipeArray[indexPath.row] else { return UITableViewCell() }
+        
+//        guard let recipesList = dishTypeList[indexPath.section].recipeList else {  return UITableViewCell() }
+
+        let recipe = dishTypeList[indexPath.section].recipeArray[indexPath.row]
+        
+        
+        
+//        let recipe = recipesList[indexPath.row]
+        
+        
+        
+        
+        
+        
+//        // Premier TEST OLD
+//        guard let recipesList = dishTypeList[indexPath.section].recipes else { return UITableViewCell() }
+//
+//        let recipe = recipesList[indexPath.row]
+//
+        
+        
+        
+        
+        // Suite OK
         guard let imageUrl = recipe.imageUrl else {
-            cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+            cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientList, note: recipe.note, time: recipe.totalTime)
             return cell
         }
-        
+
         guard imageUrl.hasSuffix(".jpg") || imageUrl.hasSuffix(".png") else {
-            cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+            cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientList, note: recipe.note, time: recipe.totalTime)
             return cell
         }
                 
         RecipeService.shared.getImage(url: recipe.imageUrl!) { result in
             switch result {
             case .success(let image):
-                cell.configure(imageData: image, title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+                cell.configure(imageData: image, title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientList, note: recipe.note, time: recipe.totalTime)
             case .failure(_):
-                cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+                cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientList, note: recipe.note, time: recipe.totalTime)
             }
         }
         return cell
+    }
+
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let myLabel = UILabel()
+        myLabel.frame = CGRect(x: 20, y: 8, width: 320, height: 20)
+        myLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        myLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        myLabel.textAlignment = .center
+        myLabel.numberOfLines = 0
+        myLabel.text = self.tableView(tableView, titleForHeaderInSection: section)
+
+        let headerView = UIView()
+        headerView.addSubview(myLabel)
+
+        return headerView
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let titleSection = dishTypeList[section].type else { return nil}
+        return titleSection
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

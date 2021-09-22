@@ -32,51 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    private func preloadData() {
-        let userDefaults = UserDefaults.standard
-        let defaultValues = ["firstRun" : true]
-        userDefaults.register(defaults: defaultValues)
-
-        if userDefaults.bool(forKey: "firstRun") {
-            
-            let defaultDishType = ["Biscuits and cookies", "Bread", "Cereals", "Condiments and sauces", "Desserts", "Drinks", "Main course", "Pancake", "Preps", "Preserve", "Salad", "Sandwiches", "Side dish", "Soup", "Starter", "Sweets"]
-            let entity = NSEntityDescription.entity(forEntityName: "DishType", in: AppDelegate.viewContext)!
-
-
-            
-            
-            
-            
-//            let defaultCompanies = ["Apple", "Google", "Facebook", "Tesla", "Twitter"]
-//            let entity = NSEntityDescription.entity(forEntityName: "Company", in: managedContext)!
-//
-//            for companyName in defaultCompanies {
-//                let company = NSManagedObject(entity: entity,insertInto: managedContext)
-//                company.setValue(companyName, forKey: "name") // not keyPath
-//                companies.append(company)
-//            }
-//            do {
-//                try managedContext.save()
-//                userDefaults.set(false, forKey: "firstRun")
-//            } catch let error as NSError {
-//                print("Could not save. \(error), \(error.userInfo)")
-//            }
-            
-            
-            
-            
-            
-        }
-    }
-
     // MARK: - Core Data stack
 
     lazy var persistentContainer: NSPersistentContainer = {

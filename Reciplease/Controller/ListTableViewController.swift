@@ -15,6 +15,7 @@ class ListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 200
+        
 
         RecipeService.shared.getFirstRecipe(ingredients: ingredients) { result in
             switch result {
