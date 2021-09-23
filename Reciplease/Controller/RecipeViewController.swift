@@ -15,61 +15,72 @@ class RecipeViewController: UIViewController {
     @IBOutlet weak var noteLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
 
-    var selectedRecipe: Recipe?
+    var selectedRecipe: RecipeProtocol?
     var selectedRecipeImage = UIImage()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        if verifyIfRecipeIsOnFavorite() {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"), style: .plain, target: self, action: #selector(removeFavorite))
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(addToFavorite))
+        }
 
-        
-//        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"), style: .plain, target: self, action: #selector(removeFavorite))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(addToFavorite))
-
-        
         littleView.layer.cornerRadius = 5
         littleView.layer.borderWidth = 1
         littleView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        
-        updateView()
 
+        updateView()
     }
-    
+
     @IBAction func tappedGetDirectionsButton(_ sender: Any) {
-        guard let currentUrl = selectedRecipe?.url else { return }
+        guard let currentRecipe = selectedRecipe else { return }
+        let currentUrl = currentRecipe.recipeUrl()
         print(currentUrl)
+    }
+
+    private func verifyIfRecipeIsOnFavorite() -> Bool {
+        if (selectedRecipe as? RecipeSaved) != nil {
+            return true
+        }
+        if let currentRecipe = selectedRecipe as? Recipe {
+            if DishType().recipeIsExisting(currentRecipe) {
+                return true
+            }
+        }
+        return false
     }
 
     private func updateView() {
         guard let recipeToLoad = selectedRecipe else { return }
-        titleLabel.text = recipeToLoad.title
-        ingredientsTextView.text = recipeToLoad.ingredientList
-        
-        noteLabel.text = "\(recipeToLoad.yield)"
-        
-        if recipeToLoad.totalTime > 0 {
-            timeLabel.text = "\(recipeToLoad.totalTime) min"
+        titleLabel.text = recipeToLoad.recipeTitle()
+        ingredientsTextView.text = recipeToLoad.recipeIngredientsDetailed()
+
+        noteLabel.text = "\(recipeToLoad.recipeNote())"
+
+        if recipeToLoad.recipeTime() > 0 {
+            timeLabel.text = "\(recipeToLoad.recipeTime()) min"
         } else {
             timeLabel.text = ""
         }
-        
+
         recipeImageView.image = selectedRecipeImage
     }
-    
+
     @objc private func addToFavorite() {
         guard let currentRecipe = selectedRecipe else { return }
 
         let recipeToSave = RecipeSaved(context: AppDelegate.viewContext)
-        recipeToSave.title = currentRecipe.title
-        recipeToSave.imageUrl = currentRecipe.imageUrl
-        recipeToSave.url = currentRecipe.url
-        recipeToSave.ingredientList = currentRecipe.ingredientList
-        recipeToSave.totalTime = currentRecipe.totalTime
+        recipeToSave.title = currentRecipe.recipeTitle()
+        recipeToSave.imageUrl = currentRecipe.recipeImageUrl()
+        recipeToSave.url = currentRecipe.recipeUrl()
+        recipeToSave.ingredientListDetailed = currentRecipe.recipeIngredientsDetailed()
+        recipeToSave.totalTime = currentRecipe.recipeTime()
 
-        print("dishType reçu: \(currentRecipe.dishType)")
+        print("dishType reçu: \(currentRecipe.recipeDishType())")
 
-        for dishType in currentRecipe.dishType {
+        for dishType in currentRecipe.recipeDishType() {
             if !DishType().dishTypeIsExisting(dishType) {
                 let dishTypeToSave = DishType(context: AppDelegate.viewContext)
                 dishTypeToSave.type = dishType
@@ -85,34 +96,23 @@ class RecipeViewController: UIViewController {
         do {
             try AppDelegate.viewContext.save()
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"), style: .plain, target: self, action: #selector(removeFavorite))
+            alertMessageForUser(title: "Succes!", message: "Recipe added to favorite")
         } catch {
-            alertErrorMessage()
+            alertMessageForUser(title: "Error!", message: "Favorite not saved")
         }
     }
 
-    private func alertErrorMessage() {
-        let alertVC = UIAlertController(title: "Error!", message: "Favorite not saved!",
+    @objc private func removeFavorite() {
+        
+    }
+
+    private func alertMessageForUser(title: String, message: String) {
+        let alertVC = UIAlertController(title: title, message: message,
                                         preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alertVC, animated: true, completion: nil)
     }
 
-//    private func addDishTypes(recipe: Recipe) -> String {
-//        let dishTypeToSave = DishType(context: AppDelegate.viewContext)
-//
-//        var dishTypes = ""
-//        for dishType in recipe.dishType {
-//            dishTypes.append("\(dishType), ")
-//        }
-//        dishTypes.removeLast(2)
-//        return dishTypes
-//    }
-
-    @objc private func removeFavorite() {
-        
-    }
-    
-    
     /*
     // MARK: - Navigation
 

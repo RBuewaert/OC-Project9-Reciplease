@@ -21,23 +21,32 @@ class DishType: NSManagedObject {
         return dishTypes
     }
 
-    // TEST pour array
+    public var wrappedType: String {
+        type ?? "No Type"
+    }
+
     public var recipeArray: [RecipeSaved] {
         let set = recipes as? Set<RecipeSaved> ?? []
         return set.sorted {
             $0.wrappedTitle < $1.wrappedTitle
         }
     }
-    // Fin test Array
-    
-    
-    
-    
 
     func dishTypeIsExisting(_ dishTypeToVerify: String) -> Bool {
         for dishType in DishType.all {
             if dishType.type == dishTypeToVerify {
                 return true
+            }
+        }
+        return false
+    }
+
+    func recipeIsExisting(_ recipeToVerify: Recipe) -> Bool {
+        for dishType in DishType.all {
+            for recipe in dishType.recipeArray {
+                if recipe.title == recipeToVerify.title, recipe.ingredientListDetailed == recipeToVerify.ingredientDetailed, recipe.url == recipeToVerify.url {
+                    return true
+                }
             }
         }
         return false

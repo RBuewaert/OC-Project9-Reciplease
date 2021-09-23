@@ -18,10 +18,40 @@ struct Recipe {
     let url: String
     let yield: Double
 //    let cautions: [String]
-    let ingredientList : String
+    let ingredientDetailed : String
     let totalTime: Double
 //    let mealType: [String]
     let dishType: [String]
+}
+
+extension Recipe: RecipeProtocol {
+    func recipeTitle() -> String {
+        return title
+    }
+    
+    func recipeIngredientsDetailed() -> String {
+        return ingredientDetailed
+    }
+
+    func recipeUrl() -> String {
+        return url
+    }
+    
+    func recipeImageUrl() -> String {
+        return imageUrl ?? ""
+    }
+    
+    func recipeNote() -> Double {
+        return yield
+    }
+    
+    func recipeTime() -> Double {
+        return totalTime
+    }
+
+    func recipeDishType() -> [String] {
+        return dishType
+    }
 }
 
 // MARK: - Struct result from JSO
@@ -58,13 +88,13 @@ extension RecipeListResultHits {
                url: recipe.url,
                yield: recipe.yield,
 //               cautions: recipe.cautions,
-               ingredientList: addIngredientList(),
+               ingredientDetailed: addIngredientListDetailed(),
                totalTime: recipe.totalTime,
 //               mealType: recipe.mealType,
                dishType: recipe.dishType)
     }
 
-    private func addIngredientList() -> String {
+    private func addIngredientListDetailed() -> String {
         var ingredientlist = ""
         for ingredient in recipe.ingredientLines {
             ingredientlist.append("- \(ingredient) \n")

@@ -39,77 +39,25 @@ class FavoriteListTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath) as? RecipeTableViewCell else {
             return UITableViewCell()
         }
-        
-        
-        
-        
-        // Nouveau test
-//        print("Premier Print : \(dishTypeList[indexPath.section].recipes!)")
-//        print(dishTypeList[indexPath.section].recipes?.sortedArray(using: [NSSortDescriptor(key: "recipe.title", ascending: true)]) as? [RecipeSaved] as Any)
-        
-//        guard let recipesList = dishTypeList[indexPath.section].recipes?.sortedArray(using: [NSSortDescriptor(key: "recipe.title", ascending: true)]) as? [RecipeSaved] else { return UITableViewCell() }
-//
-//
-//
-//        var RecipeListArray: [RecipeSaved] {
-//            let set = RecipeSaved as? Set<RecipeSaved> ?? []
-//            return set.sorted {
-//                $0.wrappedName < $1.wrappedName
-//            }
-//        }
-//
-//
-//
-//        public var candyArray: [Candy] {
-//            let set = candy as? Set<Candy> ?? []
-//            return set.sorted {
-//                $0.wrappedName < $1.wrappedName
-//            }
-//        }
-        
-        
-        
-//        guard let recipesList = dishTypeList[indexPath.section].recipeArray[indexPath.row] else { return UITableViewCell() }
-        
-//        guard let recipesList = dishTypeList[indexPath.section].recipeList else {  return UITableViewCell() }
 
         let recipe = dishTypeList[indexPath.section].recipeArray[indexPath.row]
-        
-        
-        
-//        let recipe = recipesList[indexPath.row]
-        
-        
-        
-        
-        
-        
-//        // Premier TEST OLD
-//        guard let recipesList = dishTypeList[indexPath.section].recipes else { return UITableViewCell() }
-//
-//        let recipe = recipesList[indexPath.row]
-//
-        
-        
-        
-        
-        // Suite OK
+
         guard let imageUrl = recipe.imageUrl else {
-            cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientList, note: recipe.note, time: recipe.totalTime)
+            cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientListDetailed, note: recipe.note, time: recipe.totalTime)
             return cell
         }
 
         guard imageUrl.hasSuffix(".jpg") || imageUrl.hasSuffix(".png") else {
-            cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientList, note: recipe.note, time: recipe.totalTime)
+            cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientListDetailed, note: recipe.note, time: recipe.totalTime)
             return cell
         }
                 
         RecipeService.shared.getImage(url: recipe.imageUrl!) { result in
             switch result {
             case .success(let image):
-                cell.configure(imageData: image, title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientList, note: recipe.note, time: recipe.totalTime)
+                cell.configure(imageData: image, title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientListDetailed, note: recipe.note, time: recipe.totalTime)
             case .failure(_):
-                cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientList, note: recipe.note, time: recipe.totalTime)
+                cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientListDetailed, note: recipe.note, time: recipe.totalTime)
             }
         }
         return cell
@@ -137,8 +85,9 @@ class FavoriteListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(identifier: "Recipe") as? RecipeViewController {
-            vc.selectedRecipe = recipeList.list[indexPath.row]
             
+            vc.selectedRecipe = dishTypeList[indexPath.section].recipeArray[indexPath.row]
+                        
             guard let currentCell = tableView.cellForRow(at: indexPath) as? RecipeTableViewCell else { return }
             guard let currentImage = currentCell.recipeImageView.image else { return }
             vc.selectedRecipeImage = currentImage

@@ -17,11 +17,52 @@ class RecipeSaved: NSManagedObject {
         imageUrl ?? "no Url"
     }
 
-    public var wrappedIngredientList: String {
-        ingredientList ?? "No Ingredients"
+    public var wrappedIngredientListDetailed: String {
+        ingredientListDetailed ?? "No Ingredients"
     }
 
     public var wrappedUrl: String {
         url ?? "No Url"
+    }
+
+    public var dishTypeArray: [DishType] {
+        let set = dishTypes as? Set<DishType> ?? []
+        return set.sorted {
+            $0.wrappedType < $1.wrappedType
+        }
+    }
+}
+
+extension RecipeSaved: RecipeProtocol {
+    func recipeTitle() -> String {
+        return wrappedTitle
+    }
+
+    func recipeIngredientsDetailed() -> String {
+        return wrappedIngredientListDetailed
+    }
+
+    func recipeUrl() -> String {
+        return wrappedUrl
+    }
+
+    func recipeImageUrl() -> String {
+        return wrappedImageUrl
+    }
+
+    func recipeNote() -> Double {
+        return note
+    }
+
+    func recipeTime() -> Double {
+        return totalTime
+    }
+
+    func recipeDishType() -> [String] {
+        var dishType = [String]()
+        for type in dishTypeArray {
+            dishType.append(type.wrappedType)
+        }
+        return dishType
     }
 }
