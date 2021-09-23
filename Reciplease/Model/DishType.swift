@@ -44,7 +44,7 @@ class DishType: NSManagedObject {
     func recipeIsExisting(_ recipeToVerify: Recipe) -> Bool {
         for dishType in DishType.all {
             for recipe in dishType.recipeArray {
-                if recipe.title == recipeToVerify.title, recipe.ingredientListDetailed == recipeToVerify.ingredientDetailed, recipe.url == recipeToVerify.url {
+                if recipe.title == recipeToVerify.title, recipe.ingredientList == recipeToVerify.ingredientList, recipe.url == recipeToVerify.url {
                     return true
                 }
             }

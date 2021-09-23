@@ -55,7 +55,7 @@ class RecipeViewController: UIViewController {
     private func updateView() {
         guard let recipeToLoad = selectedRecipe else { return }
         titleLabel.text = recipeToLoad.recipeTitle()
-        ingredientsTextView.text = recipeToLoad.recipeIngredientsDetailed()
+        ingredientsTextView.text = recipeToLoad.recipeIngredientsList()
 
         noteLabel.text = "\(recipeToLoad.recipeNote())"
 
@@ -75,7 +75,7 @@ class RecipeViewController: UIViewController {
         recipeToSave.title = currentRecipe.recipeTitle()
         recipeToSave.imageUrl = currentRecipe.recipeImageUrl()
         recipeToSave.url = currentRecipe.recipeUrl()
-        recipeToSave.ingredientListDetailed = currentRecipe.recipeIngredientsDetailed()
+        recipeToSave.ingredientList = currentRecipe.recipeIngredientsList()
         recipeToSave.totalTime = currentRecipe.recipeTime()
 
         print("dishType reçu: \(currentRecipe.recipeDishType())")

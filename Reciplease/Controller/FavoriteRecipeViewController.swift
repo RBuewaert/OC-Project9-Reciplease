@@ -38,7 +38,7 @@ class FavoriteRecipeViewController: UIViewController {
     func updateView() {
         guard let recipeToLoad = selectedFavoriteRecipe else { return }
         titleLabel.text = recipeToLoad.title
-        ingredientsTextView.text = recipeToLoad.ingredientListDetailed
+        ingredientsTextView.text = recipeToLoad.ingredientList
         
         noteLabel.text = "\(recipeToLoad.note)"
         

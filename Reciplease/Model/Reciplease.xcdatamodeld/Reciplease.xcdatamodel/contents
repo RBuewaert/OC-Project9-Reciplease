@@ -6,7 +6,7 @@
     </entity>
     <entity name="RecipeSaved" representedClassName=".RecipeSaved" syncable="YES" codeGenerationType="category">
         <attribute name="imageUrl" attributeType="String"/>
-        <attribute name="ingredientListDetailed" attributeType="String"/>
+        <attribute name="ingredientList" attributeType="String"/>
         <attribute name="note" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="totalTime" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>

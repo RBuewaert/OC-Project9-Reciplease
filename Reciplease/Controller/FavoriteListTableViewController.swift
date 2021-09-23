@@ -43,21 +43,21 @@ class FavoriteListTableViewController: UITableViewController {
         let recipe = dishTypeList[indexPath.section].recipeArray[indexPath.row]
 
         guard let imageUrl = recipe.imageUrl else {
-            cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientListDetailed, note: recipe.note, time: recipe.totalTime)
+            cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientList, note: recipe.note, time: recipe.totalTime)
             return cell
         }
 
         guard imageUrl.hasSuffix(".jpg") || imageUrl.hasSuffix(".png") else {
-            cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientListDetailed, note: recipe.note, time: recipe.totalTime)
+            cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientList, note: recipe.note, time: recipe.totalTime)
             return cell
         }
                 
         RecipeService.shared.getImage(url: recipe.imageUrl!) { result in
             switch result {
             case .success(let image):
-                cell.configure(imageData: image, title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientListDetailed, note: recipe.note, time: recipe.totalTime)
+                cell.configure(imageData: image, title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientList, note: recipe.note, time: recipe.totalTime)
             case .failure(_):
-                cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientListDetailed, note: recipe.note, time: recipe.totalTime)
+                cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientList, note: recipe.note, time: recipe.totalTime)
             }
         }
         return cell

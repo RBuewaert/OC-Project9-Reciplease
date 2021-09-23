@@ -18,7 +18,7 @@ struct Recipe {
     let url: String
     let yield: Double
 //    let cautions: [String]
-    let ingredientDetailed : String
+    let ingredientList : String
     let totalTime: Double
 //    let mealType: [String]
     let dishType: [String]
@@ -29,8 +29,8 @@ extension Recipe: RecipeProtocol {
         return title
     }
     
-    func recipeIngredientsDetailed() -> String {
-        return ingredientDetailed
+    func recipeIngredientsList() -> String {
+        return ingredientList
     }
 
     func recipeUrl() -> String {
@@ -88,13 +88,13 @@ extension RecipeListResultHits {
                url: recipe.url,
                yield: recipe.yield,
 //               cautions: recipe.cautions,
-               ingredientDetailed: addIngredientListDetailed(),
+               ingredientList: addIngredientList(),
                totalTime: recipe.totalTime,
 //               mealType: recipe.mealType,
                dishType: recipe.dishType)
     }
 
-    private func addIngredientListDetailed() -> String {
+    private func addIngredientList() -> String {
         var ingredientlist = ""
         for ingredient in recipe.ingredientLines {
             ingredientlist.append("- \(ingredient) \n")
