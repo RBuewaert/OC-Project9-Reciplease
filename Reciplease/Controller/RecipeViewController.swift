@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class RecipeViewController: UIViewController {
     @IBOutlet weak var recipeImageView: UIImageView!
@@ -92,7 +93,7 @@ class RecipeViewController: UIViewController {
         }
 
         print("dishType sauvegardé: \(recipeToSave.dishTypes?.allObjects)")
-        
+
         do {
             try AppDelegate.viewContext.save()
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"), style: .plain, target: self, action: #selector(removeFavorite))
@@ -103,6 +104,56 @@ class RecipeViewController: UIViewController {
     }
 
     @objc private func removeFavorite() {
+        
+        guard var currentRecipe = selectedRecipe as? RecipeSaved else { return }
+        
+//        guard currentRecipe == RecipeSaved(context: selectedRecipe as! NSManagedObjectContext) else { return }
+
+        
+        
+        AppDelegate.viewContext.delete(currentRecipe)
+        
+//        let context = AppDelegate.viewContext
+//        context.delete(currentRecipe)
+        
+        
+        print("SelectedRecipe : \(selectedRecipe)")
+        print("CurrentRecipeDishtypeArray : \(currentRecipe.dishTypeArray)")
+        
+  
+        for dishType in currentRecipe.dishTypeArray {
+            currentRecipe.removeFromDishTypes(dishType)
+            
+            if dishType.recipeArray.isEmpty {
+//                var dishTypeToRemove = DishType(context: AppDelegate.viewContext)
+//                dishTypeToRemove = dishType
+//                dishTypeToRemove.removeFromRecipes(currentRecipe)
+                AppDelegate.viewContext.delete(dishType)
+            }
+            
+
+//            if !DishType().dishTypeIsExisting(dishType) {
+//                let dishTypeToSave = DishType(context: AppDelegate.viewContext)
+//                dishTypeToSave.type = dishType
+//                recipeToSave.addToDishTypes(dishTypeToSave)
+//            } else {
+//                guard let currentDishType = DishType().returnExistingDishType(dishType) else { return }
+//                recipeToSave.addToDishTypes(currentDishType)
+//            }
+            
+
+        }
+
+        do {
+            try AppDelegate.viewContext.save()
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(addToFavorite))
+            alertMessageForUser(title: "Succes!", message: "Recipe removed from favorite")
+        } catch {
+            alertMessageForUser(title: "Error!", message: "Favorite not removed")
+        }
+        
+        
+        
         
     }
 

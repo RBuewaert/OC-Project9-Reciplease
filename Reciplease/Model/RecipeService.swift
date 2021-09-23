@@ -14,8 +14,8 @@ final class RecipeService {
 
     private static let url = "https://api.edamam.com/api/recipes/v2?"
     static var urlNextPage = ""
-    
-    func getFirstRecipe(ingredients: String, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
+
+    func getFirstRecipes(ingredients: String, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
         let parameters = ["type": "public", "q": ingredients, "app_id": APIKey.id, "app_key": APIKey.key]
 
         AF.request(RecipeService.url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil, interceptor: nil, requestModifier: nil).responseDecodable(of: RecipeListResult.self) { response in
@@ -52,7 +52,7 @@ final class RecipeService {
         }
     }
     
-    func getOtherRecipe(url: String, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
+    func getOtherRecipes(url: String, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
         AF.request(url).responseDecodable(of: RecipeListResult.self) { response in
             
             self.getRecipe(response: response, completionHandler: completionHandler)

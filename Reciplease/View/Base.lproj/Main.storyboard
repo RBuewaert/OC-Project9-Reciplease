@@ -30,7 +30,7 @@
             </objects>
             <point key="canvasLocation" x="-674" y="216"/>
         </scene>
-        <!--Favorite-->
+        <!--Reciplease-->
         <scene sceneID="zoM-LS-3i2">
             <objects>
                 <tableViewController id="T0p-qA-Iyz" customClass="FavoriteListTableViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
@@ -136,12 +136,13 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Favorite" id="znH-Ww-wjn"/>
+                    <navigationItem key="navigationItem" title="Reciplease" id="sBF-6j-ApV"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pk0-U4-5dW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="919" y="804"/>
         </scene>
-        <!--Favorite-->
+        <!--Reciplease-->
         <scene sceneID="k7m-Xe-eAO">
             <objects>
                 <viewController storyboardIdentifier="FavoriteRecipe" id="fQY-zF-vPw" customClass="FavoriteRecipeViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
@@ -255,7 +256,9 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Favorite" id="Jqc-3D-v0m"/>
-                    <navigationItem key="navigationItem" id="rgm-Ev-dvh"/>
+                    <navigationItem key="navigationItem" title="Reciplease" id="rgm-Ev-dvh">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="rgz-2g-twk"/>
+                    </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="ingredientsTextView" destination="dm8-PW-K5u" id="llZ-uT-BQr"/>
@@ -292,6 +295,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Fvj-xQ-ca7">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" red="0.2117646933" green="0.20000001789999999" blue="0.19215688110000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="25"/>
@@ -447,7 +451,7 @@
             </objects>
             <point key="canvasLocation" x="918.84057971014499" y="-139.28571428571428"/>
         </scene>
-        <!--Search-->
+        <!--Reciplease-->
         <scene sceneID="n9F-zW-6BV">
             <objects>
                 <tableViewController id="jmw-Kn-7UN" customClass="ListTableViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
@@ -552,14 +556,16 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Search" id="rZz-AT-JqH"/>
-                    <navigationItem key="navigationItem" id="RFL-Xi-bnO"/>
+                    <navigationItem key="navigationItem" title="Reciplease" id="RFL-Xi-bnO">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="0nJ-fe-0V3"/>
+                    </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gni-HT-9FE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2047.826086956522" y="-139.28571428571428"/>
         </scene>
-        <!--Search-->
+        <!--Reciplease-->
         <scene sceneID="xrd-48-ryv">
             <objects>
                 <viewController storyboardIdentifier="Recipe" id="bEw-7H-ktu" customClass="RecipeViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
@@ -671,7 +677,9 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Search" id="jig-cH-bjw"/>
-                    <navigationItem key="navigationItem" id="jDE-qk-Uq0"/>
+                    <navigationItem key="navigationItem" title="Reciplease" id="jDE-qk-Uq0">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="lV2-eP-0y4"/>
+                    </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="ingredientsTextView" destination="f7C-Cn-oTl" id="KfA-Wu-7NX"/>

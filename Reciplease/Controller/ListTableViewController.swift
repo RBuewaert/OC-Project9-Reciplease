@@ -17,7 +17,7 @@ class ListTableViewController: UITableViewController {
         tableView.rowHeight = 200
         
 
-        RecipeService.shared.getFirstRecipe(ingredients: ingredients) { result in
+        RecipeService.shared.getFirstRecipes(ingredients: ingredients) { result in
             switch result {
             case .success(let recipeList):
                 self.recipeList = recipeList
@@ -46,21 +46,21 @@ class ListTableViewController: UITableViewController {
         let recipe = recipeList.list[indexPath.row]
         
         guard let imageUrl = recipe.imageUrl else {
-            cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+            cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientName, note: recipe.yield, time: recipe.totalTime)
             return cell
         }
                 
         guard imageUrl.hasSuffix(".jpg") || imageUrl.hasSuffix(".png") else {
-            cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+            cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientName, note: recipe.yield, time: recipe.totalTime)
             return cell
         }
 
         RecipeService.shared.getImage(url: recipe.imageUrl!) { result in
             switch result {
             case .success(let image):
-                cell.configure(imageData: image, title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+                cell.configure(imageData: image, title: recipe.title, ingredients: recipe.ingredientName, note: recipe.yield, time: recipe.totalTime)
             case .failure(_):
-                cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientList, note: recipe.yield, time: recipe.totalTime)
+                cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientName, note: recipe.yield, time: recipe.totalTime)
             }
         }
         return cell
@@ -104,7 +104,7 @@ class ListTableViewController: UITableViewController {
         self.tableView.tableFooterView = createFooterActivityIndicator()
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            RecipeService.shared.getOtherRecipe(url: RecipeService.urlNextPage) { result in
+            RecipeService.shared.getOtherRecipes(url: RecipeService.urlNextPage) { result in
                 self.tableView.tableFooterView = nil
                 switch result {
                 case .success(let nextRecipeList):

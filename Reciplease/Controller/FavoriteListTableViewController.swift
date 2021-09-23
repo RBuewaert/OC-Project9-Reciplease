@@ -14,7 +14,9 @@ class FavoriteListTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 200
-
+        if recipeList.list.isEmpty {
+            alertMessageForUser()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -94,6 +96,12 @@ class FavoriteListTableViewController: UITableViewController {
 
             navigationController?.pushViewController(vc, animated: true)
         }
+    }
+
+    private func alertMessageForUser() {
+        let alertVC = UIAlertController(title: "Information!", message: "click on the star to add a recipe on your favorite list", preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        self.present(alertVC, animated: true, completion: nil)
     }
 
     /*
