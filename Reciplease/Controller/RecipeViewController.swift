@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import SafariServices
 
 class RecipeViewController: UIViewController {
     // MARK: - Outlets
@@ -41,8 +42,13 @@ class RecipeViewController: UIViewController {
     // MARK: - Action
     @IBAction func tappedGetDirectionsButton(_ sender: Any) {
         guard let currentRecipe = selectedRecipe else { return }
-        let currentUrl = currentRecipe.recipeUrl()
-        print(currentUrl)
+        guard let url = URL(string: currentRecipe.recipeUrl()) else { return }
+
+        let config = SFSafariViewController.Configuration()
+//        config.entersReaderIfAvailable = true
+
+        let vc = SFSafariViewController(url: url, configuration: config)
+        present(vc, animated: true)
     }
 
     // MARK: - Private methods
