@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ListTableViewController: UITableViewController {
+final class ListTableViewController: UITableViewController {
     // MARK: - Properties
     var ingredients = ""
     var recipeList = RecipeList(list: [])
@@ -46,21 +46,21 @@ class ListTableViewController: UITableViewController {
         let recipe = recipeList.list[indexPath.row]
 
         guard let imageUrl = recipe.imageUrl else {
-            cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientName, note: recipe.yield, time: recipe.totalTime)
+            cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientName, cuisineType: recipe.cuisineType, time: recipe.totalTime)
             return cell
         }
 
         guard imageUrl.hasSuffix(".jpg") || imageUrl.hasSuffix(".png") else {
-            cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientName, note: recipe.yield, time: recipe.totalTime)
+            cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientName, cuisineType: recipe.cuisineType, time: recipe.totalTime)
             return cell
         }
 
         RecipeManage.shared.getImage(url: recipe.imageUrl!) { result in
             switch result {
             case .success(let image):
-                cell.configure(imageData: image, title: recipe.title, ingredients: recipe.ingredientName, note: recipe.yield, time: recipe.totalTime)
+                cell.configure(imageData: image, title: recipe.title, ingredients: recipe.ingredientName, cuisineType: recipe.cuisineType, time: recipe.totalTime)
             case .failure(_):
-                cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientName, note: recipe.yield, time: recipe.totalTime)
+                cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientName, cuisineType: recipe.cuisineType, time: recipe.totalTime)
             }
         }
         return cell

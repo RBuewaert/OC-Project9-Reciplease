@@ -12,7 +12,7 @@ import SafariServices
 // PAGE INUTILE !!!!!! (IDEM AVEC LES STORYBOARD ASSOCIES !!!)
 //
 
-class DetailRecipeViewController: UIViewController {
+final class DetailRecipeViewController: UIViewController {
     var selectedUrl = ""
 
     override func viewDidLoad() {

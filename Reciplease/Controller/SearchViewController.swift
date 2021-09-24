@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var ingredientTextView: UITextView!

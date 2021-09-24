@@ -7,7 +7,11 @@
 
 import UIKit
 
-class FavoriteRecipeViewController: UIViewController {
+//
+// PAS UTILE !!!!! ON PEUT SUPPRIMER !!!
+//
+
+final class FavoriteRecipeViewController: UIViewController {
     @IBOutlet weak var recipeImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ingredientsTextView: UITextView!

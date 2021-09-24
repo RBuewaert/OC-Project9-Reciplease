@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class RecipeSaved: NSManagedObject {
+final class RecipeSaved: NSManagedObject {
     public var wrappedTitle: String {
         title ?? "Unknown Title"
     }

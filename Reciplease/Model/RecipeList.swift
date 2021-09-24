@@ -21,6 +21,7 @@ struct Recipe {
     let ingredientList : String
     let ingredientName: String
     let totalTime: Double
+    let cuisineType: String
 //    let mealType: [String]
     let dishType: [String]
 }
@@ -96,6 +97,7 @@ extension RecipeListResultHits {
                ingredientList: addIngredientList(),
                 ingredientName: addIngredientName(),
                totalTime: recipe.totalTime,
+                cuisineType: addCuisineType(),
 //               mealType: recipe.mealType,
                dishType: recipe.dishType)
     }
@@ -115,8 +117,17 @@ extension RecipeListResultHits {
             ingredients.append("\(ingredient.food), ")
         }
         ingredients.removeLast(2)
-        print("Ingredient Name \(ingredients)")
         return ingredients
+    }
+
+    private func addCuisineType() -> String {
+        var cuisineType = ""
+        for cuisine in recipe.cuisineType {
+            cuisineType.append("\(cuisine), ")
+        }
+        cuisineType.removeLast(2)
+        print("Cuisine Type \(cuisineType)")
+        return cuisineType
     }
 }
 
@@ -129,6 +140,7 @@ struct RecipeListResultRecipe: Codable {
     let ingredientLines : [String]
     let ingredients : [RecipeListResultIngredient]
     let totalTime: Double
+    let cuisineType : [String]
 //    let mealType: [String]
     let dishType: [String]
 }

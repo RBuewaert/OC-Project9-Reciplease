@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-class DishType: NSManagedObject {
+final class DishType: NSManagedObject {
     static var all: [DishType] {
         let request: NSFetchRequest<DishType> = DishType.fetchRequest()
         request.sortDescriptors = [

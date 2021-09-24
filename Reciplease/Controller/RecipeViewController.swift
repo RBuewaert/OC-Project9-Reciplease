@@ -9,7 +9,7 @@ import UIKit
 import CoreData
 import SafariServices
 
-class RecipeViewController: UIViewController {
+final class RecipeViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var recipeImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -17,7 +17,8 @@ class RecipeViewController: UIViewController {
     @IBOutlet weak var littleView: UIView!
     @IBOutlet weak var noteLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
-
+    @IBOutlet weak var getDirectionsButton: UIButton!
+    
     // MARK: - Properties
     var selectedRecipe: RecipeProtocol?
     var selectedRecipeImage = UIImage()
@@ -25,6 +26,7 @@ class RecipeViewController: UIViewController {
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        getDirectionsButton.layer.cornerRadius = 5
 
         if verifyIfRecipeIsOnFavorite() {
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"), style: .plain, target: self, action: #selector(removeFavorite))
@@ -90,6 +92,7 @@ class RecipeViewController: UIViewController {
         recipeToSave.imageUrl = currentRecipe.recipeImageUrl()
         recipeToSave.url = currentRecipe.recipeUrl()
         recipeToSave.ingredientList = currentRecipe.recipeIngredientsList()
+        recipeToSave.ingredientName = currentRecipe.recipeIngredientsName()
         recipeToSave.totalTime = currentRecipe.recipeTime()
 
         print("dishType reçu: \(currentRecipe.recipeDishType())")

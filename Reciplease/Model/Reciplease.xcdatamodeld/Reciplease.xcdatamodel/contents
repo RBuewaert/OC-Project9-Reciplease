@@ -5,6 +5,7 @@
         <relationship name="recipes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecipeSaved" inverseName="dishTypes" inverseEntity="RecipeSaved"/>
     </entity>
     <entity name="RecipeSaved" representedClassName=".RecipeSaved" syncable="YES" codeGenerationType="category">
+        <attribute name="cuisineType" optional="YES" attributeType="String"/>
         <attribute name="imageUrl" attributeType="String"/>
         <attribute name="ingredientList" attributeType="String"/>
         <attribute name="ingredientName" optional="YES" attributeType="String"/>
@@ -16,6 +17,6 @@
     </entity>
     <elements>
         <element name="DishType" positionX="207.5625" positionY="-5.734375" width="128" height="59"/>
-        <element name="RecipeSaved" positionX="-63" positionY="-18" width="128" height="149"/>
+        <element name="RecipeSaved" positionX="-63" positionY="-18" width="128" height="164"/>
     </elements>
 </model>

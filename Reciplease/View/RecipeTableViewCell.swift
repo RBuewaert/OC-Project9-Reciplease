@@ -12,7 +12,7 @@ class RecipeTableViewCell: UITableViewCell {
     @IBOutlet weak var ingredientsLabel: UILabel!
     @IBOutlet weak var littleView: UIView!
     @IBOutlet weak var bottomLabelsView: UIView!
-    @IBOutlet weak var noteLabel: UILabel!
+    @IBOutlet weak var cuisineTypeLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var recipeImageView: UIImageView!
     
@@ -23,11 +23,11 @@ class RecipeTableViewCell: UITableViewCell {
         littleView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
 
-    func configure(imageData: Data, title: String, ingredients: String, note: Double, time: Double) {
+    func configure(imageData: Data, title: String, ingredients: String, cuisineType: String, time: Double) {
         recipeImageView.image = UIImage(data: imageData)
         titleLabel.text = title
         ingredientsLabel.text = ingredients
-        noteLabel.text = "\(note)"
+        cuisineTypeLabel.text = cuisineType
 
         if time > 0 {
             timeLabel.text = "\(time) min"
@@ -36,13 +36,13 @@ class RecipeTableViewCell: UITableViewCell {
         }
     }
 
-    func configureWithDefaultImage(title: String, ingredients: String, note: Double, time: Double) {
+    func configureWithDefaultImage(title: String, ingredients: String, cuisineType: String, time: Double) {
         guard let imageData = UIImage(named: "tableSetFlag")?.pngData() else { return }
         recipeImageView.image = UIImage(data: imageData)
         titleLabel.text = title
         ingredientsLabel.text = ingredients
 
-        noteLabel.text = "\(note)"
+        cuisineTypeLabel.text = cuisineType
 
         if time > 0 {
             timeLabel.text = "\(time) min"

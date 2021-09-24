@@ -121,9 +121,9 @@
                                 <color key="backgroundColor" red="0.2117646933" green="0.20000001789999999" blue="0.19215688110000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <connections>
                                     <outlet property="bottomLabelsView" destination="EpN-ro-uYi" id="4N8-XC-MKY"/>
+                                    <outlet property="cuisineTypeLabel" destination="2gS-tV-274" id="9P0-WT-6L8"/>
                                     <outlet property="ingredientsLabel" destination="Zxc-Jf-pKL" id="gyo-zf-Svr"/>
                                     <outlet property="littleView" destination="aoX-zj-cjK" id="CaI-7B-91v"/>
-                                    <outlet property="noteLabel" destination="2gS-tV-274" id="9P0-WT-6L8"/>
                                     <outlet property="recipeImageView" destination="IpE-Mx-uZl" id="Ifk-J2-4Qz"/>
                                     <outlet property="timeLabel" destination="JXd-uL-IqI" id="QNp-9O-KYd"/>
                                     <outlet property="titleLabel" destination="edd-1C-hG8" id="4bz-af-VJv"/>
@@ -541,9 +541,9 @@
                                 <color key="backgroundColor" red="0.2117646933" green="0.20000001789999999" blue="0.19215688110000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <connections>
                                     <outlet property="bottomLabelsView" destination="ilo-R7-QIT" id="4sq-su-Pup"/>
+                                    <outlet property="cuisineTypeLabel" destination="VXj-Dh-kXf" id="ClZ-ik-HcV"/>
                                     <outlet property="ingredientsLabel" destination="Bcp-da-5Zr" id="zm7-Gn-zyu"/>
                                     <outlet property="littleView" destination="Oob-Zr-YbC" id="qq4-XV-FnM"/>
-                                    <outlet property="noteLabel" destination="VXj-Dh-kXf" id="ClZ-ik-HcV"/>
                                     <outlet property="recipeImageView" destination="iYN-jO-0sa" id="eM7-xD-DCf"/>
                                     <outlet property="timeLabel" destination="phy-MQ-wbG" id="fhZ-dN-F9T"/>
                                     <outlet property="titleLabel" destination="PhH-s8-ozP" id="eZM-Xg-aud"/>
@@ -682,6 +682,7 @@
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="getDirectionsButton" destination="lzY-Ms-Bii" id="IzW-L9-I65"/>
                         <outlet property="ingredientsTextView" destination="f7C-Cn-oTl" id="KfA-Wu-7NX"/>
                         <outlet property="littleView" destination="7Nw-6H-ONn" id="enZ-MO-jU3"/>
                         <outlet property="noteLabel" destination="AWJ-bR-M70" id="MBc-vL-fqf"/>
