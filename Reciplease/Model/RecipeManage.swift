@@ -8,9 +8,9 @@
 import Foundation
 import Alamofire
 
-final class RecipeService {
+final class RecipeManage {
     // MARK: - Pattern Singleton
-    static var shared = RecipeService()
+    static var shared = RecipeManage()
 
     private static let url = "https://api.edamam.com/api/recipes/v2?"
     static var urlNextPage = ""
@@ -18,7 +18,7 @@ final class RecipeService {
     func getFirstRecipes(ingredients: String, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
         let parameters = ["type": "public", "q": ingredients, "app_id": APIKey.id, "app_key": APIKey.key]
 
-        AF.request(RecipeService.url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil, interceptor: nil, requestModifier: nil).responseDecodable(of: RecipeListResult.self) { response in
+        AF.request(RecipeManage.url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil, interceptor: nil, requestModifier: nil).responseDecodable(of: RecipeListResult.self) { response in
             
             self.getRecipe(response: response, completionHandler: completionHandler)
             
@@ -102,9 +102,9 @@ final class RecipeService {
             }
             recipeList = self.addRecipeOnArrayList(numberOfRecipe: JSONresult.to, JSONresult: JSONresult)
             if let urlNextPage = JSONresult.links.next?.href {
-                RecipeService.urlNextPage = urlNextPage
+                RecipeManage.urlNextPage = urlNextPage
             } else {
-                RecipeService.urlNextPage = ""
+                RecipeManage.urlNextPage = ""
             }
         } catch {
             print(error)

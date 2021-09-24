@@ -52,7 +52,7 @@ class FavoriteListTableViewController: UITableViewController {
             return cell
         }
                 
-        RecipeService.shared.getImage(url: recipe.imageUrl!) { result in
+        RecipeManage.shared.getImage(url: recipe.imageUrl!) { result in
             switch result {
             case .success(let image):
                 cell.configure(imageData: image, title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientName, note: recipe.note, time: recipe.totalTime)

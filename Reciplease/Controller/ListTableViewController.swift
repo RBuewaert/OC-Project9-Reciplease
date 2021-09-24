@@ -18,7 +18,7 @@ class ListTableViewController: UITableViewController {
         super.viewDidLoad()
         tableView.rowHeight = 200
 
-        RecipeService.shared.getFirstRecipes(ingredients: ingredients) { result in
+        RecipeManage.shared.getFirstRecipes(ingredients: ingredients) { result in
             switch result {
             case .success(let recipeList):
                 self.recipeList = recipeList
@@ -55,7 +55,7 @@ class ListTableViewController: UITableViewController {
             return cell
         }
 
-        RecipeService.shared.getImage(url: recipe.imageUrl!) { result in
+        RecipeManage.shared.getImage(url: recipe.imageUrl!) { result in
             switch result {
             case .success(let image):
                 cell.configure(imageData: image, title: recipe.title, ingredients: recipe.ingredientName, note: recipe.yield, time: recipe.totalTime)
@@ -82,7 +82,7 @@ class ListTableViewController: UITableViewController {
         let positionY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
 
-        if positionY > contentHeight - scrollView.frame.height * 2, RecipeService.urlNextPage != "" {
+        if positionY > contentHeight - scrollView.frame.height * 2, RecipeManage.urlNextPage != "" {
             if !findMoreRecipe {
                 loadMoreRecipe()
             }
@@ -105,7 +105,7 @@ class ListTableViewController: UITableViewController {
         self.tableView.tableFooterView = createFooterActivityIndicator()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            RecipeService.shared.getOtherRecipes(url: RecipeService.urlNextPage) { result in
+            RecipeManage.shared.getOtherRecipes(url: RecipeManage.urlNextPage) { result in
                 self.tableView.tableFooterView = nil
                 switch result {
                 case .success(let nextRecipeList):
