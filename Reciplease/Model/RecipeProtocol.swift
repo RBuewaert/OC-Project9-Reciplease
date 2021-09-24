@@ -10,6 +10,7 @@ import Foundation
 protocol RecipeProtocol {
     func recipeTitle() -> String
     func recipeIngredientsList() -> String
+    func recipeIngredientsName() -> String
     func recipeUrl() -> String
     func recipeImageUrl() -> String
     func recipeNote() -> Double

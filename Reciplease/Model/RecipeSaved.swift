@@ -21,6 +21,10 @@ class RecipeSaved: NSManagedObject {
         ingredientList ?? "No Ingredients"
     }
 
+    public var wrappedIngredientName: String {
+        ingredientName ?? "No Ingredients"
+    }
+
     public var wrappedUrl: String {
         url ?? "No Url"
     }
@@ -40,6 +44,10 @@ extension RecipeSaved: RecipeProtocol {
 
     func recipeIngredientsList() -> String {
         return wrappedIngredientList
+    }
+
+    func recipeIngredientsName() -> String {
+        return wrappedIngredientName
     }
 
     func recipeUrl() -> String {

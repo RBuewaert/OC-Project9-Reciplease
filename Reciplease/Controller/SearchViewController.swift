@@ -8,13 +8,14 @@
 import UIKit
 
 class SearchViewController: UIViewController {
-    // MARK: - Properties
+    // MARK: - Outlets
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var ingredientTextView: UITextView!
     @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var searchButton: UIButton!
 
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,7 +25,7 @@ class SearchViewController: UIViewController {
         searchButton.layer.cornerRadius = 5
     }
 
-    // MARK: - Methods
+    // MARK: - Actions
     @IBAction func tappedAddButton(_ sender: Any) {
         guard let textTapped = textField.text else { return }
 
@@ -43,7 +44,7 @@ class SearchViewController: UIViewController {
             ingredientTextView.text.append("- \(ingredient.trimmingCharacters(in: .whitespacesAndNewlines)) \n")
         }
     }
-    
+
     @IBAction func tappedClearButton(_ sender: Any) {
         ingredientTextView.text = ""
     }
@@ -56,6 +57,7 @@ class SearchViewController: UIViewController {
         }
     }
 
+    // MARK: - Private method
     private func extractIngredients() -> String? {
         guard let ingredientsList = ingredientTextView.text?.components(separatedBy: "- ") else { return nil }
 
@@ -112,4 +114,3 @@ extension SearchViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
     }
 }
-

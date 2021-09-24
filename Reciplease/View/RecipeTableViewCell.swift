@@ -28,11 +28,11 @@ class RecipeTableViewCell: UITableViewCell {
         titleLabel.text = title
         ingredientsLabel.text = ingredients
         noteLabel.text = "\(note)"
-        
+
         if time > 0 {
             timeLabel.text = "\(time) min"
         } else {
-            timeLabel.text = ""
+            timeLabel.text = "No Time"
         }
     }
 
@@ -41,10 +41,10 @@ class RecipeTableViewCell: UITableViewCell {
         recipeImageView.image = UIImage(data: imageData)
         titleLabel.text = title
         ingredientsLabel.text = ingredients
-        
+
         noteLabel.text = "\(note)"
 
-        if time > 0.1 {
+        if time > 0 {
             timeLabel.text = "\(time) min"
         } else {
             timeLabel.text = "No Time"

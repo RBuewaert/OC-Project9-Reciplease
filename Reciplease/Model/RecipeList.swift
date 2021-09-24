@@ -34,6 +34,10 @@ extension Recipe: RecipeProtocol {
         return ingredientList
     }
 
+    func recipeIngredientsName() -> String {
+        return ingredientName
+    }
+
     func recipeUrl() -> String {
         return url
     }

@@ -9,6 +9,7 @@ import UIKit
 import CoreData
 
 class RecipeViewController: UIViewController {
+    // MARK: - Outlets
     @IBOutlet weak var recipeImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ingredientsTextView: UITextView!
@@ -16,9 +17,11 @@ class RecipeViewController: UIViewController {
     @IBOutlet weak var noteLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
 
+    // MARK: - Properties
     var selectedRecipe: RecipeProtocol?
     var selectedRecipeImage = UIImage()
 
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,12 +38,14 @@ class RecipeViewController: UIViewController {
         updateView()
     }
 
+    // MARK: - Action
     @IBAction func tappedGetDirectionsButton(_ sender: Any) {
         guard let currentRecipe = selectedRecipe else { return }
         let currentUrl = currentRecipe.recipeUrl()
         print(currentUrl)
     }
 
+    // MARK: - Private methods
     private func verifyIfRecipeIsOnFavorite() -> Bool {
         if (selectedRecipe as? RecipeSaved) != nil {
             return true
@@ -69,6 +74,7 @@ class RecipeViewController: UIViewController {
         recipeImageView.image = selectedRecipeImage
     }
 
+    // MARK: - Private methods for NavigationItem Buttons
     @objc private func addToFavorite() {
         guard let currentRecipe = selectedRecipe else { return }
 
@@ -132,16 +138,6 @@ class RecipeViewController: UIViewController {
             }
             
 
-//            if !DishType().dishTypeIsExisting(dishType) {
-//                let dishTypeToSave = DishType(context: AppDelegate.viewContext)
-//                dishTypeToSave.type = dishType
-//                recipeToSave.addToDishTypes(dishTypeToSave)
-//            } else {
-//                guard let currentDishType = DishType().returnExistingDishType(dishType) else { return }
-//                recipeToSave.addToDishTypes(currentDishType)
-//            }
-            
-
         }
 
         do {
@@ -151,18 +147,20 @@ class RecipeViewController: UIViewController {
         } catch {
             alertMessageForUser(title: "Error!", message: "Favorite not removed")
         }
-        
-        
-        
-        
     }
+}
 
+extension RecipeViewController {
+    // MARK: - UIAlertController
     private func alertMessageForUser(title: String, message: String) {
         let alertVC = UIAlertController(title: title, message: message,
                                         preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alertVC, animated: true, completion: nil)
     }
+
+    
+ 
 
     /*
     // MARK: - Navigation

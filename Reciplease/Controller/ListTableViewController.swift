@@ -8,14 +8,15 @@
 import UIKit
 
 class ListTableViewController: UITableViewController {
+    // MARK: - Properties
     var ingredients = ""
     var recipeList = RecipeList(list: [])
     var findMoreRecipe = false
 
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 200
-        
 
         RecipeService.shared.getFirstRecipes(ingredients: ingredients) { result in
             switch result {
@@ -29,7 +30,6 @@ class ListTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -44,12 +44,12 @@ class ListTableViewController: UITableViewController {
         }
 
         let recipe = recipeList.list[indexPath.row]
-        
+
         guard let imageUrl = recipe.imageUrl else {
             cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientName, note: recipe.yield, time: recipe.totalTime)
             return cell
         }
-                
+
         guard imageUrl.hasSuffix(".jpg") || imageUrl.hasSuffix(".png") else {
             cell.configureWithDefaultImage(title: recipe.title, ingredients: recipe.ingredientName, note: recipe.yield, time: recipe.totalTime)
             return cell
@@ -65,11 +65,11 @@ class ListTableViewController: UITableViewController {
         }
         return cell
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(identifier: "Recipe") as? RecipeViewController {
             vc.selectedRecipe = recipeList.list[indexPath.row]
-            
+
             guard let currentCell = tableView.cellForRow(at: indexPath) as? RecipeTableViewCell else { return }
             guard let currentImage = currentCell.recipeImageView.image else { return }
             vc.selectedRecipeImage = currentImage
@@ -77,7 +77,7 @@ class ListTableViewController: UITableViewController {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
-    
+
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let positionY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
@@ -89,20 +89,21 @@ class ListTableViewController: UITableViewController {
         }
     }
 
+    // MARK: - Private methods
     private func createFooterActivityIndicator() -> UIView {
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.center = footerView.center
         footerView.addSubview(activityIndicator)
         activityIndicator.startAnimating()
-        
+
         return footerView
     }
 
     private func loadMoreRecipe() {
         findMoreRecipe = true
         self.tableView.tableFooterView = createFooterActivityIndicator()
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             RecipeService.shared.getOtherRecipes(url: RecipeService.urlNextPage) { result in
                 self.tableView.tableFooterView = nil
@@ -180,16 +181,16 @@ class ListTableViewController: UITableViewController {
 }
 
 
-extension UIImageView {
-    func load(url: URL) {
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self?.image = image
-                    }
-                }
-            }
-        }
-    }
-}
+//extension UIImageView {
+//    func load(url: URL) {
+//        DispatchQueue.global().async { [weak self] in
+//            if let data = try? Data(contentsOf: url) {
+//                if let image = UIImage(data: data) {
+//                    DispatchQueue.main.async {
+//                        self?.image = image
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}

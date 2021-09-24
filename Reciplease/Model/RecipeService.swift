@@ -22,7 +22,6 @@ final class RecipeService {
             
             self.getRecipe(response: response, completionHandler: completionHandler)
             
-
 //            guard response.error == nil else {
 //                return completionHandler(.failure(.downloadFailed))
 //            }

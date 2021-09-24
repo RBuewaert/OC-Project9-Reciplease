@@ -207,7 +207,7 @@
                                     <constraint firstAttribute="trailing" secondItem="jRG-ac-oaE" secondAttribute="trailing" id="yzn-yD-oQ4"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="dm8-PW-K5u">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="dm8-PW-K5u">
                                 <rect key="frame" x="15" y="400" width="384" height="320"/>
                                 <color key="backgroundColor" red="0.2117646933" green="0.20000001789999999" blue="0.19215688110000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -630,7 +630,7 @@
                                     <constraint firstAttribute="trailing" secondItem="Bgu-L1-mhI" secondAttribute="trailing" id="ylc-Mj-Zto"/>
                                 </constraints>
                             </view>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="f7C-Cn-oTl">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="f7C-Cn-oTl">
                                 <rect key="frame" x="15" y="400" width="384" height="320"/>
                                 <color key="backgroundColor" red="0.2117646933" green="0.20000001789999999" blue="0.19215688110000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
