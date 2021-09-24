@@ -261,9 +261,9 @@
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="cuisineTypeLabel" destination="q11-nn-gqr" id="JEe-Ik-h96"/>
                         <outlet property="ingredientsTextView" destination="dm8-PW-K5u" id="llZ-uT-BQr"/>
                         <outlet property="littleView" destination="dx4-Cj-Bf9" id="eoZ-kO-Qbn"/>
-                        <outlet property="noteLabel" destination="q11-nn-gqr" id="JEe-Ik-h96"/>
                         <outlet property="recipeImageView" destination="jRG-ac-oaE" id="SnW-tC-Hud"/>
                         <outlet property="timeLabel" destination="c4L-p1-XBA" id="08f-f7-Tk8"/>
                         <outlet property="titleLabel" destination="XXW-8I-9N6" id="BBV-qR-cTw"/>
@@ -587,7 +587,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Nw-6H-ONn">
-                                        <rect key="frame" x="326" y="140" width="80" height="70"/>
+                                        <rect key="frame" x="326" y="30" width="80" height="70"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AWJ-bR-M70">
                                                 <rect key="frame" x="5" y="10" width="70" height="18"/>
@@ -619,13 +619,13 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="Bgu-L1-mhI" firstAttribute="leading" secondItem="xBf-nU-dIV" secondAttribute="leading" id="3gn-KN-Wku"/>
+                                    <constraint firstItem="7Nw-6H-ONn" firstAttribute="top" secondItem="xBf-nU-dIV" secondAttribute="top" constant="30" id="9pi-jh-BtT"/>
                                     <constraint firstAttribute="bottom" secondItem="9Vf-aF-AB5" secondAttribute="bottom" id="Hy8-4v-Kf5"/>
                                     <constraint firstItem="9Vf-aF-AB5" firstAttribute="top" secondItem="xBf-nU-dIV" secondAttribute="top" id="LAM-pd-gJR"/>
                                     <constraint firstAttribute="trailing" secondItem="9Vf-aF-AB5" secondAttribute="trailing" id="QBP-6c-3Ka"/>
                                     <constraint firstAttribute="trailing" secondItem="7Nw-6H-ONn" secondAttribute="trailing" constant="8" id="SLh-le-wLp"/>
                                     <constraint firstAttribute="bottom" secondItem="Bgu-L1-mhI" secondAttribute="bottom" id="qmO-sf-5uH"/>
                                     <constraint firstItem="9Vf-aF-AB5" firstAttribute="leading" secondItem="xBf-nU-dIV" secondAttribute="leading" id="sio-CB-Kva"/>
-                                    <constraint firstItem="7Nw-6H-ONn" firstAttribute="centerY" secondItem="xBf-nU-dIV" secondAttribute="centerY" id="sn8-ht-hT7"/>
                                     <constraint firstAttribute="height" constant="350" id="tka-BB-Qw0"/>
                                     <constraint firstAttribute="trailing" secondItem="Bgu-L1-mhI" secondAttribute="trailing" id="ylc-Mj-Zto"/>
                                 </constraints>
@@ -682,10 +682,10 @@
                     </navigationItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="cuisineTypeLabel" destination="AWJ-bR-M70" id="MBc-vL-fqf"/>
                         <outlet property="getDirectionsButton" destination="lzY-Ms-Bii" id="IzW-L9-I65"/>
                         <outlet property="ingredientsTextView" destination="f7C-Cn-oTl" id="KfA-Wu-7NX"/>
                         <outlet property="littleView" destination="7Nw-6H-ONn" id="enZ-MO-jU3"/>
-                        <outlet property="noteLabel" destination="AWJ-bR-M70" id="MBc-vL-fqf"/>
                         <outlet property="recipeImageView" destination="9Vf-aF-AB5" id="HLB-Vu-ltc"/>
                         <outlet property="timeLabel" destination="X7W-Mq-Ill" id="rZ9-ey-W9D"/>
                         <outlet property="titleLabel" destination="Bgu-L1-mhI" id="rhQ-EW-2vW"/>

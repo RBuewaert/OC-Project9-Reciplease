@@ -121,7 +121,9 @@ final class ListTableViewController: UITableViewController {
             }
         }
     }
+}
 
+extension ListTableViewController {
     // MARK: - UIAlertController
     private func alertErrorMessage(message: String) {
         let alertVC = UIAlertController(title: "Error!", message: message,

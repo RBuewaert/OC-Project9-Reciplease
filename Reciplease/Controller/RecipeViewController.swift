@@ -15,7 +15,7 @@ final class RecipeViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ingredientsTextView: UITextView!
     @IBOutlet weak var littleView: UIView!
-    @IBOutlet weak var noteLabel: UILabel!
+    @IBOutlet weak var cuisineTypeLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var getDirectionsButton: UIButton!
     
@@ -72,12 +72,12 @@ final class RecipeViewController: UIViewController {
         titleLabel.text = recipeToLoad.recipeTitle()
         ingredientsTextView.text = recipeToLoad.recipeIngredientsList()
 
-        noteLabel.text = "\(recipeToLoad.recipeNote())"
+        cuisineTypeLabel.text = recipeToLoad.recipeCuisineType()
 
         if recipeToLoad.recipeTime() > 0 {
             timeLabel.text = "\(recipeToLoad.recipeTime()) min"
         } else {
-            timeLabel.text = ""
+            timeLabel.text = "No Time"
         }
 
         recipeImageView.image = selectedRecipeImage
@@ -94,6 +94,7 @@ final class RecipeViewController: UIViewController {
         recipeToSave.ingredientList = currentRecipe.recipeIngredientsList()
         recipeToSave.ingredientName = currentRecipe.recipeIngredientsName()
         recipeToSave.totalTime = currentRecipe.recipeTime()
+        recipeToSave.cuisineType = currentRecipe.recipeCuisineType()
 
         print("dishType reçu: \(currentRecipe.recipeDishType())")
 

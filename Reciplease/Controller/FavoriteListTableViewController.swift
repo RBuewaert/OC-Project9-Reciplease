@@ -8,8 +8,10 @@
 import UIKit
 
 final class FavoriteListTableViewController: UITableViewController {
+    // MARK: - Property
     var dishTypeList = DishType.all
 
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 200
@@ -25,7 +27,6 @@ final class FavoriteListTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return dishTypeList.count
     }
@@ -34,7 +35,7 @@ final class FavoriteListTableViewController: UITableViewController {
         guard let numberOfRows = dishTypeList[section].recipes?.count else { return 1 }
         return numberOfRows
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath) as? RecipeTableViewCell else {
             return UITableViewCell()
@@ -43,21 +44,21 @@ final class FavoriteListTableViewController: UITableViewController {
         let recipe = dishTypeList[indexPath.section].recipeArray[indexPath.row]
 
         guard let imageUrl = recipe.imageUrl else {
-            cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientName, cuisineType: recipe.note, time: recipe.totalTime)
+            cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientName, cuisineType: recipe.wrappedCuisineType, time: recipe.totalTime)
             return cell
         }
 
         guard imageUrl.hasSuffix(".jpg") || imageUrl.hasSuffix(".png") else {
-            cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientName, cuisineType: recipe.note, time: recipe.totalTime)
+            cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientName, cuisineType: recipe.wrappedCuisineType, time: recipe.totalTime)
             return cell
         }
-                
+
         RecipeManage.shared.getImage(url: recipe.imageUrl!) { result in
             switch result {
             case .success(let image):
-                cell.configure(imageData: image, title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientName, cuisineType: recipe.note, time: recipe.totalTime)
+                cell.configure(imageData: image, title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientName, cuisineType: recipe.wrappedCuisineType, time: recipe.totalTime)
             case .failure(_):
-                cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientName, cuisineType: recipe.note, time: recipe.totalTime)
+                cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientName, cuisineType: recipe.wrappedCuisineType, time: recipe.totalTime)
             }
         }
         return cell
@@ -85,9 +86,9 @@ final class FavoriteListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(identifier: "Recipe") as? RecipeViewController {
-            
+
             vc.selectedRecipe = dishTypeList[indexPath.section].recipeArray[indexPath.row]
-                        
+
             guard let currentCell = tableView.cellForRow(at: indexPath) as? RecipeTableViewCell else { return }
             guard let currentImage = currentCell.recipeImageView.image else { return }
             vc.selectedRecipeImage = currentImage
@@ -95,7 +96,10 @@ final class FavoriteListTableViewController: UITableViewController {
             navigationController?.pushViewController(vc, animated: true)
         }
     }
+}
 
+extension FavoriteListTableViewController {
+    // MARK: - UIAlertController
     private func alertMessageForUser() {
         let alertVC = UIAlertController(title: "Information!", message: "click on the star to add a recipe on your favorite list", preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))

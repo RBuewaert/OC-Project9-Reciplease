@@ -16,7 +16,7 @@ final class FavoriteRecipeViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ingredientsTextView: UITextView!
     @IBOutlet weak var littleView: UIView!
-    @IBOutlet weak var noteLabel: UILabel!
+    @IBOutlet weak var cuisineTypeLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
 
     var selectedFavoriteRecipe: RecipeSaved?
@@ -44,7 +44,7 @@ final class FavoriteRecipeViewController: UIViewController {
         titleLabel.text = recipeToLoad.title
         ingredientsTextView.text = recipeToLoad.ingredientList
         
-        noteLabel.text = "\(recipeToLoad.note)"
+        cuisineTypeLabel.text = "\(recipeToLoad.note)"
         
         if recipeToLoad.totalTime > 0 {
             timeLabel.text = "\(recipeToLoad.totalTime) min"

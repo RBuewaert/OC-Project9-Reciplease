@@ -139,8 +139,8 @@
 				69991AEC26EA26CA00A9DE90 /* SearchViewController.swift */,
 				699EBF3526EF74EC003CBA46 /* ListTableViewController.swift */,
 				6997167226F2202800467F48 /* RecipeViewController.swift */,
-				699FB06126F4D97F00E52A90 /* DetailRecipeViewController.swift */,
 				69A0046F26F8AFF700E098A1 /* FavoriteListTableViewController.swift */,
+				699FB06126F4D97F00E52A90 /* DetailRecipeViewController.swift */,
 				69A1D05826FC5E0200DC91ED /* FavoriteRecipeViewController.swift */,
 			);
 			path = Controller;

@@ -5,7 +5,7 @@
         <relationship name="recipes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecipeSaved" inverseName="dishTypes" inverseEntity="RecipeSaved"/>
     </entity>
     <entity name="RecipeSaved" representedClassName=".RecipeSaved" syncable="YES" codeGenerationType="category">
-        <attribute name="cuisineType" optional="YES" attributeType="String"/>
+        <attribute name="cuisineType" attributeType="String"/>
         <attribute name="imageUrl" attributeType="String"/>
         <attribute name="ingredientList" attributeType="String"/>
         <attribute name="ingredientName" optional="YES" attributeType="String"/>

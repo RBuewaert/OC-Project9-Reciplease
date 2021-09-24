@@ -29,6 +29,10 @@ final class RecipeSaved: NSManagedObject {
         url ?? "No Url"
     }
 
+    public var wrappedCuisineType: String {
+        cuisineType ?? "No Origin"
+    }
+
     public var dishTypeArray: [DishType] {
         let set = dishTypes as? Set<DishType> ?? []
         return set.sorted {
@@ -64,6 +68,10 @@ extension RecipeSaved: RecipeProtocol {
 
     func recipeTime() -> Double {
         return totalTime
+    }
+
+    func recipeCuisineType() -> String {
+        return wrappedCuisineType
     }
 
     func recipeDishType() -> [String] {

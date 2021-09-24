@@ -55,6 +55,10 @@ extension Recipe: RecipeProtocol {
         return totalTime
     }
 
+    func recipeCuisineType() -> String {
+        return cuisineType
+    }
+
     func recipeDishType() -> [String] {
         return dishType
     }

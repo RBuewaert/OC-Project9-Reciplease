@@ -15,5 +15,6 @@ protocol RecipeProtocol {
     func recipeImageUrl() -> String
     func recipeNote() -> Double
     func recipeTime() -> Double
+    func recipeCuisineType() -> String
     func recipeDishType() -> [String]
 }
