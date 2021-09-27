@@ -1,14 +1,14 @@
 //
-//  RecipeServiceTestCase.swift
+//  RecipeManageTestCase.swift
 //  RecipleaseTests
 //
-//  Created by Romain Buewaert on 24/09/2021.
+//  Created by Romain Buewaert on 27/09/2021.
 //
 
 import XCTest
 @testable import Reciplease
 
-class RecipeServiceTestCase: XCTestCase {
+class RecipeManageTestCase: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

@@ -9,91 +9,60 @@ import Foundation
 import Alamofire
 
 final class RecipeManage {
-    // MARK: - Pattern Singleton
-    static var shared = RecipeManage()
+    // PAS UTILE
+//    // MARK: - Pattern Singleton
+//    static var shared = RecipeManage()
 
     private static let url = "https://api.edamam.com/api/recipes/v2?"
     static var urlNextPage = ""
+    
+    private let session: NetworkSession
+    init(session: NetworkSession = RecipeSession()) {
+        self.session = session
+    }
 
     func getFirstRecipes(ingredients: String, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
-        let parameters = ["type": "public", "q": ingredients, "app_id": APIKey.id, "app_key": APIKey.key]
+        var url: URL? {
+            var urlComponents = URLComponents(string: "https://api.edamam.com/api/recipes/v2?")
 
-        AF.request(RecipeManage.url, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil, interceptor: nil, requestModifier: nil).responseDecodable(of: RecipeListResult.self) { response in
-            
-            self.getRecipe(response: response, completionHandler: completionHandler)
-            
-//            guard response.error == nil else {
-//                return completionHandler(.failure(.downloadFailed))
-//            }
-//
-//            guard let data = response.data else {
-//                return completionHandler(.failure(.noData))
-//            }
-//
-//            var recipeList = RecipeList(list: [])
-//            do {
-//                let JSONresult = try JSONDecoder().decode(RecipeListResult.self, from: data)
-//                guard JSONresult.count > 0 else {
-//                    return completionHandler(.failure(.noResult))
-//                }
-//                recipeList = self.addRecipeOnArrayList(numberOfRecipe: JSONresult.to, JSONresult: JSONresult)
-//                if let urlNextPage = JSONresult.links.next?.href {
-//                    RecipeService.urlNextPage = urlNextPage
-//                } else {
-//                    RecipeService.urlNextPage = ""
-//                }
-//            } catch {
-//                print(error)
-//                return completionHandler(.failure(.extractValues))
-//            }
-//
-//            completionHandler(.success(recipeList))
+            urlComponents?.queryItems = [
+                URLQueryItem(name: "type", value: "public"),
+                URLQueryItem(name: "q", value: ingredients),
+                URLQueryItem(name: "app_id", value: APIKey.id),
+                URLQueryItem(name: "app_key", value: APIKey.key)
+            ]
+
+            guard let urlComponentUnwrapped = urlComponents else { return nil}
+            guard let urlString = urlComponentUnwrapped.string else { return nil }
+            guard let url = URL(string: urlString) else { return nil }
+            return url
+        }
+
+        guard let urlUnwrapped = url else { return }
+
+        session.request(url: urlUnwrapped) { dataResponse in
+            self.getRecipe(dataResponse: dataResponse, completionHandler: completionHandler)
         }
     }
     
-    func getOtherRecipes(url: String, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
-        AF.request(url).responseDecodable(of: RecipeListResult.self) { response in
-            
-            self.getRecipe(response: response, completionHandler: completionHandler)
-            
-//            guard response.error == nil else {
-//                return completionHandler(.failure(.downloadFailed))
-//            }
-//
-//            guard let data = response.data else {
-//                return completionHandler(.failure(.noData))
-//            }
-//
-//            var recipeList = RecipeList(list: [])
-//            do {
-//                let JSONresult = try JSONDecoder().decode(RecipeListResult.self, from: data)
-//                guard JSONresult.count > 0 else {
-//                    return completionHandler(.failure(.noResult))
-//                }
-//                recipeList = self.addRecipeOnArrayList(numberOfRecipe: JSONresult.to, JSONresult: JSONresult)
-//                if let urlNextPage = JSONresult.links.next?.href {
-//                    RecipeService.urlNextPage = urlNextPage
-//                } else {
-//                    RecipeService.urlNextPage = ""
-//                }
-//            } catch {
-//                print(error)
-//                return completionHandler(.failure(.extractValues))
-//            }
-//
-//            completionHandler(.success(recipeList))
+    func getOtherRecipes(completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
+        guard let url = URL(string: RecipeManage.urlNextPage) else { return }
+
+        session.request(url: url) { dataResponse in
+            self.getRecipe(dataResponse: dataResponse, completionHandler: completionHandler)
         }
     }
 
-    private func getRecipe(response: DataResponse<RecipeListResult, AFError>, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
-        guard response.error == nil else {
-            return completionHandler(.failure(.downloadFailed))
+    private func getRecipe(dataResponse: DataResponse<Any, AFError>, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
+        guard let data = dataResponse.data else {
+            completionHandler(.failure(.noData))
+            return
+        }
+        guard dataResponse.response?.statusCode == 200 else {
+            completionHandler(.failure(.downloadFailed))
+            return
         }
 
-        guard let data = response.data else {
-            return completionHandler(.failure(.noData))
-        }
-        
         var recipeList = RecipeList(list: [])
         do {
             let JSONresult = try JSONDecoder().decode(RecipeListResult.self, from: data)
@@ -110,9 +79,7 @@ final class RecipeManage {
             print(error)
             return completionHandler(.failure(.extractValues))
         }
-        
         completionHandler(.success(recipeList))
-        
     }
 
     private func addRecipeOnArrayList(numberOfRecipe: Int, JSONresult: RecipeListResult) -> RecipeList {

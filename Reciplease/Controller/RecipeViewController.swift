@@ -44,10 +44,9 @@ final class RecipeViewController: UIViewController {
     // MARK: - Action
     @IBAction func tappedGetDirectionsButton(_ sender: Any) {
         guard let currentRecipe = selectedRecipe else { return }
-        guard let url = URL(string: currentRecipe.recipeUrl()) else { return }
+        guard let url = URL(string: currentRecipe.recipeUrl) else { return }
 
         let config = SFSafariViewController.Configuration()
-        // Mode lecture???
         config.entersReaderIfAvailable = true
 
         let vc = SFSafariViewController(url: url, configuration: config)
@@ -69,13 +68,13 @@ final class RecipeViewController: UIViewController {
 
     private func updateView() {
         guard let recipeToLoad = selectedRecipe else { return }
-        titleLabel.text = recipeToLoad.recipeTitle()
-        ingredientsTextView.text = recipeToLoad.recipeIngredientsList()
+        titleLabel.text = recipeToLoad.recipeTitle
+        ingredientsTextView.text = recipeToLoad.recipeIngredientsList
 
-        cuisineTypeLabel.text = recipeToLoad.recipeCuisineType()
+        cuisineTypeLabel.text = recipeToLoad.recipeCuisineType
 
-        if recipeToLoad.recipeTime() > 0 {
-            timeLabel.text = "\(recipeToLoad.recipeTime()) min"
+        if recipeToLoad.recipeTime > 0 {
+            timeLabel.text = "\(recipeToLoad.recipeTime) min"
         } else {
             timeLabel.text = "No Time"
         }
@@ -88,17 +87,17 @@ final class RecipeViewController: UIViewController {
         guard let currentRecipe = selectedRecipe else { return }
 
         let recipeToSave = RecipeSaved(context: AppDelegate.viewContext)
-        recipeToSave.title = currentRecipe.recipeTitle()
-        recipeToSave.imageUrl = currentRecipe.recipeImageUrl()
-        recipeToSave.url = currentRecipe.recipeUrl()
-        recipeToSave.ingredientList = currentRecipe.recipeIngredientsList()
-        recipeToSave.ingredientName = currentRecipe.recipeIngredientsName()
-        recipeToSave.totalTime = currentRecipe.recipeTime()
-        recipeToSave.cuisineType = currentRecipe.recipeCuisineType()
+        recipeToSave.title = currentRecipe.recipeTitle
+        recipeToSave.imageUrl = currentRecipe.recipeImageUrl
+        recipeToSave.url = currentRecipe.recipeUrl
+        recipeToSave.ingredientList = currentRecipe.recipeIngredientsList
+        recipeToSave.ingredientName = currentRecipe.recipeIngredientsName
+        recipeToSave.totalTime = currentRecipe.recipeTime
+        recipeToSave.cuisineType = currentRecipe.recipeCuisineType
 
-        print("dishType reçu: \(currentRecipe.recipeDishType())")
+        print("dishType reçu: \(currentRecipe.recipeDishType)")
 
-        for dishType in currentRecipe.recipeDishType() {
+        for dishType in currentRecipe.recipeDishType {
             if !DishType().dishTypeIsExisting(dishType) {
                 let dishTypeToSave = DishType(context: AppDelegate.viewContext)
                 dishTypeToSave.type = dishType
@@ -122,7 +121,7 @@ final class RecipeViewController: UIViewController {
 
     @objc private func removeFavorite() {
         
-        guard var currentRecipe = selectedRecipe as? RecipeSaved else { return }
+        guard let currentRecipe = selectedRecipe as? RecipeSaved else { return }
         
 //        guard currentRecipe == RecipeSaved(context: selectedRecipe as! NSManagedObjectContext) else { return }
 
@@ -134,7 +133,7 @@ final class RecipeViewController: UIViewController {
 //        context.delete(currentRecipe)
         
         
-        print("SelectedRecipe : \(selectedRecipe)")
+        print("SelectedRecipe : \(currentRecipe)")
         print("CurrentRecipeDishtypeArray : \(currentRecipe.dishTypeArray)")
         
   

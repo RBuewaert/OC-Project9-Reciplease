@@ -8,13 +8,13 @@
 import Foundation
 
 protocol RecipeProtocol {
-    func recipeTitle() -> String
-    func recipeIngredientsList() -> String
-    func recipeIngredientsName() -> String
-    func recipeUrl() -> String
-    func recipeImageUrl() -> String
-    func recipeNote() -> Double
-    func recipeTime() -> Double
-    func recipeCuisineType() -> String
-    func recipeDishType() -> [String]
+    var recipeTitle: String { get }
+    var recipeIngredientsList: String { get }
+    var recipeIngredientsName: String { get }
+    var recipeUrl: String { get }
+    var recipeImageUrl: String { get }
+    var recipeNote: Double { get }
+    var recipeTime: Double { get }
+    var recipeCuisineType: String { get }
+    var recipeDishType: [String] { get }    
 }

@@ -42,39 +42,39 @@ final class RecipeSaved: NSManagedObject {
 }
 
 extension RecipeSaved: RecipeProtocol {
-    func recipeTitle() -> String {
+    var recipeTitle: String {
         return wrappedTitle
     }
 
-    func recipeIngredientsList() -> String {
+    var recipeIngredientsList: String {
         return wrappedIngredientList
     }
 
-    func recipeIngredientsName() -> String {
+    var recipeIngredientsName: String {
         return wrappedIngredientName
     }
 
-    func recipeUrl() -> String {
+    var recipeUrl: String {
         return wrappedUrl
     }
-
-    func recipeImageUrl() -> String {
+    
+    var recipeImageUrl: String {
         return wrappedImageUrl
     }
 
-    func recipeNote() -> Double {
+    var recipeNote: Double {
         return note
     }
 
-    func recipeTime() -> Double {
+    var recipeTime: Double {
         return totalTime
     }
 
-    func recipeCuisineType() -> String {
+    var recipeCuisineType: String {
         return wrappedCuisineType
     }
 
-    func recipeDishType() -> [String] {
+    var recipeDishType: [String] {
         var dishType = [String]()
         for type in dishTypeArray {
             dishType.append(type.wrappedType)

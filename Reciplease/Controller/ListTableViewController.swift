@@ -9,6 +9,7 @@ import UIKit
 
 final class ListTableViewController: UITableViewController {
     // MARK: - Properties
+    private let recipeManage = RecipeManage()
     var ingredients = ""
     var recipeList = RecipeList(list: [])
     var findMoreRecipe = false
@@ -18,7 +19,7 @@ final class ListTableViewController: UITableViewController {
         super.viewDidLoad()
         tableView.rowHeight = 200
 
-        RecipeManage.shared.getFirstRecipes(ingredients: ingredients) { result in
+        recipeManage.getFirstRecipes(ingredients: ingredients) { result in
             switch result {
             case .success(let recipeList):
                 self.recipeList = recipeList
@@ -55,7 +56,7 @@ final class ListTableViewController: UITableViewController {
             return cell
         }
 
-        RecipeManage.shared.getImage(url: recipe.imageUrl!) { result in
+        recipeManage.getImage(url: recipe.imageUrl!) { result in
             switch result {
             case .success(let image):
                 cell.configure(imageData: image, title: recipe.title, ingredients: recipe.ingredientName, cuisineType: recipe.cuisineType, time: recipe.totalTime)
@@ -105,7 +106,7 @@ final class ListTableViewController: UITableViewController {
         self.tableView.tableFooterView = createFooterActivityIndicator()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            RecipeManage.shared.getOtherRecipes(url: RecipeManage.urlNextPage) { result in
+            self.recipeManage.getOtherRecipes() { result in
                 self.tableView.tableFooterView = nil
                 switch result {
                 case .success(let nextRecipeList):

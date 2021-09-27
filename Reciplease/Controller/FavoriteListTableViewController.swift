@@ -9,6 +9,7 @@ import UIKit
 
 final class FavoriteListTableViewController: UITableViewController {
     // MARK: - Property
+    private let recipeManage = RecipeManage()
     var dishTypeList = DishType.all
 
     // MARK: - View life cycle
@@ -53,7 +54,7 @@ final class FavoriteListTableViewController: UITableViewController {
             return cell
         }
 
-        RecipeManage.shared.getImage(url: recipe.imageUrl!) { result in
+        recipeManage.getImage(url: recipe.imageUrl!) { result in
             switch result {
             case .success(let image):
                 cell.configure(imageData: image, title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientName, cuisineType: recipe.wrappedCuisineType, time: recipe.totalTime)
@@ -65,13 +66,14 @@ final class FavoriteListTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let titleSection = dishTypeList[section].type else { return nil}
         let myLabel = UILabel()
-        myLabel.frame = CGRect(x: 20, y: 8, width: 320, height: 20)
+        myLabel.frame = CGRect(x: 20, y: 8, width: 320, height: 32)
         myLabel.font = UIFont.boldSystemFont(ofSize: 30)
         myLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         myLabel.textAlignment = .center
         myLabel.numberOfLines = 0
-        myLabel.text = self.tableView(tableView, titleForHeaderInSection: section)
+        myLabel.text = titleSection
 
         let headerView = UIView()
         headerView.addSubview(myLabel)
@@ -79,10 +81,6 @@ final class FavoriteListTableViewController: UITableViewController {
         return headerView
     }
 
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let titleSection = dishTypeList[section].type else { return nil}
-        return titleSection
-    }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let vc = storyboard?.instantiateViewController(identifier: "Recipe") as? RecipeViewController {

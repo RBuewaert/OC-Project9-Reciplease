@@ -27,39 +27,39 @@ struct Recipe {
 }
 
 extension Recipe: RecipeProtocol {
-    func recipeTitle() -> String {
+    var recipeTitle: String {
         return title
     }
     
-    func recipeIngredientsList() -> String {
+    var recipeIngredientsList: String {
         return ingredientList
     }
-
-    func recipeIngredientsName() -> String {
+    
+    var recipeIngredientsName: String {
         return ingredientName
     }
-
-    func recipeUrl() -> String {
+    
+    var recipeUrl: String {
         return url
     }
     
-    func recipeImageUrl() -> String {
+    var recipeImageUrl: String {
         return imageUrl ?? ""
     }
     
-    func recipeNote() -> Double {
+    var recipeNote: Double {
         return yield
     }
     
-    func recipeTime() -> Double {
+    var recipeTime: Double {
         return totalTime
     }
-
-    func recipeCuisineType() -> String {
+    
+    var recipeCuisineType: String {
         return cuisineType
     }
-
-    func recipeDishType() -> [String] {
+    
+    var recipeDishType: [String] {
         return dishType
     }
 }
@@ -130,7 +130,6 @@ extension RecipeListResultHits {
             cuisineType.append("\(cuisine), ")
         }
         cuisineType.removeLast(2)
-        print("Cuisine Type \(cuisineType)")
         return cuisineType
     }
 }
