@@ -10,18 +10,8 @@ import Alamofire
 
 protocol NetworkSession {
     func request(url: URL, completionHandler: @escaping (AFDataResponse<Any>) -> Void)
-    
-    
-    
-    
-//    func request2(url: URL, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> Void)
-//
-//
-//    func get(_ url: URL, completionHandler: @escaping (Data?, Error?) -> Void)
-//
-    
-    
 
+    func requestForImage(url: String, completionHandler: @escaping (DataResponse<Data, AFError>) -> Void)
 }
 
 final class RecipeSession: NetworkSession {
@@ -30,36 +20,10 @@ final class RecipeSession: NetworkSession {
             completionHandler(dataResponse)
         }
     }
-    
-   
-    
-    
-   
-    
-    
- 
-    
-    
-//    func request2(url: URL, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> Void) {
-//        <#code#>
-//    }
-//
-//
-//
-//
-//    func get(_ url: URL, completionHandler: @escaping (Data?, Error?) -> Void) {
-//        AF.request(url)
-//            .validate()
-//            .responseData { response in
-//                switch response.result {
-//                case .failure(let error):
-//                    completionHandler(nil, error)
-//                case .success(let data):
-//                    completionHandler(data, nil)
-//                }
-//            }
-//    }
-    
-    
-    
+
+    func requestForImage(url: String, completionHandler: @escaping (DataResponse<Data, AFError>) -> Void) {
+        AF.request(url).responseData { (dataImage) in
+            completionHandler(dataImage)
+        }
+    }
 }

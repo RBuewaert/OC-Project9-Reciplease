@@ -9,18 +9,17 @@ import Foundation
 import Alamofire
 
 final class RecipeManage {
-    // PAS UTILE
-//    // MARK: - Pattern Singleton
-//    static var shared = RecipeManage()
-
+    // MARK: - Properties
     private static let url = "https://api.edamam.com/api/recipes/v2?"
     static var urlNextPage = ""
-    
+
+    // MARK: - Init session for request and Dependency Injection
     private let session: NetworkSession
     init(session: NetworkSession = RecipeSession()) {
         self.session = session
     }
 
+    // MARK: - Methods for Request
     func getFirstRecipes(ingredients: String, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
         var url: URL? {
             var urlComponents = URLComponents(string: "https://api.edamam.com/api/recipes/v2?")
@@ -44,7 +43,7 @@ final class RecipeManage {
             self.getRecipe(dataResponse: dataResponse, completionHandler: completionHandler)
         }
     }
-    
+
     func getOtherRecipes(completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
         guard let url = URL(string: RecipeManage.urlNextPage) else { return }
 
@@ -53,6 +52,24 @@ final class RecipeManage {
         }
     }
 
+    func getImage(url: String, completionHandler: @escaping (Result<Data, ErrorType>) -> ()) {
+        
+        session.requestForImage(url: url) { dataImage in
+            guard dataImage.error == nil else {
+                completionHandler(.failure(.downloadFailed))
+                return
+            }
+
+            guard let image = dataImage.data else {
+                completionHandler(.failure(.noData))
+                return
+            }
+
+            completionHandler(.success(image))
+        }
+    }
+
+    // MARK: - Private Methods
     private func getRecipe(dataResponse: DataResponse<Any, AFError>, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
         guard let data = dataResponse.data else {
             completionHandler(.failure(.noData))
@@ -87,27 +104,11 @@ final class RecipeManage {
         let recipes = JSONresult.hits.map { $0.toRecipe() }
         recipeList.list.append(contentsOf: recipes)
         return recipeList
-        
+
 //         3 last lines equivalent to:
 //        for hit in JSONresult.hits {
 //            recipeList.list.append(hit.toRecipe())
 //        }
 //        return recipeList
-    }
-
-    func getImage(url: String, completionHandler: @escaping (Result<Data, ErrorType>) -> ()) {
-        AF.request(url).responseData { (response) in
-            guard response.error == nil else {
-                completionHandler(.failure(.downloadFailed))
-                return
-            }
-
-            guard let image = response.data else {
-                completionHandler(.failure(.noData))
-                return
-            }
-
-            completionHandler(.success(image))
-        }
     }
 }

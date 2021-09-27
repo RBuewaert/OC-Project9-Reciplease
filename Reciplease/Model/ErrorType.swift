@@ -12,5 +12,7 @@ enum ErrorType: String, Error {
     case noData = "no data found"
     case extractValues = "No possible to extract values"
     case noResult = "there is no recipe found for this research"
+    case saveFailed = "Favorite not saved"
+    case deletionFailed = "Favorite not removed"
 }
 

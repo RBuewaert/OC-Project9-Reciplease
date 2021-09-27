@@ -86,76 +86,24 @@ final class RecipeViewController: UIViewController {
     @objc private func addToFavorite() {
         guard let currentRecipe = selectedRecipe else { return }
 
-        let recipeToSave = RecipeSaved(context: AppDelegate.viewContext)
-        recipeToSave.title = currentRecipe.recipeTitle
-        recipeToSave.imageUrl = currentRecipe.recipeImageUrl
-        recipeToSave.url = currentRecipe.recipeUrl
-        recipeToSave.ingredientList = currentRecipe.recipeIngredientsList
-        recipeToSave.ingredientName = currentRecipe.recipeIngredientsName
-        recipeToSave.totalTime = currentRecipe.recipeTime
-        recipeToSave.cuisineType = currentRecipe.recipeCuisineType
-
-        print("dishType reçu: \(currentRecipe.recipeDishType)")
-
-        for dishType in currentRecipe.recipeDishType {
-            if !DishType().dishTypeIsExisting(dishType) {
-                let dishTypeToSave = DishType(context: AppDelegate.viewContext)
-                dishTypeToSave.type = dishType
-                recipeToSave.addToDishTypes(dishTypeToSave)
-            } else {
-                guard let currentDishType = DishType().returnExistingDishType(dishType) else { return }
-                recipeToSave.addToDishTypes(currentDishType)
-            }
-        }
-
-        print("dishType sauvegardé: \(recipeToSave.dishTypes?.allObjects)")
-
         do {
-            try AppDelegate.viewContext.save()
+            try DishType().saveRecipe(currentRecipe)
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"), style: .plain, target: self, action: #selector(removeFavorite))
             alertMessageForUser(title: "Succes!", message: "Recipe added to favorite")
         } catch {
-            alertMessageForUser(title: "Error!", message: "Favorite not saved")
+            alertMessageForUser(title: "Error!", message: ErrorType.saveFailed.rawValue)
         }
     }
 
     @objc private func removeFavorite() {
-        
         guard let currentRecipe = selectedRecipe as? RecipeSaved else { return }
-        
-//        guard currentRecipe == RecipeSaved(context: selectedRecipe as! NSManagedObjectContext) else { return }
-
-        
-        
-        AppDelegate.viewContext.delete(currentRecipe)
-        
-//        let context = AppDelegate.viewContext
-//        context.delete(currentRecipe)
-        
-        
-        print("SelectedRecipe : \(currentRecipe)")
-        print("CurrentRecipeDishtypeArray : \(currentRecipe.dishTypeArray)")
-        
-  
-        for dishType in currentRecipe.dishTypeArray {
-            currentRecipe.removeFromDishTypes(dishType)
-            
-            if dishType.recipeArray.isEmpty {
-//                var dishTypeToRemove = DishType(context: AppDelegate.viewContext)
-//                dishTypeToRemove = dishType
-//                dishTypeToRemove.removeFromRecipes(currentRecipe)
-                AppDelegate.viewContext.delete(dishType)
-            }
-            
-
-        }
 
         do {
-            try AppDelegate.viewContext.save()
+            try DishType().removeSavedRecipe(currentRecipe)
             navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(addToFavorite))
             alertMessageForUser(title: "Succes!", message: "Recipe removed from favorite")
         } catch {
-            alertMessageForUser(title: "Error!", message: "Favorite not removed")
+            alertMessageForUser(title: "Error!", message: ErrorType.deletionFailed.rawValue)
         }
     }
 }

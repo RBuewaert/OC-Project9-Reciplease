@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - Struct RecipeList
+// MARK: - Struct RecipeList and Recipe
 struct RecipeList {
     var list: [Recipe]
 }
@@ -30,41 +30,41 @@ extension Recipe: RecipeProtocol {
     var recipeTitle: String {
         return title
     }
-    
+
     var recipeIngredientsList: String {
         return ingredientList
     }
-    
+
     var recipeIngredientsName: String {
         return ingredientName
     }
-    
+
     var recipeUrl: String {
         return url
     }
-    
+
     var recipeImageUrl: String {
         return imageUrl ?? ""
     }
-    
+
     var recipeNote: Double {
         return yield
     }
-    
+
     var recipeTime: Double {
         return totalTime
     }
-    
+
     var recipeCuisineType: String {
         return cuisineType
     }
-    
+
     var recipeDishType: [String] {
         return dishType
     }
 }
 
-// MARK: - Struct result from JSO
+// MARK: - Struct result from JSON
 struct RecipeListResult: Codable {
     let from: Int
     let to: Int

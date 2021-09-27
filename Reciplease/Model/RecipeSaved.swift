@@ -57,7 +57,7 @@ extension RecipeSaved: RecipeProtocol {
     var recipeUrl: String {
         return wrappedUrl
     }
-    
+
     var recipeImageUrl: String {
         return wrappedImageUrl
     }
