@@ -19,13 +19,13 @@ final class ListTableViewController: UITableViewController {
         super.viewDidLoad()
         tableView.rowHeight = 200
 
-        recipeManage.getFirstRecipes(ingredients: ingredients) { result in
+        recipeManage.getFirstRecipes(ingredients: ingredients) { [weak self] result in
             switch result {
             case .success(let recipeList):
-                self.recipeList = recipeList
-                self.tableView.reloadData()
+                self?.recipeList = recipeList
+                self?.tableView.reloadData()
             case .failure(let error):
-                self.alertErrorMessage(message: error.rawValue)
+                self?.alertErrorMessage(message: error.rawValue)
             }
         }
     }
@@ -106,18 +106,18 @@ final class ListTableViewController: UITableViewController {
         self.tableView.tableFooterView = createFooterActivityIndicator()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            self.recipeManage.getOtherRecipes() { result in
-                self.tableView.tableFooterView = nil
+            self.recipeManage.getOtherRecipes() { [weak self] result in
+                self?.tableView.tableFooterView = nil
                 switch result {
                 case .success(let nextRecipeList):
                     for recipe in nextRecipeList.list {
-                        self.recipeList.list.append(recipe)
+                        self?.recipeList.list.append(recipe)
                     }
-                    self.findMoreRecipe = false
-                    self.tableView.reloadData()
-                    print(self.recipeList.list.count)
+                    self?.findMoreRecipe = false
+                    self?.tableView.reloadData()
+                    print(self?.recipeList.list.count ?? "")
                 case .failure(let error):
-                    self.alertErrorMessage(message: error.rawValue)
+                    self?.alertErrorMessage(message: error.rawValue)
                 }
             }
         }
