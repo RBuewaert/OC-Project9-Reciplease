@@ -13,6 +13,7 @@ class RecipeManageTestCase: XCTestCase {
         let session = FakeRecipeSession(fakeResponse: FakeResponse(response: nil, data: nil))
         let recipeManage = RecipeManage(session: session)
         let expectation = XCTestExpectation(description: "Wait for queue change.")
+
         recipeManage.getFirstRecipes(ingredients: "chicken") { result in
             guard case .failure(let error) = result else {
                 XCTFail("Test getRecipe method with no data failed.")
