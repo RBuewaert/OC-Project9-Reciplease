@@ -19,7 +19,7 @@ final class RecipeManage {
     }
 
     // MARK: - Methods for Request
-    func getFirstRecipes(ingredients: String, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
+    func getFirstRecipes(ingredients: String, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> Void) {
         guard let urlUnwrapped = urlForFirstGetRecipe(ingredients: ingredients) else { return }
 
         session.request(url: urlUnwrapped) { dataResponse in
@@ -27,7 +27,7 @@ final class RecipeManage {
         }
     }
 
-    func getOtherRecipes(completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
+    func getOtherRecipes(completionHandler: @escaping (Result<RecipeList, ErrorType>) -> Void) {
         guard let url = URL(string: RecipeManage.urlNextPage) else { return }
 
         session.request(url: url) { dataResponse in
@@ -35,15 +35,10 @@ final class RecipeManage {
         }
     }
 
-    func getImage(url: String, completionHandler: @escaping (Result<Data, ErrorType>) -> ()) {
+    func getImage(url: String, completionHandler: @escaping (Result<Data, ErrorType>) -> Void) {
         session.requestForImage(url: url) { dataImage in
-            guard dataImage.error == nil else {
+            guard dataImage.error == nil, let image = dataImage.data else {
                 completionHandler(.failure(.downloadFailed))
-                return
-            }
-
-            guard let image = dataImage.data else {
-                completionHandler(.failure(.noData))
                 return
             }
 
@@ -68,7 +63,8 @@ final class RecipeManage {
         return url
     }
 
-    private func getRecipe(dataResponse: DataResponse<Any, AFError>, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
+    private func getRecipe(dataResponse: DataResponse<Any, AFError>,
+                           completionHandler: @escaping (Result<RecipeList, ErrorType>) -> Void) {
         guard let data = dataResponse.data else {
             completionHandler(.failure(.noData))
             return

@@ -18,7 +18,7 @@ final class RecipeViewController: UIViewController {
     @IBOutlet weak var cuisineTypeLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var getDirectionsButton: UIButton!
-    
+
     // MARK: - Properties
     var selectedRecipe: RecipeProtocol?
     var selectedRecipeImage = UIImage()
@@ -29,9 +29,11 @@ final class RecipeViewController: UIViewController {
         getDirectionsButton.layer.cornerRadius = 5
 
         if verifyIfRecipeIsOnFavorite() {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"), style: .plain, target: self, action: #selector(removeFavorite))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"),
+                                    style: .plain, target: self, action: #selector(removeFavorite))
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(addToFavorite))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"),
+                                    style: .plain, target: self, action: #selector(addToFavorite))
         }
 
         littleView.layer.cornerRadius = 5
@@ -88,7 +90,8 @@ final class RecipeViewController: UIViewController {
 
         do {
             try DishType().saveRecipe(currentRecipe)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"), style: .plain, target: self, action: #selector(removeFavorite))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"),
+                                    style: .plain, target: self, action: #selector(removeFavorite))
             alertMessageForUser(title: "Succes!", message: "Recipe added to favorite")
         } catch {
             alertMessageForUser(title: "Error!", message: ErrorType.saveFailed.rawValue)
@@ -100,7 +103,8 @@ final class RecipeViewController: UIViewController {
 
         do {
             try DishType().removeSavedRecipe(currentRecipe)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"), style: .plain, target: self, action: #selector(addToFavorite))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"),
+                                    style: .plain, target: self, action: #selector(addToFavorite))
             alertMessageForUser(title: "Succes!", message: "Recipe removed from favorite")
         } catch {
             alertMessageForUser(title: "Error!", message: ErrorType.deletionFailed.rawValue)
@@ -116,18 +120,4 @@ extension RecipeViewController {
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alertVC, animated: true, completion: nil)
     }
-
-    
- 
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

@@ -72,7 +72,6 @@ final class SearchViewController: UIViewController {
         ingredients.removeFirst(2)
         return ingredients
     }
-    
 }
 
 // MARK: - Navigation
@@ -86,7 +85,7 @@ extension SearchViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToListTableView" {
-            let vc = segue.destination as! ListTableViewController
+            guard let vc = segue.destination as? ListTableViewController else { return }
             guard let extractedIngredients = extractIngredients() else { return }
             vc.ingredients = extractedIngredients
         }
@@ -95,8 +94,9 @@ extension SearchViewController {
 
 // MARK: - UIAlertController
 extension SearchViewController {
-    private func presentAlert(){
-        let alertVC = UIAlertController(title: "Error", message: "Add ingredients before launch your research", preferredStyle: .alert)
+    private func presentAlert() {
+        let alertVC = UIAlertController(title: "Error",
+                    message: "Add ingredients before launch your research", preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .cancel, handler: nil)
         alertVC.addAction(action)
         present(alertVC, animated: true, completion: nil)

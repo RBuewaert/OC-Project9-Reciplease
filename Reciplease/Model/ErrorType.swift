@@ -15,4 +15,3 @@ enum ErrorType: String, Error {
     case saveFailed = "Favorite not saved"
     case deletionFailed = "Favorite not removed"
 }
-

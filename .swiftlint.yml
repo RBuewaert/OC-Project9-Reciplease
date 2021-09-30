@@ -1,0 +1,8 @@
+disabled_rules:
+   - identifier_name
+   - for_where
+   - control_statement
+   - unused_closure_parameter
+
+excluded:
+  - Pods

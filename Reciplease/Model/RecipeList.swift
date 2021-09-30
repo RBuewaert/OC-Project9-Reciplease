@@ -18,7 +18,7 @@ struct Recipe {
     let url: String
     let yield: Double
 //    let cautions: [String]
-    let ingredientList : String
+    let ingredientList: String
     let ingredientName: String
     let totalTime: Double
     let cuisineType: String
@@ -140,10 +140,10 @@ struct RecipeListResultRecipe: Codable {
     let url: String
     let yield: Double
 //    let cautions: [String]
-    let ingredientLines : [String]
-    let ingredients : [RecipeListResultIngredient]
+    let ingredientLines: [String]
+    let ingredients: [RecipeListResultIngredient]
     let totalTime: Double
-    let cuisineType : [String]
+    let cuisineType: [String]
 //    let mealType: [String]
     let dishType: [String]?
 }

@@ -61,7 +61,7 @@ final class DishType: NSManagedObject {
             throw ErrorType.saveFailed
         }
     }
-    
+
     func removeSavedRecipe(_ recipe: RecipeSaved) throws {
         AppDelegate.viewContext.delete(recipe)
 
@@ -92,7 +92,9 @@ final class DishType: NSManagedObject {
     func recipeIsExisting(_ recipeToVerify: Recipe) -> Bool {
         for dishType in DishType.all {
             for recipe in dishType.recipeArray {
-                if recipe.title == recipeToVerify.title, recipe.ingredientList == recipeToVerify.ingredientList, recipe.url == recipeToVerify.url {
+                if recipe.title == recipeToVerify.title,
+                   recipe.ingredientList == recipeToVerify.ingredientList,
+                   recipe.url == recipeToVerify.url {
                     return true
                 }
             }

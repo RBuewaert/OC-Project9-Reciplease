@@ -15,7 +15,7 @@ class RecipeTableViewCell: UITableViewCell {
     @IBOutlet weak var cuisineTypeLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var recipeImageView: UIImageView!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         littleView.layer.cornerRadius = 5

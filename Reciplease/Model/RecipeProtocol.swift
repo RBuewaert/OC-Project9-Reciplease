@@ -16,5 +16,5 @@ protocol RecipeProtocol {
     var recipeNote: Double { get }
     var recipeTime: Double { get }
     var recipeCuisineType: String { get }
-    var recipeDishType: [String] { get }    
+    var recipeDishType: [String] { get }
 }

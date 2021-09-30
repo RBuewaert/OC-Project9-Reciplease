@@ -9,6 +9,7 @@ import XCTest
 @testable import Reciplease
 
 class RecipeManageTestCase: XCTestCase {
+    // MARK: - Test method GetFirstRecipe
     func testGetFirstRecipe_WhenNoDataIsReceveid_ThenShouldReturnError() {
         let session = FakeRecipeSession(fakeResponse: FakeResponse(response: nil, data: nil))
         let recipeManage = RecipeManage(session: session)
@@ -26,7 +27,8 @@ class RecipeManageTestCase: XCTestCase {
     }
 
     func testGetFirstRecipe_WhenIncorrectResponseIsReceveid_ThenShouldReturnError() {
-        let session = FakeRecipeSession(fakeResponse: FakeResponse(response: FakeResponseData.responseKO, data: FakeResponseData.correctData))
+        let session = FakeRecipeSession(fakeResponse: FakeResponse(response: FakeResponseData.responseKO,
+                                                                   data: FakeResponseData.correctData))
         let recipeManage = RecipeManage(session: session)
         let expectation = XCTestExpectation(description: "Wait for queue change.")
 
@@ -42,7 +44,8 @@ class RecipeManageTestCase: XCTestCase {
     }
 
     func testGetFirstRecipe_WhenIncorrectDataIsReceveid_ThenShouldReturnError() {
-        let session = FakeRecipeSession(fakeResponse: FakeResponse(response: FakeResponseData.responseOK, data: FakeResponseData.incorrectData))
+        let session = FakeRecipeSession(fakeResponse: FakeResponse(response: FakeResponseData.responseOK,
+                                                                   data: FakeResponseData.incorrectData))
         let recipeManage = RecipeManage(session: session)
         let expectation = XCTestExpectation(description: "Wait for queue change.")
 
@@ -58,7 +61,8 @@ class RecipeManageTestCase: XCTestCase {
     }
 
     func testGetFirstRecipe_WhencorrectDataIsReceveidWithNoResult_ThenShouldReturnNoResultToUser() {
-        let session = FakeRecipeSession(fakeResponse: FakeResponse(response: FakeResponseData.responseOK, data: FakeResponseData.correctDataWithNoResult))
+        let session = FakeRecipeSession(fakeResponse: FakeResponse(response: FakeResponseData.responseOK,
+                                                                data: FakeResponseData.correctDataWithNoResult))
         let recipeManage = RecipeManage(session: session)
         let expectation = XCTestExpectation(description: "Wait for queue change.")
 
@@ -74,7 +78,8 @@ class RecipeManageTestCase: XCTestCase {
     }
 
     func testGetFirstRecipe_WhencorrectDataIsReceveid_ThenShouldReturnSuccess() {
-        let session = FakeRecipeSession(fakeResponse: FakeResponse(response: FakeResponseData.responseOK, data: FakeResponseData.correctData))
+        let session = FakeRecipeSession(fakeResponse: FakeResponse(response: FakeResponseData.responseOK,
+                                                                   data: FakeResponseData.correctData))
         let recipeManage = RecipeManage(session: session)
         let expectation = XCTestExpectation(description: "Wait for queue change.")
 
@@ -83,6 +88,7 @@ class RecipeManageTestCase: XCTestCase {
                 XCTFail("Test getRecipe method with correct data failed.")
                 return
             }
+            // swiftlint:disable line_length
             XCTAssertNotNil(data)
             XCTAssertEqual(data.list.count, 20)
             XCTAssertEqual(data.list[0].title, "Chicken Vesuvio")
@@ -96,12 +102,15 @@ class RecipeManageTestCase: XCTestCase {
             XCTAssertEqual(data.list[0].dishType, ["main course"])
             XCTAssertEqual(RecipeManage.urlNextPage, "https://api.edamam.com/api/recipes/v2?q=chicken&app_key=2b6469119d2a85f1ca18276aae53b131&_cont=CHcVQBtNNQphDmgVQntAEX4BYldtBAAGRmxGC2ERYVJ2BwoVX3cVBWQSY1EhBQcGEmNHVmMTYFEgDQQCFTNJBGQUMQZxVhFqX3cWQT1OcV9xBB8VADQWVhFCPwoxXVZEITQeVDcBaR4-SQ%3D%3D&type=public&app_id=06863309")
             expectation.fulfill()
+            // swiftlint:enable line_length
         }
         wait(for: [expectation], timeout: 0.01)
     }
 
+    // MARK: - Test method GetOtherRecipe
     func testGetOtherRecipe_WhencorrectDataIsReceveid_ThenShouldReturnSuccess() {
-        let session = FakeRecipeSession(fakeResponse: FakeResponse(response: FakeResponseData.responseOK, data: FakeResponseData.correctData))
+        let session = FakeRecipeSession(fakeResponse: FakeResponse(response: FakeResponseData.responseOK,
+                                                                   data: FakeResponseData.correctData))
         let recipeManage = RecipeManage(session: session)
         let expectation = XCTestExpectation(description: "Wait for queue change.")
 
@@ -113,16 +122,41 @@ class RecipeManageTestCase: XCTestCase {
             XCTAssertNotNil(data)
             expectation.fulfill()
         }
-
         wait(for: [expectation], timeout: 0.01)
     }
 
+    // MARK: - Test method GetImage
+    func testGetImage_WhenNoDataIsReceveid_ThenShouldReturnError() {
+        let session = FakeRecipeSession(fakeResponse: FakeResponse(response: nil, data: nil))
+        let recipeManage = RecipeManage(session: session)
+        let expectation = XCTestExpectation(description: "Wait for queue change.")
 
-   
-    
-    
-    
-    
+        recipeManage.getImage(url:
+                    "https://www.edamam.com/web-img/e42/e42f9119813e890af34c259785ae1cfb.jpg") { result in
+            guard case .failure(let error) = result else {
+                XCTFail("Test getImage method with no data failed.")
+                return
+            }
+            XCTAssertNotNil(error)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.01)
+    }
 
+    func testGetImage_WhenCorrectDataIsReceveid_ThenShouldReturnSucces() {
+        let session = FakeRecipeSession(fakeResponse: FakeResponse(response: nil, data: FakeResponseData.imageData))
+        let recipeManage = RecipeManage(session: session)
+        let expectation = XCTestExpectation(description: "Wait for queue change.")
 
+        recipeManage.getImage(url:
+                    "https://www.edamam.com/web-img/e42/e42f9119813e890af34c259785ae1cfb.jpg") { result in
+            guard case .success(let data) = result else {
+                XCTFail("Test getImage method with correct data failed.")
+                return
+            }
+            XCTAssertNotNil(data)
+            expectation.fulfill()
+        }
+        wait(for: [expectation], timeout: 0.01)
+    }
 }

@@ -15,7 +15,7 @@ struct FakeResponse {
 }
 
 final class FakeRecipeSession: NetworkSession {
-    // MARK: - Properties
+    // MARK: - Property
     private let fakeResponse: FakeResponse
 
     // MARK: - Initializer
@@ -25,13 +25,15 @@ final class FakeRecipeSession: NetworkSession {
 
     // MARK: - Methods
     func request(url: URL, completionHandler: @escaping (AFDataResponse<Any>) -> Void) {
-        let dataResponse = AFDataResponse<Any>(request: nil, response: fakeResponse.response, data: fakeResponse.data, metrics: nil, serializationDuration: 0, result: .success("OK"))
+        let dataResponse = AFDataResponse<Any>(request: nil, response: fakeResponse.response,
+                data: fakeResponse.data, metrics: nil, serializationDuration: 0, result: .success("OK"))
         completionHandler(dataResponse)
     }
 
     func requestForImage(url: String, completionHandler: @escaping (DataResponse<Data, AFError>) -> Void) {
         let dataSucces = Data()
-        let dataResponse = DataResponse<Data, AFError>(request: nil, response: fakeResponse.response, data: fakeResponse.data, metrics: nil, serializationDuration: 0, result: .success(dataSucces))
+        let dataResponse = DataResponse<Data, AFError>(request: nil, response: fakeResponse.response,
+                data: fakeResponse.data, metrics: nil, serializationDuration: 0, result: .success(dataSucces))
         completionHandler(dataResponse)
     }
 }
