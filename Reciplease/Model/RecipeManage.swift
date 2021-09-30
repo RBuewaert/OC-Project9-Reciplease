@@ -9,8 +9,7 @@ import Foundation
 import Alamofire
 
 final class RecipeManage {
-    // MARK: - Properties
-    private static let url = "https://api.edamam.com/api/recipes/v2?"
+    // MARK: - Property
     static var urlNextPage = ""
 
     // MARK: - Init session for request and Dependency Injection
@@ -21,23 +20,7 @@ final class RecipeManage {
 
     // MARK: - Methods for Request
     func getFirstRecipes(ingredients: String, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
-        var url: URL? {
-            var urlComponents = URLComponents(string: "https://api.edamam.com/api/recipes/v2?")
-
-            urlComponents?.queryItems = [
-                URLQueryItem(name: "type", value: "public"),
-                URLQueryItem(name: "q", value: ingredients),
-                URLQueryItem(name: "app_id", value: APIKey.id),
-                URLQueryItem(name: "app_key", value: APIKey.key)
-            ]
-
-            guard let urlComponentUnwrapped = urlComponents else { return nil}
-            guard let urlString = urlComponentUnwrapped.string else { return nil }
-            guard let url = URL(string: urlString) else { return nil }
-            return url
-        }
-
-        guard let urlUnwrapped = url else { return }
+        guard let urlUnwrapped = urlForFirstGetRecipe(ingredients: ingredients) else { return }
 
         session.request(url: urlUnwrapped) { dataResponse in
             self.getRecipe(dataResponse: dataResponse, completionHandler: completionHandler)
@@ -53,7 +36,6 @@ final class RecipeManage {
     }
 
     func getImage(url: String, completionHandler: @escaping (Result<Data, ErrorType>) -> ()) {
-        
         session.requestForImage(url: url) { dataImage in
             guard dataImage.error == nil else {
                 completionHandler(.failure(.downloadFailed))
@@ -70,6 +52,22 @@ final class RecipeManage {
     }
 
     // MARK: - Private Methods
+    private func urlForFirstGetRecipe(ingredients: String) -> URL? {
+        var urlComponents = URLComponents(string: "https://api.edamam.com/api/recipes/v2?")
+
+        urlComponents?.queryItems = [
+            URLQueryItem(name: "type", value: "public"),
+            URLQueryItem(name: "q", value: ingredients),
+            URLQueryItem(name: "app_id", value: APIKey.id),
+            URLQueryItem(name: "app_key", value: APIKey.key)
+        ]
+
+        guard let urlComponentUnwrapped = urlComponents else { return nil}
+        guard let urlString = urlComponentUnwrapped.string else { return nil }
+        guard let url = URL(string: urlString) else { return nil }
+        return url
+    }
+
     private func getRecipe(dataResponse: DataResponse<Any, AFError>, completionHandler: @escaping (Result<RecipeList, ErrorType>) -> ()) {
         guard let data = dataResponse.data else {
             completionHandler(.failure(.noData))

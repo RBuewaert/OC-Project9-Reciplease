@@ -14416,9 +14416,6 @@
                 "mealType": [
                     "lunch/dinner"
                 ],
-                "dishType": [
-                    "condiments and sauces"
-                ],
                 "totalNutrients": {
                     "ENERC_KCAL": {
                         "label": "Energy",

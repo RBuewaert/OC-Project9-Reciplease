@@ -20,6 +20,13 @@ final class FakeResponseData {
         let data = try! Data(contentsOf: url!)
         return data
     }
+
+    static var correctDataWithNoResult: Data {
+        let bundle = Bundle(for: FakeResponseData.self)
+        let url = bundle.url(forResource: "RecipeSearchAPIWithNoResult", withExtension: "json")
+        let data = try! Data(contentsOf: url!)
+        return data
+    }
     
     static let incorrectData = "error".data(using: .utf8)!
 }
