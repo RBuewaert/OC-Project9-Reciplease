@@ -62,10 +62,6 @@ extension RecipeSaved: RecipeProtocol {
         return wrappedImageUrl
     }
 
-    var recipeNote: Double {
-        return note
-    }
-
     var recipeTime: Double {
         return totalTime
     }

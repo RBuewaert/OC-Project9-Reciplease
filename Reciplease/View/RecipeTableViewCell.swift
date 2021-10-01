@@ -18,6 +18,7 @@ class RecipeTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        addShadowOnBackground()
         littleView.layer.cornerRadius = 5
         littleView.layer.borderWidth = 1
         littleView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -51,10 +52,11 @@ class RecipeTableViewCell: UITableViewCell {
         }
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    private func addShadowOnBackground() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = bottomLabelsView.bounds
+        gradientLayer.colors = [UIColor.white.withAlphaComponent(0.1).cgColor,
+                                UIColor.black.withAlphaComponent(1).cgColor]
+        bottomLabelsView.layer.insertSublayer(gradientLayer, at: 0)
     }
-
 }

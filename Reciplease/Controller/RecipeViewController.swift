@@ -18,6 +18,7 @@ final class RecipeViewController: UIViewController {
     @IBOutlet weak var cuisineTypeLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var getDirectionsButton: UIButton!
+    @IBOutlet weak var labelBackgroundView: UIView!
 
     // MARK: - Properties
     var selectedRecipe: RecipeProtocol?
@@ -26,14 +27,15 @@ final class RecipeViewController: UIViewController {
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Reciplease"
+        navigationItem.backButtonTitle = "Back"
         getDirectionsButton.layer.cornerRadius = 5
+        addGradientShadowOnBackground()
 
         if verifyIfRecipeIsOnFavorite() {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"),
-                                    style: .plain, target: self, action: #selector(removeFavorite))
+            configureFavoriteButton()
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"),
-                                    style: .plain, target: self, action: #selector(addToFavorite))
+            configureNoFavoriteButton()
         }
 
         littleView.layer.cornerRadius = 5
@@ -41,6 +43,14 @@ final class RecipeViewController: UIViewController {
         littleView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
 
         updateView()
+    }
+
+    private func addGradientShadowOnBackground() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = labelBackgroundView.bounds
+        gradientLayer.colors = [UIColor.white.withAlphaComponent(0).cgColor,
+                                UIColor.black.withAlphaComponent(1).cgColor]
+        labelBackgroundView.layer.insertSublayer(gradientLayer, at: 0)
     }
 
     // MARK: - Action
@@ -90,8 +100,7 @@ final class RecipeViewController: UIViewController {
 
         do {
             try DishType().saveRecipe(currentRecipe)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star.fill"),
-                                    style: .plain, target: self, action: #selector(removeFavorite))
+            configureFavoriteButton()
             alertMessageForUser(title: "Succes!", message: "Recipe added to favorite")
         } catch {
             alertMessageForUser(title: "Error!", message: ErrorType.saveFailed.rawValue)
@@ -99,16 +108,40 @@ final class RecipeViewController: UIViewController {
     }
 
     @objc private func removeFavorite() {
-        guard let currentRecipe = selectedRecipe as? RecipeSaved else { return }
-
-        do {
-            try DishType().removeSavedRecipe(currentRecipe)
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "star"),
-                                    style: .plain, target: self, action: #selector(addToFavorite))
-            alertMessageForUser(title: "Succes!", message: "Recipe removed from favorite")
-        } catch {
-            alertMessageForUser(title: "Error!", message: ErrorType.deletionFailed.rawValue)
+        if let currentRecipe = selectedRecipe as? RecipeSaved {
+            do {
+                try DishType().removeSavedRecipe(currentRecipe)
+                configureNoFavoriteButton()
+                alertMessageForUser(title: "Succes!", message: "Recipe removed from favorite")
+                navigationController?.popViewController(animated: true)
+            } catch {
+                alertMessageForUser(title: "Error!", message: ErrorType.deletionFailed.rawValue)
+            }
+        } else {
+            do {
+                guard let currentRecipe = selectedRecipe as? Recipe else { return }
+                guard let recipeToRemove = DishType().returnExistingSavedRecipe(currentRecipe) else { return }
+                try DishType().removeSavedRecipe(recipeToRemove)
+                configureNoFavoriteButton()
+                alertMessageForUser(title: "Succes!", message: "Recipe removed from favorite")
+                navigationController?.popViewController(animated: true)
+            } catch {
+                alertMessageForUser(title: "Error!", message: ErrorType.deletionFailed.rawValue)
+            }
         }
+    }
+
+    private func configureFavoriteButton() {
+        let buttonStarFill = UIBarButtonItem(image: UIImage(systemName: "star.fill"),
+                                             style: .plain, target: self, action: #selector(removeFavorite))
+        buttonStarFill.tintColor = .yellow
+        navigationItem.rightBarButtonItem = buttonStarFill
+    }
+
+    private func configureNoFavoriteButton() {
+        let buttonStar = UIBarButtonItem(image: UIImage(systemName: "star"),
+                                         style: .plain, target: self, action: #selector(addToFavorite))
+        navigationItem.rightBarButtonItem = buttonStar
     }
 }
 

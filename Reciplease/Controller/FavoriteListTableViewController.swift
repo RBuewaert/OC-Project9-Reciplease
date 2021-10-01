@@ -15,6 +15,8 @@ final class FavoriteListTableViewController: UITableViewController {
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Reciplease"
+        navigationItem.backButtonTitle = "Back"
         tableView.rowHeight = 200
     }
 

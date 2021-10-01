@@ -11,9 +11,8 @@ class CustomTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let tabBarItemAppearance = UITabBarItem.appearance()
-        let attributes = [NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 20)]
+        let attributes = [NSAttributedString.Key.font: UIFont(name: "Chalkduster", size: 18)]
         tabBarItemAppearance.setTitleTextAttributes(attributes as [NSAttributedString.Key: Any],
                                                     for: .normal)
-        navigationItem.backButtonTitle = "Back"
     }
 }

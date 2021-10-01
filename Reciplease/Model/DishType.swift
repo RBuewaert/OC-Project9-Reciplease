@@ -10,13 +10,15 @@ import CoreData
 
 final class DishType: NSManagedObject {
     // MARK: - Properties
+    static var currentContext = AppDelegate.viewContext
+
     static var all: [DishType] {
         let request: NSFetchRequest<DishType> = DishType.fetchRequest()
         request.sortDescriptors = [
             NSSortDescriptor(key: "type", ascending: true)
 //            NSSortDescriptor(key: "type.recipes", ascending: true)
         ]
-        guard let dishTypes = try? AppDelegate.viewContext.fetch(request) else {
+        guard let dishTypes = try? currentContext.fetch(request) else {
             return []
         }
         return dishTypes
@@ -35,7 +37,7 @@ final class DishType: NSManagedObject {
 
     // MARK: - Methods
     func saveRecipe(_ recipe: RecipeProtocol) throws {
-        let recipeToSave = RecipeSaved(context: AppDelegate.viewContext)
+        let recipeToSave = RecipeSaved(context: DishType.currentContext)
         recipeToSave.title = recipe.recipeTitle
         recipeToSave.imageUrl = recipe.recipeImageUrl
         recipeToSave.url = recipe.recipeUrl
@@ -46,7 +48,7 @@ final class DishType: NSManagedObject {
 
         for dishType in recipe.recipeDishType {
             if !DishType().dishTypeIsExisting(dishType) {
-                let dishTypeToSave = DishType(context: AppDelegate.viewContext)
+                let dishTypeToSave = DishType(context: DishType.currentContext)
                 dishTypeToSave.type = dishType
                 recipeToSave.addToDishTypes(dishTypeToSave)
             } else {
@@ -56,25 +58,25 @@ final class DishType: NSManagedObject {
         }
 
         do {
-            try AppDelegate.viewContext.save()
+            try DishType.currentContext.save()
         } catch {
             throw ErrorType.saveFailed
         }
     }
 
     func removeSavedRecipe(_ recipe: RecipeSaved) throws {
-        AppDelegate.viewContext.delete(recipe)
+        DishType.currentContext.delete(recipe)
 
         for dishType in recipe.dishTypeArray {
             recipe.removeFromDishTypes(dishType)
 
             if dishType.recipeArray.isEmpty {
-                AppDelegate.viewContext.delete(dishType)
+                DishType.currentContext.delete(dishType)
             }
         }
 
         do {
-            try AppDelegate.viewContext.save()
+            try DishType.currentContext.save()
         } catch {
             throw ErrorType.deletionFailed
         }
@@ -100,6 +102,19 @@ final class DishType: NSManagedObject {
             }
         }
         return false
+    }
+
+    func returnExistingSavedRecipe(_ recipeToVerify: Recipe) -> RecipeSaved? {
+        for dishType in DishType.all {
+            for recipe in dishType.recipeArray {
+                if recipe.title == recipeToVerify.title,
+                   recipe.ingredientList == recipeToVerify.ingredientList,
+                   recipe.url == recipeToVerify.url {
+                    return recipe
+                }
+            }
+        }
+        return nil
     }
 
     func returnExistingDishType(_ dishTypeToVerify: String) -> DishType? {

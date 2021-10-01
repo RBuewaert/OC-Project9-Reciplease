@@ -13,7 +13,6 @@ protocol RecipeProtocol {
     var recipeIngredientsName: String { get }
     var recipeUrl: String { get }
     var recipeImageUrl: String { get }
-    var recipeNote: Double { get }
     var recipeTime: Double { get }
     var recipeCuisineType: String { get }
     var recipeDishType: [String] { get }

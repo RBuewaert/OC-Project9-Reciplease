@@ -47,10 +47,6 @@ extension Recipe: RecipeProtocol {
         return imageUrl ?? ""
     }
 
-    var recipeNote: Double {
-        return yield
-    }
-
     var recipeTime: Double {
         return totalTime
     }

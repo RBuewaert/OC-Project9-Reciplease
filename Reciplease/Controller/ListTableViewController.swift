@@ -17,6 +17,8 @@ final class ListTableViewController: UITableViewController {
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Reciplease"
+        navigationItem.backButtonTitle = "Back"
         tableView.rowHeight = 200
 
         recipeManage.getFirstRecipes(ingredients: ingredients) { [weak self] result in
@@ -25,7 +27,7 @@ final class ListTableViewController: UITableViewController {
                 self?.recipeList = recipeList
                 self?.tableView.reloadData()
             case .failure(let error):
-                self?.alertErrorMessage(message: error.rawValue)
+                self?.alertErrorMessageWithReturnToLastVC(message: error.rawValue)
             }
         }
     }
@@ -88,7 +90,7 @@ final class ListTableViewController: UITableViewController {
         let positionY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
 
-        if positionY > contentHeight - scrollView.frame.height * 2, RecipeManage.urlNextPage != "" {
+        if positionY > contentHeight - scrollView.frame.height * 3, RecipeManage.urlNextPage != "" {
             if !findMoreRecipe {
                 loadMoreRecipe()
             }
@@ -98,10 +100,12 @@ final class ListTableViewController: UITableViewController {
     // MARK: - Private methods
     private func createFooterActivityIndicator() -> UIView {
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 100))
-        let activityIndicator = UIActivityIndicatorView()
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .white
         activityIndicator.center = footerView.center
         footerView.addSubview(activityIndicator)
         activityIndicator.startAnimating()
+        footerView.translatesAutoresizingMaskIntoConstraints = false
 
         return footerView
     }
@@ -110,20 +114,18 @@ final class ListTableViewController: UITableViewController {
         findMoreRecipe = true
         self.tableView.tableFooterView = createFooterActivityIndicator()
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            self.recipeManage.getOtherRecipes { [weak self] result in
-                self?.tableView.tableFooterView = nil
-                switch result {
-                case .success(let nextRecipeList):
-                    for recipe in nextRecipeList.list {
-                        self?.recipeList.list.append(recipe)
-                    }
-                    self?.findMoreRecipe = false
-                    self?.tableView.reloadData()
-                    print(self?.recipeList.list.count ?? "")
-                case .failure(let error):
-                    self?.alertErrorMessage(message: error.rawValue)
+        self.recipeManage.getOtherRecipes { [weak self] result in
+            self?.tableView.tableFooterView = nil
+            switch result {
+            case .success(let nextRecipeList):
+                for recipe in nextRecipeList.list {
+                    self?.recipeList.list.append(recipe)
                 }
+                self?.findMoreRecipe = false
+                self?.tableView.reloadData()
+                print(self?.recipeList.list.count ?? "")
+            case .failure(let error):
+                self?.alertErrorMessage(message: error.rawValue)
             }
         }
     }
@@ -131,10 +133,25 @@ final class ListTableViewController: UITableViewController {
 
 extension ListTableViewController {
     // MARK: - UIAlertController
+    private func alertErrorMessageWithReturnToLastVC(message: String) {
+        let alertVC = UIAlertController(title: "Error!", message: message,
+                                        preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { [weak self] _ in
+            self?.returnToPreviousVC()
+        }))
+        self.present(alertVC, animated: true, completion: nil)
+    }
+
     private func alertErrorMessage(message: String) {
         let alertVC = UIAlertController(title: "Error!", message: message,
                                         preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alertVC, animated: true, completion: nil)
+    }
+
+    private func returnToPreviousVC() {
+        if (storyboard?.instantiateViewController(identifier: "Research") as? SearchViewController) != nil {
+            navigationController?.popViewController(animated: true)
+        }
     }
 }

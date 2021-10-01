@@ -20,6 +20,8 @@ final class SearchViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        navigationItem.title = "Reciplease"
+        navigationItem.backButtonTitle = "Back"
         addButton.layer.cornerRadius = 5
         clearButton.layer.cornerRadius = 5
         searchButton.layer.cornerRadius = 5

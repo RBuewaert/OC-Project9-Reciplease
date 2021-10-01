@@ -9,7 +9,6 @@
         <attribute name="imageUrl" attributeType="String"/>
         <attribute name="ingredientList" attributeType="String"/>
         <attribute name="ingredientName" optional="YES" attributeType="String"/>
-        <attribute name="note" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="title" attributeType="String"/>
         <attribute name="totalTime" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="url" attributeType="String"/>
@@ -17,6 +16,6 @@
     </entity>
     <elements>
         <element name="DishType" positionX="207.5625" positionY="-5.734375" width="128" height="59"/>
-        <element name="RecipeSaved" positionX="-63" positionY="-18" width="128" height="164"/>
+        <element name="RecipeSaved" positionX="-63" positionY="-18" width="128" height="149"/>
     </elements>
 </model>
