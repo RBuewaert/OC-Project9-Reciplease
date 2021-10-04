@@ -16,12 +16,10 @@ struct Recipe {
     let title: String
     let imageUrl: String?
     let url: String
-    let yield: Double
     let ingredientList: String
     let ingredientName: String
     let totalTime: Double
     let cuisineType: String
-//    let mealType: [String]
     let dishType: [String]
 }
 
@@ -91,12 +89,10 @@ extension RecipeListResultHits {
         return Recipe(title: recipe.label,
                imageUrl: recipe.image,
                url: recipe.url,
-               yield: recipe.yield,
                ingredientList: addIngredientList(),
                 ingredientName: addIngredientName(),
                totalTime: recipe.totalTime,
                 cuisineType: addCuisineType(),
-//               mealType: recipe.mealType,
                 dishType: recipe.dishType ?? ["Unknown"])
     }
 
@@ -132,12 +128,10 @@ struct RecipeListResultRecipe: Codable {
     let label: String
     let image: String?
     let url: String
-    let yield: Double
     let ingredientLines: [String]
     let ingredients: [RecipeListResultIngredient]
     let totalTime: Double
     let cuisineType: [String]
-//    let mealType: [String]
     let dishType: [String]?
 }
 

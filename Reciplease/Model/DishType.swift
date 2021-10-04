@@ -16,7 +16,6 @@ final class DishType: NSManagedObject {
         let request: NSFetchRequest<DishType> = DishType.fetchRequest()
         request.sortDescriptors = [
             NSSortDescriptor(key: "type", ascending: true)
-//            NSSortDescriptor(key: "type.recipes", ascending: true)
         ]
         guard let dishTypes = try? currentContext.fetch(request) else { return [] }
         return dishTypes
@@ -83,9 +82,9 @@ final class DishType: NSManagedObject {
     func returnExistingSavedRecipe(_ recipeToVerify: Recipe) -> RecipeSaved? {
         for dishType in DishType.all {
             for recipe in dishType.recipeArray {
-                if recipe.title == recipeToVerify.title,
-                   recipe.ingredientList == recipeToVerify.ingredientList,
-                   recipe.url == recipeToVerify.url {
+                if recipe.recipeTitle == recipeToVerify.recipeTitle,
+                   recipe.recipeIngredientsList == recipeToVerify.recipeIngredientsList,
+                   recipe.recipeUrl == recipeToVerify.recipeUrl {
                     return recipe
                 }
             }

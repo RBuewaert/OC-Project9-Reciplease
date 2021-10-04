@@ -94,7 +94,6 @@ class RecipeManageTestCase: XCTestCase {
             XCTAssertEqual(data.list[0].title, "Chicken Vesuvio")
             XCTAssertEqual(data.list[0].imageUrl, "https://www.edamam.com/web-img/e42/e42f9119813e890af34c259785ae1cfb.jpg")
             XCTAssertEqual(data.list[0].url, "http://www.seriouseats.com/recipes/2011/12/chicken-vesuvio-recipe.html")
-            XCTAssertEqual(data.list[0].yield, 4.0)
             XCTAssertEqual(data.list[0].ingredientList, "- 1/2 cup olive oil \n- 5 cloves garlic, peeled \n- 2 large russet potatoes, peeled and cut into chunks \n- 1 3-4 pound chicken, cut into 8 pieces (or 3 pound chicken legs) \n- 3/4 cup white wine \n- 3/4 cup chicken stock \n- 3 tablespoons chopped parsley \n- 1 tablespoon dried oregano \n- Salt and pepper \n- 1 cup frozen peas, thawed")
             XCTAssertEqual(data.list[0].ingredientName, "olive oil, garlic, russet potatoes, chicken, white wine, chicken stock, parsley, dried oregano, Salt, pepper, frozen peas")
             XCTAssertEqual(data.list[0].totalTime, 60.0)

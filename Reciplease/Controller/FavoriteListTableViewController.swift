@@ -48,25 +48,25 @@ final class FavoriteListTableViewController: UITableViewController {
         let recipe = dishTypeList[indexPath.section].recipeArray[indexPath.row]
 
         guard let imageUrl = recipe.imageUrl else {
-            cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientName,
-                cuisineType: recipe.wrappedCuisineType, time: recipe.totalTime)
+            cell.configureWithDefaultImage(title: recipe.recipeTitle, ingredients: recipe.recipeIngredientsName,
+                cuisineType: recipe.recipeCuisineType, time: recipe.recipeTime)
             return cell
         }
 
         guard imageUrl.hasSuffix(".jpg") || imageUrl.hasSuffix(".png") else {
-            cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientName,
-                cuisineType: recipe.wrappedCuisineType, time: recipe.totalTime)
+            cell.configureWithDefaultImage(title: recipe.recipeTitle, ingredients: recipe.recipeIngredientsName,
+                cuisineType: recipe.recipeCuisineType, time: recipe.recipeTime)
             return cell
         }
 
         recipeManage.getImage(url: recipe.imageUrl!) { result in
             switch result {
             case .success(let image):
-                cell.configure(imageData: image, title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientName,
-                    cuisineType: recipe.wrappedCuisineType, time: recipe.totalTime)
+                cell.configure(imageData: image, title: recipe.recipeTitle, ingredients: recipe.recipeIngredientsName,
+                    cuisineType: recipe.recipeCuisineType, time: recipe.recipeTime)
             case .failure(_):
-                cell.configureWithDefaultImage(title: recipe.wrappedTitle, ingredients: recipe.wrappedIngredientName,
-                    cuisineType: recipe.wrappedCuisineType, time: recipe.totalTime)
+                cell.configureWithDefaultImage(title: recipe.recipeTitle, ingredients: recipe.recipeIngredientsName,
+                    cuisineType: recipe.recipeCuisineType, time: recipe.recipeTime)
             }
         }
         return cell

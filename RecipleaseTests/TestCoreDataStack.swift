@@ -14,7 +14,6 @@ class TestCoreDataStack: NSObject {
     lazy var persistentContainer: NSPersistentContainer = {
         let persistentStoreDescription = NSPersistentStoreDescription()
         persistentStoreDescription.url = URL(fileURLWithPath: "/dev/null")
-//        persistentStoreDescription.type = NSInMemoryStoreType
         let container = NSPersistentContainer(name: "Reciplease")
         container.persistentStoreDescriptions = [persistentStoreDescription]
         container.loadPersistentStores { _, error in
