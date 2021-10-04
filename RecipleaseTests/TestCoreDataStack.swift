@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import CoreData
 import Reciplease
 
@@ -23,7 +24,4 @@ class TestCoreDataStack: NSObject {
         }
         return container
     }()
-
-
-    
 }

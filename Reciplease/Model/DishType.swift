@@ -18,9 +18,7 @@ final class DishType: NSManagedObject {
             NSSortDescriptor(key: "type", ascending: true)
 //            NSSortDescriptor(key: "type.recipes", ascending: true)
         ]
-        guard let dishTypes = try? currentContext.fetch(request) else {
-            return []
-        }
+        guard let dishTypes = try? currentContext.fetch(request) else { return [] }
         return dishTypes
     }
 
@@ -47,7 +45,7 @@ final class DishType: NSManagedObject {
         recipeToSave.cuisineType = recipe.recipeCuisineType
 
         for dishType in recipe.recipeDishType {
-            if !DishType().dishTypeIsExisting(dishType) {
+            if DishType().returnExistingDishType(dishType) == nil {
                 let dishTypeToSave = DishType(context: DishType.currentContext)
                 dishTypeToSave.type = dishType
                 recipeToSave.addToDishTypes(dishTypeToSave)
@@ -80,28 +78,6 @@ final class DishType: NSManagedObject {
         } catch {
             throw ErrorType.deletionFailed
         }
-    }
-
-    func dishTypeIsExisting(_ dishTypeToVerify: String) -> Bool {
-        for dishType in DishType.all {
-            if dishType.type == dishTypeToVerify {
-                return true
-            }
-        }
-        return false
-    }
-
-    func recipeIsExisting(_ recipeToVerify: Recipe) -> Bool {
-        for dishType in DishType.all {
-            for recipe in dishType.recipeArray {
-                if recipe.title == recipeToVerify.title,
-                   recipe.ingredientList == recipeToVerify.ingredientList,
-                   recipe.url == recipeToVerify.url {
-                    return true
-                }
-            }
-        }
-        return false
     }
 
     func returnExistingSavedRecipe(_ recipeToVerify: Recipe) -> RecipeSaved? {

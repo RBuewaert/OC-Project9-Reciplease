@@ -71,7 +71,7 @@ final class RecipeViewController: UIViewController {
             return true
         }
         if let currentRecipe = selectedRecipe as? Recipe {
-            if DishType().recipeIsExisting(currentRecipe) {
+            if DishType().returnExistingSavedRecipe(currentRecipe) != nil {
                 return true
             }
         }
@@ -112,8 +112,7 @@ final class RecipeViewController: UIViewController {
             do {
                 try DishType().removeSavedRecipe(currentRecipe)
                 configureNoFavoriteButton()
-                alertMessageForUser(title: "Succes!", message: "Recipe removed from favorite")
-                navigationController?.popViewController(animated: true)
+                alertMessageForUserWithReturnToFavoriteVC()
             } catch {
                 alertMessageForUser(title: "Error!", message: ErrorType.deletionFailed.rawValue)
             }
@@ -124,7 +123,6 @@ final class RecipeViewController: UIViewController {
                 try DishType().removeSavedRecipe(recipeToRemove)
                 configureNoFavoriteButton()
                 alertMessageForUser(title: "Succes!", message: "Recipe removed from favorite")
-                navigationController?.popViewController(animated: true)
             } catch {
                 alertMessageForUser(title: "Error!", message: ErrorType.deletionFailed.rawValue)
             }
@@ -152,5 +150,21 @@ extension RecipeViewController {
                                         preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
         self.present(alertVC, animated: true, completion: nil)
+    }
+
+    private func alertMessageForUserWithReturnToFavoriteVC() {
+        let alertVC = UIAlertController(title: "Succes!", message: "Recipe removed from favorite",
+                                        preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: { [weak self] _ in
+            self?.returnToPreviousVC()
+        }))
+        self.present(alertVC, animated: true, completion: nil)
+    }
+
+    private func returnToPreviousVC() {
+        if (storyboard?.instantiateViewController(identifier: "FavoriteList")
+            as? FavoriteListTableViewController) != nil {
+            navigationController?.popViewController(animated: true)
+        }
     }
 }

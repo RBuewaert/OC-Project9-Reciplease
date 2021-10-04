@@ -17,7 +17,6 @@ struct Recipe {
     let imageUrl: String?
     let url: String
     let yield: Double
-//    let cautions: [String]
     let ingredientList: String
     let ingredientName: String
     let totalTime: Double
@@ -43,8 +42,8 @@ extension Recipe: RecipeProtocol {
         return url
     }
 
-    var recipeImageUrl: String {
-        return imageUrl ?? ""
+    var recipeImageUrl: String? {
+        return imageUrl
     }
 
     var recipeTime: Double {
@@ -93,7 +92,6 @@ extension RecipeListResultHits {
                imageUrl: recipe.image,
                url: recipe.url,
                yield: recipe.yield,
-//               cautions: recipe.cautions,
                ingredientList: addIngredientList(),
                 ingredientName: addIngredientName(),
                totalTime: recipe.totalTime,
@@ -135,7 +133,6 @@ struct RecipeListResultRecipe: Codable {
     let image: String?
     let url: String
     let yield: Double
-//    let cautions: [String]
     let ingredientLines: [String]
     let ingredients: [RecipeListResultIngredient]
     let totalTime: Double
