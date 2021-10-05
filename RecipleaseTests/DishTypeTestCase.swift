@@ -9,23 +9,27 @@ import XCTest
 @testable import Reciplease
 
 class DishTypeTestCase: XCTestCase {
-    func testSaveRecipeWithNewDishType_WhenCorrectValuesAreEntered_ThenShouldSaveRecipe() {
-        let recipeToSave = Recipe(title: "Recipe To Save",
-                                  imageUrl: "this is an image url",
-                                  url: "this is the recipe url",
-                                  ingredientList: "detailed list of all ingredients",
-                                  ingredientName: "list of all ingredients name",
-                                  totalTime: 60.0,
-                                  cuisineType: "american",
-                                  dishType: ["main course"])
+    let firstRecipeToSave = Recipe(title: "Recipe To Save",
+                              imageUrl: "this is an image url", url: "this is the recipe url",
+                              ingredientList: "detailed list of all ingredients",
+                              ingredientName: "list of all ingredients name",
+                              totalTime: 60.0, cuisineType: "american", dishType: ["main course"])
+    let secondRecipeToSave = Recipe(title: "Recipe To Save2",
+                              imageUrl: "this is an image url", url: "this is the recipe url",
+                              ingredientList: "detailed list of all ingredients",
+                              ingredientName: "list of all ingredients name",
+                              totalTime: 50.0, cuisineType: "french", dishType: ["main course"])
+    let firstExistingDishType = "dessert"
+    let secondExistingDishType = "main course"
 
+    func testSaveRecipeWithNewDishType_WhenCorrectValuesAreEntered_ThenShouldSaveRecipe() {
         let context = TestCoreDataStack().persistentContainer.newBackgroundContext()
         DishType.currentContext = context
         expectation(forNotification: .NSManagedObjectContextDidSave, object: context) { _ in
             return true
         }
 
-        XCTAssertNoThrow(try DishType().saveRecipe(recipeToSave))
+        XCTAssertNoThrow(try DishType().saveRecipe(firstRecipeToSave))
 
         waitForExpectations(timeout: 2.0) { error in
             XCTAssertNil(error, "Save did not occur")
@@ -33,9 +37,6 @@ class DishTypeTestCase: XCTestCase {
     }
 
     func testSaveRecipeWithExistingDishType_WhenCorrectValuesAreEntered_ThenShouldSaveRecipe() {
-        let firstExistingDishType = "dessert"
-        let secondExistingDishType = "main course"
-
         let context = TestCoreDataStack().persistentContainer.newBackgroundContext()
         DishType.currentContext = context
         expectation(forNotification: .NSManagedObjectContextDidSave, object: context) { _ in
@@ -47,16 +48,7 @@ class DishTypeTestCase: XCTestCase {
         let secondDishTypeToSave = DishType(context: context)
         secondDishTypeToSave.type = secondExistingDishType
 
-        let recipeToSave = Recipe(title: "Recipe To Save",
-                                  imageUrl: "this is an image url",
-                                  url: "this is the recipe url",
-                                  ingredientList: "detailed list of all ingredients",
-                                  ingredientName: "list of all ingredients name",
-                                  totalTime: 60.0,
-                                  cuisineType: "american",
-                                  dishType: ["main course, dessert"])
-
-        XCTAssertNoThrow(try DishType().saveRecipe(recipeToSave))
+        XCTAssertNoThrow(try DishType().saveRecipe(firstRecipeToSave))
 
         waitForExpectations(timeout: 2.0) { error in
             XCTAssertNil(error, "Save did not occur")
@@ -64,9 +56,6 @@ class DishTypeTestCase: XCTestCase {
     }
 
     func testRemoveRecipeWithExistingDishType_WhenCorrectValuesAreEntered_ThenShouldRemoveRecipe() {
-        let firstExistingDishType = "dessert"
-        let secondExistingDishType = "main course"
-
         let context = TestCoreDataStack().persistentContainer.newBackgroundContext()
         DishType.currentContext = context
         expectation(forNotification: .NSManagedObjectContextDidSave, object: context) { _ in
@@ -78,21 +67,13 @@ class DishTypeTestCase: XCTestCase {
         let secondDishTypeToSave = DishType(context: context)
         secondDishTypeToSave.type = secondExistingDishType
 
-        let recipeToSave = Recipe(title: "Recipe To Save",
-                                  imageUrl: "this is an image url",
-                                  url: "this is the recipe url",
-                                  ingredientList: "detailed list of all ingredients",
-                                  ingredientName: "list of all ingredients name",
-                                  totalTime: 60.0,
-                                  cuisineType: "american",
-                                  dishType: ["main course, dessert"])
         do {
-            try DishType().saveRecipe(recipeToSave)
+            try DishType().saveRecipe(firstRecipeToSave)
         } catch {
             print("Recipe not saved")
         }
 
-        guard let recipeToRemove = DishType().returnExistingSavedRecipe(recipeToSave) else { return }
+        guard let recipeToRemove = DishType().returnExistingSavedRecipe(firstRecipeToSave) else { return }
 
         XCTAssertNoThrow(try DishType().removeSavedRecipe(recipeToRemove))
 
@@ -102,9 +83,6 @@ class DishTypeTestCase: XCTestCase {
     }
 
     func testReturnExistingSavedRecipe_WhenIncorrectRecipeIsSearched_ThenShouldReturnNil() {
-        let firstExistingDishType = "dessert"
-        let secondExistingDishType = "main course"
-
         let context = TestCoreDataStack().persistentContainer.newBackgroundContext()
         DishType.currentContext = context
         expectation(forNotification: .NSManagedObjectContextDidSave, object: context) { _ in
@@ -116,24 +94,14 @@ class DishTypeTestCase: XCTestCase {
         let secondDishTypeToSave = DishType(context: context)
         secondDishTypeToSave.type = secondExistingDishType
 
-        let recipeToSave1 = Recipe(title: "Recipe To Save",
-                                  imageUrl: "this is an image url", url: "this is the recipe url",
-                                  ingredientList: "detailed list of all ingredients",
-                                  ingredientName: "list of all ingredients name",
-                                  totalTime: 60.0, cuisineType: "american", dishType: ["main course"])
         do {
-            try DishType().saveRecipe(recipeToSave1)
+            try DishType().saveRecipe(firstRecipeToSave)
         } catch {
             print("Recipe not saved")
         }
 
-        let recipeToSave2 = Recipe(title: "Recipe To Save2",
-                                  imageUrl: "this is an image url", url: "this is the recipe url",
-                                  ingredientList: "detailed list of all ingredients",
-                                  ingredientName: "list of all ingredients name",
-                                  totalTime: 50.0, cuisineType: "french", dishType: ["main course"])
         do {
-            try DishType().saveRecipe(recipeToSave2)
+            try DishType().saveRecipe(secondRecipeToSave)
         } catch {
             print("Recipe not saved")
         }
@@ -155,9 +123,6 @@ class DishTypeTestCase: XCTestCase {
     }
 
     func testReturnExistingSavedRecipe_WhenCorrectRecipeIsSearched_ThenShouldRecipeSaved() {
-        let firstExistingDishType = "dessert"
-        let secondExistingDishType = "main course"
-
         let context = TestCoreDataStack().persistentContainer.newBackgroundContext()
         DishType.currentContext = context
         expectation(forNotification: .NSManagedObjectContextDidSave, object: context) { _ in
@@ -169,38 +134,28 @@ class DishTypeTestCase: XCTestCase {
         let secondDishTypeToSave = DishType(context: context)
         secondDishTypeToSave.type = secondExistingDishType
 
-        let recipeToSave1 = Recipe(title: "Recipe To Save",
-                                  imageUrl: "this is an image url", url: "this is the recipe url",
-                                  ingredientList: "detailed list of all ingredients",
-                                  ingredientName: "list of all ingredients name",
-                                  totalTime: 60.0, cuisineType: "american", dishType: ["main course"])
         do {
-            try DishType().saveRecipe(recipeToSave1)
+            try DishType().saveRecipe(firstRecipeToSave)
         } catch {
             print("Recipe not saved")
         }
 
-        let recipeToSave2 = Recipe(title: "Recipe To Save2",
-                                  imageUrl: "this is an image url", url: "this is the recipe url",
-                                  ingredientList: "detailed list of all ingredients",
-                                  ingredientName: "list of all ingredients name",
-                                  totalTime: 50.0, cuisineType: "french", dishType: ["main course"])
         do {
-            try DishType().saveRecipe(recipeToSave2)
+            try DishType().saveRecipe(secondRecipeToSave)
         } catch {
             print("Recipe not saved")
         }
 
-        let recipeFind = DishType().returnExistingSavedRecipe(recipeToSave1)
+        let recipeFind = DishType().returnExistingSavedRecipe(firstRecipeToSave)
 
-        XCTAssertEqual(recipeFind?.recipeTitle, recipeToSave1.recipeTitle)
-        XCTAssertEqual(recipeFind?.recipeImageUrl, recipeToSave1.recipeImageUrl)
-        XCTAssertEqual(recipeFind?.recipeUrl, recipeToSave1.recipeUrl)
-        XCTAssertEqual(recipeFind?.recipeIngredientsName, recipeToSave1.recipeIngredientsName)
-        XCTAssertEqual(recipeFind?.recipeIngredientsList, recipeToSave1.recipeIngredientsList)
-        XCTAssertEqual(recipeFind?.recipeTime, recipeToSave1.recipeTime)
-        XCTAssertEqual(recipeFind?.recipeCuisineType, recipeToSave1.recipeCuisineType)
-        XCTAssertEqual(recipeFind?.recipeDishType, recipeToSave1.recipeDishType)
+        XCTAssertEqual(recipeFind?.recipeTitle, firstRecipeToSave.recipeTitle)
+        XCTAssertEqual(recipeFind?.recipeImageUrl, firstRecipeToSave.recipeImageUrl)
+        XCTAssertEqual(recipeFind?.recipeUrl, firstRecipeToSave.recipeUrl)
+        XCTAssertEqual(recipeFind?.recipeIngredientsName, firstRecipeToSave.recipeIngredientsName)
+        XCTAssertEqual(recipeFind?.recipeIngredientsList, firstRecipeToSave.recipeIngredientsList)
+        XCTAssertEqual(recipeFind?.recipeTime, firstRecipeToSave.recipeTime)
+        XCTAssertEqual(recipeFind?.recipeCuisineType, firstRecipeToSave.recipeCuisineType)
+        XCTAssertEqual(recipeFind?.recipeDishType, firstRecipeToSave.recipeDishType)
 
         waitForExpectations(timeout: 2.0) { error in
             XCTAssertNil(error, "Save did not occur")
