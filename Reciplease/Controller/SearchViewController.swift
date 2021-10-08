@@ -55,7 +55,6 @@ final class SearchViewController: UIViewController {
 
     @IBAction func tappedSearchButton(_ sender: Any) {
         if shouldPerformSegue(withIdentifier: "segueToListTableView", sender: nil) {
-            print("research")
         } else {
             presentAlert()
         }
