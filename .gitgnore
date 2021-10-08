@@ -1,6 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos,swift
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,swift
 Reciplease/Supporting Files/APIKey.swift
+Reciplease/Supporting Files/KeyTest.swift
 
 ### macOS ###
 # General
