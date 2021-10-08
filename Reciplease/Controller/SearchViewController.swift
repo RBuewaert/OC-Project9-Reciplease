@@ -44,6 +44,8 @@ final class SearchViewController: UIViewController {
                 continue
             }
             ingredientTextView.text.append("- \(ingredient.trimmingCharacters(in: .whitespacesAndNewlines)) \n")
+            textField.text = ""
+            textField.resignFirstResponder()
         }
     }
 
