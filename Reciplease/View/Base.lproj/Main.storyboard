@@ -35,7 +35,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="FavoriteList" id="T0p-qA-Iyz" customClass="FavoriteListTableViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="50" sectionFooterHeight="10" id="OFf-6t-Khx">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.2117646933" green="0.20000001789999999" blue="0.19215688110000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -146,7 +146,7 @@
             <objects>
                 <navigationController id="KgN-tx-dRV" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Search" image="magnifyingglass" catalog="system" id="bWd-qv-aa1"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Fvj-xQ-ca7">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Fvj-xQ-ca7">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.2117646933" green="0.20000001789999999" blue="0.19215688110000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -170,11 +170,11 @@
             <objects>
                 <viewController storyboardIdentifier="Research" id="BYZ-38-t0r" customClass="SearchViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r4h-0J-U8P">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="140"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="140"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's in your fridge ?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F63-Rz-uAN">
                                         <rect key="frame" x="8" y="20" width="398" height="30"/>
@@ -225,7 +225,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vjx-jd-cMg">
-                                <rect key="frame" x="50" y="657" width="314" height="48"/>
+                                <rect key="frame" x="50" y="745" width="314" height="48"/>
                                 <color key="backgroundColor" red="0.2588235438" green="0.52941179279999995" blue="0.34901961679999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <state key="normal" title="Search for recipes">
@@ -237,7 +237,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8A2-fS-Txo">
-                                <rect key="frame" x="324" y="160" width="70" height="40"/>
+                                <rect key="frame" x="324" y="248" width="70" height="40"/>
                                 <color key="backgroundColor" red="0.52156865600000002" green="0.52941179279999995" blue="0.53333336109999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Ihe-AS-G9d"/>
@@ -251,7 +251,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your ingredients :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i8f-op-3c9">
-                                <rect key="frame" x="20" y="160" width="274" height="30"/>
+                                <rect key="frame" x="20" y="248" width="274" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="hJR-4Y-xsn"/>
                                 </constraints>
@@ -260,7 +260,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Zaw-ch-yqT">
-                                <rect key="frame" x="40" y="215" width="354" height="422"/>
+                                <rect key="frame" x="40" y="303" width="354" height="422"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="22"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -311,7 +311,7 @@
             <objects>
                 <tableViewController id="jmw-Kn-7UN" customClass="ListTableViewController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="mvO-nz-bYV">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.2117646933" green="0.20000001789999999" blue="0.19215688110000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <prototypes>
@@ -410,7 +410,6 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Search" id="rZz-AT-JqH"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gni-HT-9FE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -428,7 +427,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Vf-aF-AB5">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
+                                        <rect key="frame" x="0.0" y="52" width="414" height="298"/>
                                     </imageView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lwf-UJ-l1b">
                                         <rect key="frame" x="0.0" y="310" width="414" height="40"/>
@@ -443,7 +442,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Nw-6H-ONn">
-                                        <rect key="frame" x="286" y="30" width="120" height="70"/>
+                                        <rect key="frame" x="286" y="95" width="120" height="70"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AWJ-bR-M70">
                                                 <rect key="frame" x="5" y="10" width="110" height="18"/>
@@ -472,13 +471,13 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" red="0.2117646933" green="0.20000001789999999" blue="0.19215688110000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="Bgu-L1-mhI" firstAttribute="leading" secondItem="xBf-nU-dIV" secondAttribute="leading" id="3gn-KN-Wku"/>
-                                    <constraint firstItem="7Nw-6H-ONn" firstAttribute="top" secondItem="xBf-nU-dIV" secondAttribute="top" constant="30" id="9pi-jh-BtT"/>
+                                    <constraint firstItem="7Nw-6H-ONn" firstAttribute="top" secondItem="xBf-nU-dIV" secondAttribute="top" constant="95" id="9pi-jh-BtT"/>
+                                    <constraint firstItem="9Vf-aF-AB5" firstAttribute="top" secondItem="xBf-nU-dIV" secondAttribute="top" constant="52" id="Fol-g6-Xxx"/>
                                     <constraint firstItem="Bgu-L1-mhI" firstAttribute="leading" secondItem="Lwf-UJ-l1b" secondAttribute="leading" id="HhV-yj-Oi2"/>
                                     <constraint firstAttribute="bottom" secondItem="9Vf-aF-AB5" secondAttribute="bottom" id="Hy8-4v-Kf5"/>
-                                    <constraint firstItem="9Vf-aF-AB5" firstAttribute="top" secondItem="xBf-nU-dIV" secondAttribute="top" id="LAM-pd-gJR"/>
                                     <constraint firstAttribute="trailing" secondItem="9Vf-aF-AB5" secondAttribute="trailing" id="QBP-6c-3Ka"/>
                                     <constraint firstAttribute="trailing" secondItem="7Nw-6H-ONn" secondAttribute="trailing" constant="8" id="SLh-le-wLp"/>
                                     <constraint firstItem="Bgu-L1-mhI" firstAttribute="bottom" secondItem="Lwf-UJ-l1b" secondAttribute="bottom" id="TyI-lJ-Lna"/>
@@ -557,7 +556,7 @@
             <objects>
                 <navigationController id="Re9-GK-B4a" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Favorite" image="star.fill" catalog="system" id="OAz-7i-4Yy"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="zXm-X7-czW">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="zXm-X7-czW">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.2117646933" green="0.20000001789999999" blue="0.19215688110000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
