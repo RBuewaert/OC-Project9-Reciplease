@@ -59,7 +59,7 @@ final class RecipeViewController: UIViewController {
         guard let url = URL(string: currentRecipe.recipeUrl) else { return }
 
         let config = SFSafariViewController.Configuration()
-        config.entersReaderIfAvailable = true
+//        config.entersReaderIfAvailable = true
 
         let vc = SFSafariViewController(url: url, configuration: config)
         present(vc, animated: true)
