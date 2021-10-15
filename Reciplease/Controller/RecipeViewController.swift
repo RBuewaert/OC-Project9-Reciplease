@@ -61,7 +61,7 @@ final class RecipeViewController: UIViewController {
         let config = SFSafariViewController.Configuration()
 //        config.entersReaderIfAvailable = true
 
-        let vc = SFSafariViewController(url: url, configuration: config)
+        let vc = SafariViewController(url: url, configuration: config)
         present(vc, animated: true)
     }
 

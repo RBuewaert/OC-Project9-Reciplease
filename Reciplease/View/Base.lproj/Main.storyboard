@@ -146,7 +146,7 @@
             <objects>
                 <navigationController id="KgN-tx-dRV" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Search" image="magnifyingglass" catalog="system" id="bWd-qv-aa1"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Fvj-xQ-ca7">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Fvj-xQ-ca7">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.2117646933" green="0.20000001789999999" blue="0.19215688110000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -556,7 +556,7 @@
             <objects>
                 <navigationController id="Re9-GK-B4a" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Favorite" image="star.fill" catalog="system" id="OAz-7i-4Yy"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="zXm-X7-czW">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="zXm-X7-czW">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.2117646933" green="0.20000001789999999" blue="0.19215688110000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
