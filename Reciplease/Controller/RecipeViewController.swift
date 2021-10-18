@@ -32,7 +32,7 @@ final class RecipeViewController: UIViewController {
         getDirectionsButton.layer.cornerRadius = 5
         addGradientShadowOnBackground()
 
-        if verifyIfRecipeIsOnFavorite() {
+        if recipeIsOnFavorite() {
             configureFavoriteButton()
         } else {
             configureNoFavoriteButton()
@@ -66,7 +66,7 @@ final class RecipeViewController: UIViewController {
     }
 
     // MARK: - Private methods
-    private func verifyIfRecipeIsOnFavorite() -> Bool {
+    private func recipeIsOnFavorite() -> Bool {
         if (selectedRecipe as? RecipeSaved) != nil {
             return true
         }
