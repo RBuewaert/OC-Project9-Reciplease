@@ -27,10 +27,9 @@ final class APIKey {
 
 # Screenshots
 ### Search Tab:
-![Simulator Search Menu Example](https://user-images.githubusercontent.com/79987744/136814561-ed13b814-2c18-419e-856d-a8b4888104f9.png) ![Simulator Search Result](https://user-images.githubusercontent.com/79987744/136814571-dd5560f6-3e43-447f-8a2d-d4cb6dc4db0f.png)
+![Simulator Search Menu Example](https://user-images.githubusercontent.com/79987744/137483176-dbccb153-9d0c-4a95-9097-b4375e8b3e04.png) ![Simulator Search Result](https://user-images.githubusercontent.com/79987744/137483199-64d12717-5936-47e7-899b-f381dc9a2e84.png)
 
-![Simulator Detail Recipe Searched](https://user-images.githubusercontent.com/79987744/136814622-048ea519-bb13-4a8f-ad43-859fcfe96e46.png)
-) ![Simulator Detail Recipe Searched on Safari Link](https://user-images.githubusercontent.com/79987744/136814627-5fcfaf59-b416-4eed-a5a8-5a9a6b5a2f21.png)
+![Simulator Detail Recipe Searched](https://user-images.githubusercontent.com/79987744/137483247-0bacdf90-7409-486a-ba78-aafaa0ce1244.png) ![Simulator Detail Recipe Searched on Safari Link](https://user-images.githubusercontent.com/79987744/137483255-6d11857a-8665-412b-9b86-7665ca73726a.png)
 
 ### Favorite Tab:
-![Simulator Favorite Menu](https://user-images.githubusercontent.com/79987744/136814650-864f591e-73fa-4990-81f2-835415262756.png) ![Simulator Detail Recipe Favorite](https://user-images.githubusercontent.com/79987744/136814657-ae1aab9c-6d32-4c6f-86f7-e28519b5b1f5.png)
+![Simulator Favorite Menu](https://user-images.githubusercontent.com/79987744/137483306-a96ab6e7-100e-460b-a487-b1f14ac0470b.png) ![Simulator Detail Recipe Favorite](https://user-images.githubusercontent.com/79987744/137483313-5c088e17-e26e-4840-add8-3d0c01eb07b8.png)
